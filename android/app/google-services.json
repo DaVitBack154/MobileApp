@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "592540550164",
+    "project_id": "notimessage-9bfc3",
+    "storage_bucket": "notimessage-9bfc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592540550164:android:65ace2ec60c878a0cc9301",
+        "android_client_info": {
+          "package_name": "com.example.firebase1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2KmBxbA3WRgd9z8tWPMJ3b6G8Ke1Bak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592540550164:android:a96fad1ac22ead0dcc9301",
+        "android_client_info": {
+          "package_name": "com.example.mobile_chaseapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2KmBxbA3WRgd9z8tWPMJ3b6G8Ke1Bak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592540550164:android:ebe5904796f6be11cc9301",
+        "android_client_info": {
+          "package_name": "com.example.notification_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2KmBxbA3WRgd9z8tWPMJ3b6G8Ke1Bak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
