@@ -386,6 +386,7 @@ class _ContractState extends State<Contract> {
       child: latc1 == null
           ? const Text('data')
           : GoogleMap(
+              myLocationButtonEnabled: false,
               initialCameraPosition: position!,
               mapType: MapType.normal,
               onMapCreated: (controller) {},
@@ -415,6 +416,7 @@ class _ContractState extends State<Contract> {
       child: lat2 == null
           ? const Text('data')
           : GoogleMap(
+              myLocationButtonEnabled: false,
               initialCameraPosition: position!,
               mapType: MapType.normal,
               onMapCreated: (controller) {},

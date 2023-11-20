@@ -288,7 +288,22 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (choseRadio == 'เอกสารอื่นๆ') {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReqDocFromUser(
+                                    documentChose: choseRadio,
+                                    customerId: accController.userAccModel
+                                        .data![_currentIndex].customerId,
+                                    other:
+                                        userReqController.otherController.text,
+                                  ),
+                                ),
+                              );
+                            }
+                          } else {
                             Navigator.push(
                               context,
                               MaterialPageRoute(

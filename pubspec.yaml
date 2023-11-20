@@ -48,8 +48,11 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   snippet_coder_utils: ^1.0.14
   flutter_screenutil: ^5.9.0
+  flutter_launcher_icons: ^0.13.1
+  rename: ^3.0.1
   permission_handler: ^11.0.0
   google_maps_flutter: ^2.5.0
+  insta_image_viewer: ^1.0.2
   firebase_core: ^2.20.0
   firebase_messaging: ^14.7.2
   flutter_local_notifications:
@@ -57,7 +60,12 @@ dependencies:
 
     # https://pub.dev/packages/animations
   animations: ^2.0.8
-
+flutter_launcher_icons:
+  android: true
+  image_path_android: "assets/image/playstore.png"
+  min_sdk_android: 21
+  ios: true
+  image_path_ios: "assets/image/appstore.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter

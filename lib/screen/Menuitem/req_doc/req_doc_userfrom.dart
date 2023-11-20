@@ -759,6 +759,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                       setState(() {
                                         isSelectedReceiptNo = true;
                                       });
+                                      print(chosesentRadio);
                                       if (chosesentRadio == 'ส่งแบบอีเมล') {
                                         String result = await userReqController
                                             .fetchUserReq(
@@ -792,10 +793,20 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           errorTextaddress =
                                               'กรุณากรอกที่อยู่ให้ถูกต้อง';
                                           setState(() {});
+                                          return;
                                         }
+
+                                        _formKey.currentState!.validate();
+
                                         if (profileController.userModel.user
                                                 ?.sentAddressuser !=
                                             null) {
+                                          print('Check value 4: $nameProvin');
+                                          if (nameProvin == null ||
+                                              nameProvin!.isEmpty) {
+                                            print('this condition');
+                                            return;
+                                          }
                                           String result =
                                               await userReqController
                                                   .fetchUserReq(
@@ -830,8 +841,12 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             );
                                             return;
                                           }
-                                        } else if (_formKey.currentState!
-                                            .validate()) {
+                                        } else {
+                                          if (nameProvin == null ||
+                                              nameProvin!.isEmpty) {
+                                            return;
+                                          }
+
                                           String result =
                                               await userReqController
                                                   .fetchUserReq(
@@ -854,7 +869,6 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             subdistrict: nameSubdistrict,
                                             postcode: namePostcode,
                                           );
-
                                           if (result.isNotEmpty) {
                                             // ignore: use_build_context_synchronously
                                             ScaffoldMessenger.of(context)
@@ -995,6 +1009,12 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                       if (profileController.userModel.user
                                               ?.sentAddressuser !=
                                           null) {
+                                        print('Check value1: $nameProvin');
+                                        if (nameProvin == null ||
+                                            nameProvin!.isEmpty) {
+                                          print('this condition');
+                                          return;
+                                        }
                                         String result = await userReqController
                                             .fetchUserReq(
                                           name: name.toString(),
@@ -1028,6 +1048,12 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         }
                                       } else if (_formKey.currentState!
                                           .validate()) {
+                                        print('Check value: $nameProvin');
+                                        if (nameProvin == null ||
+                                            nameProvin!.isEmpty) {
+                                          print('this condition');
+                                          return;
+                                        }
                                         String result = await userReqController
                                             .fetchUserReq(
                                           name: name.toString(),
@@ -1236,7 +1262,9 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
           });
         },
         (onValidateVal) {
-          if (onValidateVal == null) {
+          if (onValidateVal == null ||
+              nameProvin == null ||
+              nameProvin!.isEmpty) {
             return "กรุณาเลือกจังหวัด";
           }
           return null;

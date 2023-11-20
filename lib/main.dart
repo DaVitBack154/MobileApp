@@ -15,8 +15,8 @@ void main() async {
   LocalNotification.init();
   FirebaseCloudMessagingProvider.onFirebaseMessageReceived();
   FirebaseCloudMessagingProvider.setupInteractedMessage();
-  final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
-  print('fdfd,${firebaseToken}');
+  // final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
+  // print('fdfd,${firebaseToken}');
 
   runApp(const MyApp());
 }

@@ -249,193 +249,201 @@ class _FormProfileState extends State<FormProfile> {
               ),
             ),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ).w,
-                child: Text(
-                  'ที่อยู่',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          _profileController.userModel.user?.sentAddressuser != null
+              ? Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                      ).w,
+                      child: Text(
+                        'ที่อยู่',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
           SizedBox(
             height: 5.h,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UpdateProfile(
-                      sentAddressuser:
-                          _profileController.userModel.user!.sentAddressuser!,
-                      district: _profileController.userModel.user!.district!,
-                      subdistrict:
-                          _profileController.userModel.user!.subdistrict!,
-                      provin: _profileController.userModel.user!.provin!,
-                      postcode: _profileController.userModel.user!.postcode!,
-                    ),
-                  )).then((_) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String token = prefs.getString(KeyStorage.token) ?? '';
-                await _profileController.fetchProfileData(token);
-                setState(() {});
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 30,
-              ).w,
-              child: Container(
-                // height: 60.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(
-                    10,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/image/iconaddress.png',
-                            width: 27.w,
-                            height: 27.h,
+          _profileController.userModel.user?.sentAddressuser != null
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateProfile(
+                            sentAddressuser: _profileController
+                                .userModel.user!.sentAddressuser!,
+                            district:
+                                _profileController.userModel.user!.district!,
+                            subdistrict:
+                                _profileController.userModel.user!.subdistrict!,
+                            provin: _profileController.userModel.user!.provin!,
+                            postcode:
+                                _profileController.userModel.user!.postcode!,
                           ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    _profileController
-                                            .userModel.user?.sentAddressuser ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'เขต : ',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                  Text(
-                                    _profileController
-                                            .userModel.user?.district ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'แขวง : ',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                  Text(
-                                    _profileController
-                                            .userModel.user?.subdistrict ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'จังหวัด : ',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                  Text(
-                                    _profileController.userModel.user?.provin ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  Text(
-                                    _profileController
-                                            .userModel.user?.postcode ??
-                                        '',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF395D5D),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
+                        )).then((_) async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      String token = prefs.getString(KeyStorage.token) ?? '';
+                      await _profileController.fetchProfileData(token);
+                      setState(() {});
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: 30,
+                    ).w,
+                    child: Container(
+                      // height: 60.h,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                       ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.edit_square,
-                            size: 25,
-                            color: Color(0xFF395D5D),
-                          )
-                        ],
-                      )
-                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/image/iconaddress.png',
+                                  width: 27.w,
+                                  height: 27.h,
+                                ),
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          _profileController.userModel.user
+                                                  ?.sentAddressuser ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'เขต : ',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                        Text(
+                                          _profileController
+                                                  .userModel.user?.district ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5.w,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'แขวง : ',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                        Text(
+                                          _profileController.userModel.user
+                                                  ?.subdistrict ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'จังหวัด : ',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                        Text(
+                                          _profileController
+                                                  .userModel.user?.provin ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5.w,
+                                        ),
+                                        Text(
+                                          _profileController
+                                                  .userModel.user?.postcode ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xFF395D5D),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.edit_square,
+                                  size: 25,
+                                  color: Color(0xFF395D5D),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
+                )
+              : const SizedBox.shrink()
         ],
       ),
     );
