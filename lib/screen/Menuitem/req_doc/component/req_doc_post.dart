@@ -42,7 +42,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
   @override
   void initState() {
     super.initState();
-    fetchAccData(); // Fetch profile data when widget is initialized
+    fetchAccData();
   }
 
   @override
@@ -70,7 +70,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         .toList(),
                     carouselController: carouselController,
                     options: CarouselOptions(
-                        viewportFraction: 0.93,
+                        viewportFraction: 0.95,
                         height: 210.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
@@ -173,6 +173,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     choseRadio = value.toString();
                                   });
                                 },
+                                activeColor: Colors.teal.shade700,
                               ),
                             ),
                             Visibility(
@@ -205,6 +206,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                       choseRadio = value.toString();
                                     });
                                   },
+                                  activeColor: Colors.teal.shade700,
                                 ),
                               ),
                             ),
@@ -237,6 +239,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     choseRadio = value.toString();
                                   });
                                 },
+                                activeColor: Colors.teal.shade700,
                               ),
                             ),
                             choseRadio == 'เอกสารอื่นๆ'
@@ -254,6 +257,9 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                           decoration: InputDecoration(
                                             labelText:
                                                 'กรุณากรอกข้อความที่ต้องการ',
+                                            labelStyle: TextStyle(
+                                              color: Colors.black,
+                                            ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Colors.grey
@@ -263,9 +269,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Colors
-                                                      .blue), // เส้นขอบเมื่อได้รับการโฟกัส
+                                                      .grey), // เส้นขอบเมื่อได้รับการโฟกัส
                                             ),
                                           ),
+                                          cursorColor: Colors.grey.shade400,
+                                          textInputAction: TextInputAction.done,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty ||
@@ -275,7 +283,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                             setState(() {});
                                             return null; // ส่งค่า null ถ้าข้อมูลถูกต้อง
                                           },
-                                        )
+                                        ),
                                       ],
                                     ),
                                   )
@@ -319,7 +327,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
-                            const Size(250, 40),
+                            Size(320.w, 30.h),
                           ),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             const Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -337,6 +345,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                           style: TextStyle(
                             fontSize: 22.sp,
                             fontWeight: FontWeight.w400,
+                            color: Colors.white,
                           ),
                         ),
                       ),

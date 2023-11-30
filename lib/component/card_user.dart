@@ -26,7 +26,9 @@ class CardUser extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          padding:  EdgeInsets.symmetric(
+            horizontal: 10.w,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,

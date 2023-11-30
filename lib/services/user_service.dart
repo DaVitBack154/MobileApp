@@ -286,4 +286,22 @@ class UserService extends BaseService {
     );
     return response;
   }
+
+  Future<Response> getSaleHome() async {
+    String url = '$domain/getsalehome';
+
+    Response response = await get(
+      Uri.parse(url),
+    );
+    return response;
+  }
+
+  Future<Response> getSaleHomeID(String id) async {
+    String url = '$domain/getsalehome/$id';
+
+    Response response = await get(
+      Uri.parse(url),
+    );
+    return response;
+  }
 }

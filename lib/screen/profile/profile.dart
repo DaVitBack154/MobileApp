@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/controller/logout_controller.dart';
+import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/screen/profile/component/navbarprofile.dart';
 import 'package:mobile_chaseapp/screen/profile/edit_profile.dart';
+import 'package:mobile_chaseapp/utils/app_navigator.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +22,7 @@ class _ProfileState extends State<Profile> {
   Future<void> _handleLogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString(KeyStorage.token) ?? ''; // ดึง Token
+    String pin = prefs.getString(KeyStorage.pin) ?? '';
 
     if (token.isNotEmpty) {
       // ตรวจสอบว่า Token ไม่เป็น null ก่อนใช้งาน
@@ -134,21 +137,18 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: ElevatedButton(
                     onPressed: () async {
-                      await _handleLogout();
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.clear();
-
+                      // await _handleLogout();
+                      // SharedPreferences prefs =
+                      //     await SharedPreferences.getInstance();
+                      // await prefs.remove('');
                       // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Bottombar(),
-                        ),
+                      AppNavigator.pushReplacementNamed(
+                        PinCode.routeName,
+                        arguments: const PinCodeArgs(isGotoNotif: false),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(width, 40.h),
+                      fixedSize: Size(width, 35.h),
                       backgroundColor: const Color(0xFF103533),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -157,8 +157,9 @@ class _ProfileState extends State<Profile> {
                     child: Text(
                       'ออกจากระบบ',
                       style: TextStyle(
-                        fontSize: 23.sp,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w400,
+                        color: Colors.white,
                       ),
                     ),
                   ),

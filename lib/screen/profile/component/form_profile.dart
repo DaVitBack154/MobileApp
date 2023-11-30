@@ -50,7 +50,7 @@ class _FormProfileState extends State<FormProfile> {
       child: Column(
         children: [
           SizedBox(
-            height: 30.w,
+            height: 20.w,
           ),
           CircleAvatar(
             backgroundColor: Colors.grey.shade100,
@@ -74,7 +74,7 @@ class _FormProfileState extends State<FormProfile> {
                 child: Text(
                   'เบอร์โทรศัพท์',
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: 18.sp,
                     color: Colors.grey.shade600,
                   ),
                 ),
@@ -170,7 +170,7 @@ class _FormProfileState extends State<FormProfile> {
                 child: Text(
                   'อีเมล',
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: 18.sp,
                     color: Colors.grey.shade600,
                   ),
                 ),
@@ -260,7 +260,7 @@ class _FormProfileState extends State<FormProfile> {
                       child: Text(
                         'ที่อยู่',
                         style: TextStyle(
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           color: Colors.grey.shade600,
                         ),
                       ),

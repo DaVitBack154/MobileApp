@@ -103,6 +103,7 @@ class textField extends StatelessWidget {
           inputFormatters: inputFormatter,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
+          cursorColor: Colors.grey.shade400,
         ),
       ),
     );

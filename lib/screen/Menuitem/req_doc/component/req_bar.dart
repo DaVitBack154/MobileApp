@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class ReqDocBar extends StatefulWidget {
   const ReqDocBar({super.key});
@@ -18,7 +19,9 @@ class _ReqDocBarState extends State<ReqDocBar> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             alignment: Alignment.center,
-            height: 100.h + kToolbarHeight,
+            height: ResponsiveHeightContext.isMobile(context)
+                ? 100.h + kToolbarHeight
+                : 80.h + kToolbarHeight,
             child: Row(
               children: [
                 Container(

@@ -70,8 +70,8 @@ class _SlideAccState extends State<SlideAcc> {
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
-                    viewportFraction: 0.93,
-                    height: 220.h,
+                    viewportFraction: 0.95,
+                    height: 210.h,
                     autoPlay: false,
                     enableInfiniteScroll: false,
                     initialPage: _currentIndex,
@@ -114,8 +114,8 @@ class _SlideAccState extends State<SlideAcc> {
               // card ด้านล่างทั้งหมด
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 5.w,
-                  vertical: 10.h,
+                  horizontal: 10.w,
+                  vertical: 15.h,
                 ),
                 child: Card(
                   clipBehavior: Clip.antiAlias,
@@ -123,7 +123,7 @@ class _SlideAccState extends State<SlideAcc> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 2,
-                  color: const Color(0xFFF4F4F4),
+                  color: Color(0xFFFF4F4F4),
                   child: Column(
                     children: [
                       if ((accController.userAccModel.data ?? [])
@@ -167,7 +167,7 @@ class _SlideAccState extends State<SlideAcc> {
                               Container(
                                 width: double.infinity,
                                 height: 1, // กำหนดความสูงของเส้น
-                                color: Colors.grey.shade300, // กำหนดสีของเส้น
+                                color: Color.fromARGB(255, 207, 204, 204), // กำหนดสีของเส้น
                               ),
                               SizedBox(
                                 height: 15.h,
@@ -250,7 +250,7 @@ class _SlideAccState extends State<SlideAcc> {
                                 ],
                               ),
                               SizedBox(
-                                height: 20.h,
+                                height: 15.h,
                               ),
                             ],
                           ),
@@ -292,6 +292,7 @@ class _SlideAccState extends State<SlideAcc> {
                   style: TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w400,
+                    color: Colors.white,
                   ),
                 ),
               ),

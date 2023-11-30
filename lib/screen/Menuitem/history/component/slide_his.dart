@@ -64,175 +64,6 @@ class _SlideHisState extends State<SlideHis> {
                         SizedBox(
                           width: double.infinity,
                           child: CardUser(data: data),
-                          // child: Card(
-                          //   clipBehavior: Clip.antiAlias,
-                          //   shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(24),
-                          //   ),
-                          //   elevation: 3,
-                          //   child: Container(
-                          //     decoration: const BoxDecoration(
-                          //       image: DecorationImage(
-                          //         image: AssetImage('assets/image/bgcard.png'),
-                          //         fit: BoxFit.cover,
-                          //       ),
-                          //     ),
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.symmetric(
-                          //         horizontal: 18,
-                          //       ),
-                          //       child: Column(
-                          //         mainAxisAlignment: MainAxisAlignment.center,
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           SizedBox(
-                          //             child: Row(
-                          //               mainAxisAlignment:
-                          //                   MainAxisAlignment.spaceBetween,
-                          //               children: [
-                          //                 Column(
-                          //                   crossAxisAlignment:
-                          //                       CrossAxisAlignment.start,
-                          //                   children: [
-                          //                     Text(
-                          //                       data.tCompanyName ==
-                          //                               'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด         '
-                          //                           ? 'CF Asia Assets Management CO.,LTD.'
-                          //                           : 'Resolution Way CO.,LTD.',
-                          //                       style: const TextStyle(
-                          //                         fontSize: 17,
-                          //                         fontWeight: FontWeight.normal,
-                          //                         height: 0.06,
-                          //                         color: Color(0xFF5C5C5C),
-                          //                         //color: Colors.grey.shade600,
-                          //                       ),
-                          //                     ),
-                          //                     const SizedBox(
-                          //                       height: 5,
-                          //                     ),
-                          //                     Text(
-                          //                       data.tCompanyName,
-                          //                       style: const TextStyle(
-                          //                         fontSize: 17,
-                          //                         fontWeight: FontWeight.normal,
-                          //                         color: Color(0xFF5C5C5C),
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //                 Column(
-                          //                   children: [
-                          //                     Image.asset(
-                          //                       'assets/image/${data.companyId == 'CFAA' ? 'cfam.png' : 'rway.png'}',
-                          //                       height: 20,
-                          //                       fit: BoxFit.cover,
-                          //                     ),
-                          //                     const SizedBox(
-                          //                       height: 15,
-                          //                     )
-                          //                   ],
-                          //                 )
-                          //               ],
-                          //             ),
-                          //           ),
-                          //           const SizedBox(
-                          //             height: 5,
-                          //           ),
-                          //           Column(
-                          //             crossAxisAlignment:
-                          //                 CrossAxisAlignment.start,
-                          //             children: [
-                          //               const Text(
-                          //                 'ภาระหนี้คงเหลือ (บาท)',
-                          //                 style: TextStyle(
-                          //                   fontWeight: FontWeight.normal,
-                          //                   fontSize: 18,
-                          //                   height: 1.2,
-                          //                   color: Colors.black,
-                          //                 ),
-                          //               ),
-                          //               Text(
-                          //                 thaiBahtFormat.format(data.osBalance),
-                          //                 style: const TextStyle(
-                          //                   fontSize: 30,
-                          //                   fontWeight: FontWeight.w800,
-                          //                   height: 1.2,
-                          //                   color:
-                          //                       Color.fromARGB(255, 9, 34, 33),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           const SizedBox(
-                          //             height: 15,
-                          //           ),
-                          //           Row(
-                          //             children: [
-                          //               const Text(
-                          //                 'Name : ',
-                          //                 style: TextStyle(
-                          //                   color: Color(0xFF8A8A8A),
-                          //                   fontSize: 18,
-                          //                   height: 1.2,
-                          //                   fontWeight: FontWeight.normal,
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(
-                          //                 width: 20,
-                          //               ),
-                          //               Text(
-                          //                 '${data.tCustomerName}',
-                          //                 style: const TextStyle(
-                          //                   fontWeight: FontWeight.normal,
-                          //                   fontSize: 20,
-                          //                   height: 1.2,
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(
-                          //                 width: 10,
-                          //               ),
-                          //               Text(
-                          //                 '${data.tCustomerSurname}',
-                          //                 style: const TextStyle(
-                          //                   fontWeight: FontWeight.normal,
-                          //                   fontSize: 20,
-                          //                   height: 1.2,
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           const SizedBox(
-                          //             height: 5,
-                          //           ),
-                          //           Row(
-                          //             children: [
-                          //               const Text(
-                          //                 'No Card : ',
-                          //                 style: TextStyle(
-                          //                   color: Color(0xFF8A8A8A),
-                          //                   fontSize: 18,
-                          //                   height: 1.1,
-                          //                   fontWeight: FontWeight.normal,
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(
-                          //                 width: 5,
-                          //               ),
-                          //               Text(
-                          //                 '${data.customerId}',
-                          //                 style: const TextStyle(
-                          //                   fontWeight: FontWeight.normal,
-                          //                   fontSize: 20,
-                          //                   height: 1.1,
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ),
                       );
                     })
@@ -240,8 +71,8 @@ class _SlideHisState extends State<SlideHis> {
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
-                    viewportFraction: 0.93,
-                    height: 220.h,
+                    viewportFraction: 0.95,
+                    height: 210.h,
                     autoPlay: false,
                     enableInfiniteScroll: false,
                     initialPage: _currentIndex,
@@ -301,12 +132,17 @@ class _SlideHisState extends State<SlideHis> {
                               color: Colors.grey,
                             ),
                           ),
-                          SizedBox(height: 10.h,),
-                          Text('หากมีข้อสงสัยกรุณาติดต่อ Call center 02-000-2032',style: TextStyle(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.grey,
-                          ),)
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Text(
+                            'หากมีข้อสงสัยกรุณาติดต่อ Call center 02-000-2032',
+                            style: TextStyle(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.grey,
+                            ),
+                          )
                         ],
                       )
                     : Expanded(

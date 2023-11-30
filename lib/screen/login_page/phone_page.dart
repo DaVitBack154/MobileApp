@@ -296,8 +296,9 @@ class _Phone_pageState extends State<Phone_page> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  PinCode(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+                              builder: (context) => PinCode(
+                                args: PinCodeArgs(isGotoNotif: false),
+                              ),
                             ),
                           );
                         } else {
@@ -305,8 +306,7 @@ class _Phone_pageState extends State<Phone_page> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+                              builder: (context) => Pin_page(onBack: false),
                             ),
                           );
                         }

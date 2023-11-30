@@ -1,5 +1,9 @@
+import 'package:animations/animations.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
+import 'package:mobile_chaseapp/local_notification.dart';
 import 'package:mobile_chaseapp/screen/account/account.dart';
 import 'package:mobile_chaseapp/screen/contract_page/contract.dart';
 import 'package:mobile_chaseapp/screen/homepage/homepage.dart';
@@ -22,9 +26,14 @@ class _BottombarState extends State<Bottombar> {
   List<Widget> pages = [
     const Homepage(),
     const Account(),
-    const Profile(),
     const Contract(),
+    const Profile(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +57,7 @@ class _BottombarState extends State<Bottombar> {
             selectedItemColor: const Color(0xFF103533),
             unselectedItemColor: Colors.grey.shade400,
             onTap: (index) async {
-              if (index == 1 || index == 2) {
+              if (index == 1 || index == 3) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token'); // ดึง Token
 
@@ -90,43 +99,43 @@ class _BottombarState extends State<Bottombar> {
                 icon: pageIndex == 1
                     ? Image.asset(
                         'assets/image/iconacc.png',
-                        width: 28.w,
-                        height: 28.w,
+                        width: 30.w,
+                        height: 30.w,
                       )
                     : Image.asset(
                         'assets/image/iconacc_none.png',
-                        width: 28.w,
-                        height: 28.w,
+                        width: 30.w,
+                        height: 30.w,
                       ),
                 label: 'Account',
               ),
               BottomNavigationBarItem(
                 icon: pageIndex == 2
                     ? Image.asset(
-                        'assets/image/iconprofile.png',
-                        width: 28.w,
-                        height: 28.h,
-                      )
-                    : Image.asset(
-                        'assets/image/iconprofile_none.png',
-                        width: 28.w,
-                        height: 28.h,
-                      ),
-                label: 'Profile',
-              ),
-              BottomNavigationBarItem(
-                icon: pageIndex == 3
-                    ? Image.asset(
+                        // 'assets/image/iconprofile.png',
                         'assets/image/iconaddress.png',
                         width: 28.w,
                         height: 28.h,
                       )
                     : Image.asset(
                         'assets/image/iconaddress_none.png',
+                        // 'assets/image/iconprofile_none.png',
                         width: 28.w,
                         height: 28.h,
                       ),
                 label: 'Contract',
+              ),
+              BottomNavigationBarItem(
+                icon: pageIndex == 3
+                    ? const Icon(
+                        Icons.menu,
+                        color: Color(0xFFF103533),
+                      )
+                    : const Icon(
+                        Icons.menu,
+                        color: Color(0xFFF9badad),
+                      ),
+                label: 'Profile',
               ),
             ],
           ),

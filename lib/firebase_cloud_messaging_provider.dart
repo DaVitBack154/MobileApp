@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:animations/animations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/local_notification.dart';
 import 'package:mobile_chaseapp/received_notification.dart';
@@ -17,7 +20,7 @@ class FirebaseCloudMessagingProvider {
 
   static FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
 
-  static Future<void> init() async {
+  static Future init() async {
     await firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,

@@ -4,7 +4,6 @@ import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/screen/homepage/notify.dart';
 import 'package:mobile_chaseapp/utils/app_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../component/numpad.dart';
 import '../../../utils/key_storage.dart';
 
@@ -150,7 +149,7 @@ class _PinCodeState extends State<PinCode> {
                     child: Image.asset(
                       'assets/image/g_logo.png',
                       fit: BoxFit.cover,
-                      height: 120.h,
+                      height: 110.h,
                     ),
                   ),
                 ),
@@ -158,7 +157,7 @@ class _PinCodeState extends State<PinCode> {
             ),
             Container(
               width: width,
-              margin: const EdgeInsets.only(top: kToolbarHeight + 140).h,
+              margin: const EdgeInsets.only(top: kToolbarHeight + 130).h,
               decoration: const BoxDecoration(
                 color: Color(0xFFF395d5d),
                 borderRadius: BorderRadius.only(
@@ -169,7 +168,7 @@ class _PinCodeState extends State<PinCode> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 30.h,
+                    height: 20.h,
                   ),
                   Text(
                     'กรุณากรอก PIN เพื่อใช้งาน',
@@ -180,7 +179,7 @@ class _PinCodeState extends State<PinCode> {
                     ),
                   ),
                   SizedBox(
-                    height: 15.h,
+                    height: 5.h,
                   ),
                   Numpad(
                     length: 6,

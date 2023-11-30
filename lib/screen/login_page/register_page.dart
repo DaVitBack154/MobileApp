@@ -464,7 +464,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   fontWeight: FontWeight.w500,
                   color: Colors.grey.shade600,
                 ),
-
                 isExpanded: true,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.w,
@@ -499,6 +498,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text('นางสาว'),
                   ),
                 ],
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey), // สีเมื่อไม่ Focus
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                    ), // สีเมื่อ Focus
+                  ),
+                ),
               ),
             ),
           ),
@@ -531,7 +541,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'ชื่อ',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 20.sp,
+                  fontSize: 19.sp,
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -556,7 +566,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'นามสกุล',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 20.sp,
+                  fontSize: 19.sp,
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -581,7 +591,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'หมายเลขบัตรประชาชน',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 20.sp,
+                  fontSize: 19.sp,
                   fontWeight: FontWeight.w400),
             ),
           ),

@@ -22,18 +22,6 @@ class Numpad extends StatefulWidget {
 
 class _NumpadState extends State<Numpad> {
   String number = '';
-  // String? pinold;
-
-  // Future<void> getPinold() async {
-  //   try {
-  //     final prefs = await SharedPreferences.getInstance();
-  //     pinold = prefs.getString(KeyStorage.pin);
-  //     setState(() {});
-  //   } catch (error) {
-  //     // Handle error if fetching profile data fails
-  //   }
-  //   return;
-  // }
 
   setValue(String val) {
     if (number.length < widget.length) {
@@ -64,7 +52,7 @@ class _NumpadState extends State<Numpad> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 50.h),
+      padding: EdgeInsets.symmetric(horizontal: 45.h),
       child: Column(
         children: <Widget>[
           Preview(text: number, length: widget.length),
@@ -91,7 +79,6 @@ class _NumpadState extends State<Numpad> {
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
-                      decoration: TextDecoration.underline,
                     ),
                   ),
                 )
@@ -182,7 +169,7 @@ class Preview extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Wrap(children: previewLength),
     );
   }
@@ -198,10 +185,10 @@ class Dot extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: 15.w,
+        width: 14.w,
         height: 13.h,
         decoration: BoxDecoration(
-          color: isActive ? Theme.of(context).primaryColor : Colors.white,
+          color: isActive ? Colors.teal.shade700 : Colors.white,
           border: Border.all(
             width: 1.0,
             color: Colors.transparent,
@@ -242,11 +229,11 @@ class NumpadButton extends StatelessWidget {
         : Text(text ?? '', style: buttonStyle);
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.h),
+      padding: EdgeInsets.symmetric(vertical: 5.h),
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           side: BorderSide.none,
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(8.0),
         ),
         onPressed: onPressed,
         child: label,

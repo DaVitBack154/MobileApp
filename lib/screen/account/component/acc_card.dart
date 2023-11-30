@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../../controller/getacc_controller.dart';
 import '../../../model/respon_accuser.dart';
 import '../../Menuitem/qrpay/pay.dart';
@@ -66,9 +67,10 @@ class _AccCardState extends State<AccCard> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: 20.h,
-                        horizontal: 15.w,
+                        horizontal: 10.w,
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
@@ -109,7 +111,10 @@ class _AccCardState extends State<AccCard> {
                                   children: [
                                     Image.asset(
                                       'assets/image/${data.companyId == 'CFAA' ? 'cfam.png' : 'rway.png'}',
-                                      height: 18,
+                                      height: ResponsiveHeightContext.isMobile(
+                                              context)
+                                          ? 15.h
+                                          : 17.h,
                                       fit: BoxFit.cover,
                                     ),
                                     SizedBox(

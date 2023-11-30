@@ -31,7 +31,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -51,19 +54,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCFAFlNzjU5pve9wSbaojBjouI_YXOErg0',
-    appId: '1:592540550164:ios:905753ebaef2c657cc9301',
+    appId: '1:592540550164:ios:e9910b7167e8699fcc9301',
     messagingSenderId: '592540550164',
     projectId: 'notimessage-9bfc3',
     storageBucket: 'notimessage-9bfc3.appspot.com',
-    iosBundleId: 'com.example.mobileChaseapp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCFAFlNzjU5pve9wSbaojBjouI_YXOErg0',
-    appId: '1:592540550164:ios:fb214f7dc6e9865dcc9301',
-    messagingSenderId: '592540550164',
-    projectId: 'notimessage-9bfc3',
-    storageBucket: 'notimessage-9bfc3.appspot.com',
-    iosBundleId: 'com.example.mobileChaseapp.RunnerTests',
+    iosBundleId: 'com.chase.arma',
   );
 }

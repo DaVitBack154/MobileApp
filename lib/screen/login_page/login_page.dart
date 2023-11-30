@@ -19,7 +19,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   LoginController authController = LoginController();
   final _formKey = GlobalKey<FormState>();
-  //Future<String?> firebaseToken = FirebaseCloudMessagingProvider.getToken;
 
   String? errorTextIdCard;
 
@@ -30,7 +29,6 @@ class _LoginState extends State<Login> {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
-        // FocusManager.instance.primaryFocus?.unfocus();
       },
       child: WillPopScope(
         child: Scaffold(
@@ -41,7 +39,7 @@ class _LoginState extends State<Login> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 150.h + kToolbarHeight,
+                      height: 140.h + kToolbarHeight,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('assets/image/bglogin.png'),
@@ -103,7 +101,7 @@ class _LoginState extends State<Login> {
                           const Text(
                             'ลงชื่อเข้าใช้บัญชีของคุณ',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 25,
                               fontWeight: FontWeight.w400,
                               color: Colors.white,
                             ),
@@ -145,7 +143,7 @@ class _LoginState extends State<Login> {
                                   color: Color(0xFF395D5D),
                                 ),
                               ),
-                              contentPadding: const EdgeInsets.all(20),
+                              contentPadding: const EdgeInsets.all(10).h,
                               errorText: errorTextIdCard,
                               onChanged: (value) {
                                 setState(() {
@@ -281,12 +279,13 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(5).h,
                                 child: Text(
                                   'เข้าสู่ระบบ',
                                   style: TextStyle(
                                     fontSize: 23.sp,
                                     fontWeight: FontWeight.w500,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -351,7 +350,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(5).h,
                                 child: Text(
                                   'ลงทะเบียน',
                                   style: TextStyle(

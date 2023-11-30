@@ -69,8 +69,8 @@ class _SlideFromState extends State<SlideFrom> {
                       .toList(),
                   carouselController: carouselController,
                   options: CarouselOptions(
-                      viewportFraction: 0.93,
-                      height: 190.h,
+                      viewportFraction: 0.95,
+                      height: 200.h,
                       autoPlay: false,
                       enableInfiniteScroll: false,
                       initialPage: _currentIndex,
@@ -112,173 +112,178 @@ class _SlideFromState extends State<SlideFrom> {
                 // ปุ่มที่ติดกับภาพเลื่อน
 
                 SizedBox(
-                  height: 30.h,
+                  height: 20.h,
                 ),
                 //ในส่วน กรอก จำนวนเงิน ด้านล่าง
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 15.w,
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'รูปแบบการจ่าย',
-                            style: TextStyle(
-                              fontSize: 21.sp,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          InkWell(
-                            child: Container(
-                              width: 150.w,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey.shade300,
-                                ),
-                                borderRadius: BorderRadius.circular(29),
-                                color: Colors.grey.shade100,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'รูปแบบการจ่าย',
+                              style: TextStyle(
+                                fontSize: 21.sp,
+                                fontWeight: FontWeight.normal,
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'ประวัติการชำระเงิน',
-                                      style: TextStyle(
-                                        color: Colors.grey.shade500,
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.w400,
+                            ),
+                            InkWell(
+                              child: Container(
+                                width: 150.w,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  borderRadius: BorderRadius.circular(29),
+                                  color: Colors.grey.shade100,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        'ประวัติการชำระเงิน',
+                                        style: TextStyle(
+                                          color: Colors.grey.shade500,
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                    ),
-                                    Image.asset(
-                                      'assets/image/icon3.png',
-                                      height: 30,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const History(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      // SizedBox(
-                      //   height: 5.h,
-                      // ),
-                      Column(
-                        children: [
-                          // Row(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Text(
-                          //       'จำนวน:',
-                          //       style: TextStyle(
-                          //         fontSize: 18.sp,
-                          //         fontWeight: FontWeight.w400,
-                          //         color: Colors.grey.shade500,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          GestureDetector(
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Form(
-                              key: _formKey,
-                              child: TextFormField(
-                                controller: amountController,
-                                decoration: InputDecoration(
-                                  border: const UnderlineInputBorder(),
-                                  labelText: "ชำระเงิน",
-                                  suffixText: 'บาท',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  hintText: 'ยอดชำระ',
-                                  hintStyle: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w500,
+                                      Image.asset(
+                                        'assets/image/icon3.png',
+                                        height: 30,
+                                      )
+                                    ],
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'กรุณากรอกจำนวนเงิน';
-                                  } else if (value.length < 2) {
-                                    return 'กรุณากรอกจำนวนเงิน';
-                                  }
-                                  setState(() {});
-                                  return null;
-                                },
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                        signed: true, decimal: true),
-                                style: TextStyle(fontSize: 20.sp),
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => QRPayment(
-                                      amount: amountController.text,
-                                      customerId: accController.userAccModel
-                                          .data![_currentIndex].customerId,
-                                      psersonalId: accController.userAccModel
-                                          .data![_currentIndex].personalId,
-                                      taxId: accController.userAccModel
-                                          .data![_currentIndex].companyTaxId,
-                                    ),
+                                    builder: (context) => const History(),
                                   ),
                                 );
-                              }
-                              setState(() {});
-                            },
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                Size(250, 40),
-                              ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
-                              ),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10), // กำหนดรัศมีของเส้นขอบปุ่ม
+                              },
+                            ),
+                          ],
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: Form(
+                                  key: _formKey,
+                                  child: TextFormField(
+                                    controller: amountController,
+                                    decoration: InputDecoration(
+                                      border: const UnderlineInputBorder(),
+                                      labelText: "ชำระเงิน",
+                                      suffixText: 'บาท',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      hintText: 'ยอดชำระ',
+                                      hintStyle: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors
+                                                .grey), // สีเมื่อไม่ Focus
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF103533),
+                                        ), // สีเมื่อ Focus
+                                      ),
+                                    ),
+                                    cursorColor: Colors.grey.shade400,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'กรุณากรอกจำนวนเงิน';
+                                      } else if (value.length < 2) {
+                                        return 'กรุณากรอกจำนวนเงิน';
+                                      }
+                                      setState(() {});
+                                      return null;
+                                    },
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            signed: true, decimal: true),
+                                    style: TextStyle(fontSize: 20.sp),
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: Text(
-                              'ชำระเงิน',
-                              style: TextStyle(
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.w400,
+                              SizedBox(
+                                height: 15.h,
                               ),
-                            ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => QRPayment(
+                                          amount: amountController.text,
+                                          customerId: accController.userAccModel
+                                              .data![_currentIndex].customerId,
+                                          psersonalId: accController
+                                              .userAccModel
+                                              .data![_currentIndex]
+                                              .personalId,
+                                          taxId: accController
+                                              .userAccModel
+                                              .data![_currentIndex]
+                                              .companyTaxId,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  setState(() {});
+                                },
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStateProperty.all<Size>(
+                                    Size(250, 40),
+                                  ),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // กำหนดรัศมีของเส้นขอบปุ่ม
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  'ชำระเงิน',
+                                  style: TextStyle(
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              // SizedBox(height: 200,),
+                            ],
                           ),
-                          // SizedBox(height: 200,),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

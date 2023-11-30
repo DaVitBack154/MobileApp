@@ -1,4 +1,4 @@
-package com.example.mobile_chaseapp
+package com.chase.arma
 
 import io.flutter.embedding.android.FlutterActivity
 

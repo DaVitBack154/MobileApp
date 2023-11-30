@@ -10,14 +10,11 @@ import 'package:mobile_chaseapp/utils/app_navigator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   await FirebaseCloudMessagingProvider.init();
   LocalNotification.init();
   FirebaseCloudMessagingProvider.onFirebaseMessageReceived();
   FirebaseCloudMessagingProvider.setupInteractedMessage();
-  // final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
-  // print('fdfd,${firebaseToken}');
-
   runApp(const MyApp());
 }
 
@@ -47,12 +44,6 @@ class MyApp extends StatelessWidget {
               child: child ?? const SizedBox.shrink(),
             );
           },
-          // home: const AnnotatedRegion<SystemUiOverlayStyle>(
-          //   value: SystemUiOverlayStyle(
-          //     statusBarColor: Colors.transparent,
-          //   ),
-          //   child: Loadding(),
-          // ),
         );
       },
     );

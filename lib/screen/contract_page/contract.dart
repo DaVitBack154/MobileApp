@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Contract extends StatefulWidget {
   const Contract({Key? key}) : super(key: key);
@@ -18,6 +20,53 @@ class _ContractState extends State<Contract> {
   double lat2 = 13.8889879;
   double lng2 = 100.5831677;
   CameraPosition? position;
+
+
+  Future<void> openlaunchUrlAppOther(String url) async {
+    if (mounted) {
+      if (await canLaunch(url)
+          .timeout(
+        const Duration(seconds: 20),
+      )
+          .catchError(
+        (error) {
+          if (kDebugMode) {
+            print(
+              'error ===>> $error',
+            );
+          }
+          return false;
+        },
+      )) {
+        if (!await launch(url)
+            .timeout(
+          const Duration(seconds: 20),
+        )
+            .catchError(
+          (error) {
+            if (kDebugMode) {
+              print(
+                'error ===>> $error',
+              );
+            }
+            return false;
+          },
+        )) {
+          if (kDebugMode) {
+            print(
+              'Could not launch $url',
+            );
+          }
+        }
+      } else {
+        if (kDebugMode) {
+          print(
+            'Could not launch $url',
+          );
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -377,6 +426,9 @@ class _ContractState extends State<Contract> {
         position: LatLng(latc1, lngc2),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         infoWindow: const InfoWindow(title: 'บริษัทตั้งอยู่ที่นี้'),
+        onTap: () {
+          openlaunchUrlAppOther('https://www.google.com/maps/dir/Current+Location/$latc1,$lngc2');
+        }
       );
     }
 
@@ -407,6 +459,9 @@ class _ContractState extends State<Contract> {
         position: LatLng(lat2, lng2),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         infoWindow: const InfoWindow(title: 'ที่ตั้งบริษัท'),
+         onTap: () {
+          openlaunchUrlAppOther('https://www.google.com/maps/dir/Current+Location/$lat2,$lng2');
+        }
       );
     }
 

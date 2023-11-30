@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
+import 'package:mobile_chaseapp/screen/login_page/component/format_phone.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
 
@@ -24,7 +25,6 @@ class _Forget_phoneState extends State<Forget_phone> {
   );
 
   String? validator;
-  String? validator1;
 
   @override
   Widget build(BuildContext context) {
@@ -56,45 +56,13 @@ class _Forget_phoneState extends State<Forget_phone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back,
-                                size: 25,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Login(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 25.w,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'เปลี่ยนหมายเลขโทรศัพท์',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    Text(
+                      'เปลี่ยนหมายเลขโทรศัพท์',
+                      style: TextStyle(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                     SizedBox(
                       height: 15.h,
@@ -130,6 +98,9 @@ class _Forget_phoneState extends State<Forget_phone> {
                             color: Color.fromARGB(255, 20, 99, 95),
                           ),
                           labelText: 'กรุณากรอกเบอร์โทรศัพท์เดิม',
+                          labelStyle: TextStyle(
+                            color: Colors.grey.shade700,
+                          ),
                           hintText: 'กรุณากรอกเบอร์โทรศัพท์เดิม',
                           hintStyle: const TextStyle(
                             color: Colors.grey,
@@ -156,33 +127,18 @@ class _Forget_phoneState extends State<Forget_phone> {
                             color: Colors.red,
                           ),
                         ),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
+                        cursorColor: Colors.grey.shade400,
+                        // inputFormatters: [PhoneFormatter()],
                         keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        onChanged: (value) {
-                          validator = null;
-                          setState(() {});
-
-                          _debouncer.call(() async {
-                            if (value.length < 10) {
-                              validator = 'ใส่หมายเลขให้ครบ 10 หลัก';
-                              setState(() {});
-                            } else {
-                              await authController
-                                  .fetchGetPhone(
-                                      authController.phoneController.text)
-                                  .then((value) {
-                                validator =
-                                    value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
-                                setState(() {});
-                              });
-                            }
-                          });
-                        },
+                        onChanged: (value) {},
                         validator: (value) {
-                          return validator;
+                          print(value);
+                          if (value == null || value.isEmpty) {
+                            return 'กรุณาใส่เบอร์โทรศัพท์เดิม';
+                          } else if (value.length < 10) {
+                            return 'กรุณาใส่เบอร์โทรศัพท์เดิมให้ครบ';
+                          }
+                          return null;
                         },
                       ),
                       SizedBox(height: 20.h),
@@ -196,6 +152,9 @@ class _Forget_phoneState extends State<Forget_phone> {
                             color: Color.fromARGB(255, 20, 99, 95),
                           ),
                           labelText: 'กรุณากรอกเบอร์โทรศัพท์ใหม่',
+                          labelStyle: TextStyle(
+                            color: Colors.grey.shade700,
+                          ),
                           hintText: 'กรุณากรอกเบอร์โทรศัพท์ใหม่',
                           hintStyle: const TextStyle(
                             color: Colors.grey,
@@ -216,14 +175,14 @@ class _Forget_phoneState extends State<Forget_phone> {
                                   1.0, // เปลี่ยนความหนาของเส้นขอบตามที่คุณต้องการ
                             ),
                           ),
-                          errorText: validator1,
                           errorStyle: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.red,
                           ),
                         ),
+                        cursorColor: Colors.grey.shade400,
                         keyboardType: TextInputType.number,
-                        maxLength: 10,
+                        // inputFormatters: [PhoneFormatter()],
                         validator: (value) {
                           print(value);
                           if (value == null || value.isEmpty) {
@@ -238,32 +197,47 @@ class _Forget_phoneState extends State<Forget_phone> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            bool isphone = await authController.fetchGetPhone(
-                                authController.phoneController.text);
-                            if (isphone) {
-                              await authController.fetchUpdateProfile(
-                                phone: authController.phoneNewController.text,
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Phone_page(),
-                                ),
-                              );
-                              print('ถูกต้อง ทำการอัพเดทข้อมูล');
-                              // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
-                              // ...
+                            validator = null;
+
+                            if (authController.phoneController.text.length <
+                                10) {
+                              validator = 'ใส่หมายเลขให้ครบ 10 หลัก';
                             } else {
-                              print(
-                                  'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
-                              // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
-                              // ...
+                              await authController
+                                  .fetchGetPhone(
+                                      authController.phoneController.text)
+                                  .then((value) async {
+                                validator =
+                                    value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
+                                if (value == true) {
+                                  await authController.fetchUpdateProfile(
+                                    phone:
+                                        authController.phoneNewController.text,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Phone_page(),
+                                    ),
+                                  );
+                                  print('ถูกต้อง ทำการอัพเดทข้อมูล');
+                                  // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
+                                  // ...
+                                } else {
+                                  print(
+                                      'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
+                                  // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
+                                  // ...
+                                }
+                                setState(() {});
+                              });
                             }
+                            setState(() {});
                           }
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
-                            Size(width, 50),
+                            Size(width, 45),
                           ),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -279,8 +253,9 @@ class _Forget_phoneState extends State<Forget_phone> {
                         child: Text(
                           'บันทึกข้อมูล',
                           style: TextStyle(
-                            fontSize: 24.sp,
+                            fontSize: 22.sp,
                             fontWeight: FontWeight.w400,
+                            color: Colors.white,
                           ),
                         ),
                       ),

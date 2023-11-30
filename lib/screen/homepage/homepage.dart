@@ -1,13 +1,11 @@
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:mobile_chaseapp/screen/homepage/component/ads_salehome.dart';
-// import 'package:mobile_chaseapp/screen/homepage/component/knowledge.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/menu.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/navbar.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/slide.dart';
 import 'package:mobile_chaseapp/screen/homepage/salehome/salehome.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,43 +17,48 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: width,
-            height: (height * 0.5).h,
-            padding: const EdgeInsets.only(bottom: 8).h,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/image/bg.png'),
-                fit: BoxFit.cover,
+    final query = MediaQuery.of(context);
+    return MediaQuery(
+      data: query.copyWith(
+        // ignore: deprecated_member_use
+        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
+      ),
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              width: MyConstant.setMediaQueryWidthFull(context),
+              height: ResponsiveHeightContext.isMobile(context) ? 430.h : 445.h,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                image: DecorationImage(
+                  image: AssetImage('assets/image/bg.png'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: const Column(
-              children: [
-                Navbar(),
-                Slide(),
-                Menu(),
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
+              child: const Column(
                 children: [
-                  btnSaleHome(),
+                  Navbar(),
+                  Slide(),
+                  Menu(),
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    btnSaleHome(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +67,7 @@ class _HomepageState extends State<Homepage> {
     return Column(
       children: [
         SizedBox(
-          height: 10.h,
+          height: ResponsiveHeightContext.isMobile(context) ? 10.h : 5.h,
         ),
         Row(
           children: [
@@ -73,9 +76,10 @@ class _HomepageState extends State<Homepage> {
                 horizontal: 15.w,
               ),
               child: Text(
-                'ซื้อ-ขายบ้าน',
+                'ที่ดินและบ้าน',
                 style: TextStyle(
-                  fontSize: 18.sp,
+                  fontSize: 19.sp,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -83,61 +87,63 @@ class _HomepageState extends State<Homepage> {
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-            vertical: 5.h,
-            horizontal: 7.w,
+            horizontal: 5.w,
           ),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 5,
-            child: Row(
-              children: [
-                Image.asset(
-                  'assets/image/salehome.jpeg',
-                  width: 170,
-                  fit: BoxFit.cover,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
+          child: InkWell(
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: Colors.white,
+              elevation: 3,
+              child: Container(
+                color: Colors.grey.shade100,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/salehome.jpeg',
+                      width: 170.w,
+                      fit: BoxFit.contain,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'ซื้อ-บ้านกับ เรามีบ้านให้เลือกมากมาย',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                          ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
                         ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SaleHome(),
-                                  ),
-                                );
-                              },
-                              child: Text('สนใจดูรายละเอียด-คลิก'),
+                            Text(
+                              'ประกาศขาย',
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFF395D5D)),
+                            ),
+                            Text(
+                              'ที่ดิน ทาวเฮาส์ บ้านมือสอง กรุงเทพและทั่วประเทศ',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SaleHome(),
+                ),
+              );
+            },
           ),
         ),
       ],

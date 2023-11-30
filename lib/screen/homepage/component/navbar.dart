@@ -44,16 +44,6 @@ class _NavbarState extends State<Navbar> {
     return;
   }
 
-  // void handleMessage(RemoteMessage? message) {
-  //   if (message == null) return;
-  // }
-
-  // Future initPushNotification() async {
-  //   FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
-
-  //   FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -67,16 +57,16 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    // if (readed != null && !readed!) {
-    //   showNotify();
-    // }
     return Column(
       children: [
         SizedBox(
-          height: height * 0.07.h,
+          height: height * 0.06.h,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
           alignment: Alignment.bottomCenter,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,16 +75,16 @@ class _NavbarState extends State<Navbar> {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: 27.h,
+                    radius: 25.h,
                     child: Image.asset(
                       'assets/image/icon_a.png',
                       fit: BoxFit.cover,
-                      height: 30.h,
+                      height: 25.h,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                      left: 20,
+                      left: 15,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -122,56 +112,62 @@ class _NavbarState extends State<Navbar> {
               ),
               Stack(
                 children: [
-                  Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.black.withOpacity(.1),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.notifications,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        String? token = prefs.getString('token'); // ดึง Token
-
-                        if (token == null) {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Login(),
-                            ),
-                          );
-                          return;
-                        }
-
-                        // อัปเดตค่า statusread เป็น "Y" ในฐานข้อมูล
-                        UpdateNotiPromotion updateNotiPromotion =
-                            UpdateNotiPromotion();
-                        await updateNotiPromotion.fetchUpdateNotiPromotion(
-                          token: token,
-                          statusRead: "Y",
-                        );
-
-                        final result = await Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Notify(),
+                  Row(
+                    children: [
+                      Container(
+                        width: 50.w,
+                        height: 45.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.black.withOpacity(.1),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.notifications,
+                            size: 30,
+                            color: Colors.white,
                           ),
-                        );
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            String? token =
+                                prefs.getString('token'); // ดึง Token
 
-                        if (result!) {
-                          fetchProfileName();
-                        }
-                      },
-                    ),
+                            if (token == null) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Login(),
+                                ),
+                              );
+                              return;
+                            }
+
+                            // อัปเดตค่า statusread เป็น "Y" ในฐานข้อมูล
+                            UpdateNotiPromotion updateNotiPromotion =
+                                UpdateNotiPromotion();
+                            await updateNotiPromotion.fetchUpdateNotiPromotion(
+                              token: token,
+                              statusRead: "Y",
+                            );
+
+                            final result = await Navigator.push<bool>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Notify(),
+                              ),
+                            );
+
+                            if (result!) {
+                              fetchProfileName();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
+
                   // != NULL AND equal to false
                   if (readed != null && !readed!)
                     Container(

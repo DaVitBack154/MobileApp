@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:592540550164:android:2c7f818ffe4fe919cc9301",
+        "android_client_info": {
+          "package_name": "com.chase.arma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2KmBxbA3WRgd9z8tWPMJ3b6G8Ke1Bak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:592540550164:android:65ace2ec60c878a0cc9301",
         "android_client_info": {
           "package_name": "com.example.firebase1"

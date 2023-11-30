@@ -214,7 +214,7 @@ class _QRPaymentState extends State<QRPayment> {
                     'ยอดชำระจะมีผลภายใน 2 วันทำการ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16.sp,
+                      fontSize: 17.sp,
                     ),
                   ),
                 ],
@@ -224,12 +224,9 @@ class _QRPaymentState extends State<QRPayment> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 5.h,
+                    height: 10.h,
                   ),
                   SizedBox(
-                    width: 210.w,
-                    height: 70,
-                    // decoration: BoxDecoration(color: Colors.red),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -237,7 +234,7 @@ class _QRPaymentState extends State<QRPayment> {
                         Text(
                           'ขั้นตอนการชำระเงิน',
                           style: TextStyle(
-                            fontSize: 17.sp,
+                            fontSize: 18.sp,
                           ),
                         ),
                         Text(

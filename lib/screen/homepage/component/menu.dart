@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/pay.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/req_doc.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import '../../../controller/getprofile_controller.dart';
 //import '../../../utils/key_storage.dart';
@@ -18,6 +21,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -28,7 +32,6 @@ class _MenuState extends State<Menu> {
                 width: 60.w,
                 height: 55.h,
                 decoration: BoxDecoration(
-                  // shape: BoxShape.rectangle,
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -37,7 +40,7 @@ class _MenuState extends State<Menu> {
                 ),
               ),
               SizedBox(
-                height: 10.h,
+                height: 5.h,
               ),
               Text(
                 'ชำระเงิน',
@@ -91,7 +94,7 @@ class _MenuState extends State<Menu> {
                 ),
               ),
               SizedBox(
-                height: 10.h,
+                height: 5.h,
               ),
               Text(
                 'ขอเอกสาร',
@@ -142,7 +145,7 @@ class _MenuState extends State<Menu> {
                 ),
               ),
               SizedBox(
-                height: 10.h,
+                height: 5.h,
               ),
               Text(
                 'ประวัติชำระ',

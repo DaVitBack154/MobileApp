@@ -95,6 +95,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 78, 74),
+          foregroundColor: Colors.white,
           title: () {
             if (widget.phone.isNotEmpty) {
               return Text(
@@ -102,6 +103,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 style: TextStyle(
                   fontSize: 23.sp,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               );
             } else if (widget.email.isNotEmpty) {
@@ -155,8 +157,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         labelStyle: TextStyle(
                           fontSize: 30.sp,
                         ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.grey), // สีเมื่อไม่ Focus
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF103533),
+                          ), // สีเมื่อ Focus
+                        ),
                         errorText: errorTextPhone,
                       ),
+                      cursorColor: Colors.grey.shade400,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.phone,
                       onChanged: (value) {
@@ -196,8 +208,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         labelStyle: TextStyle(
                           fontSize: 30.sp,
                         ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.grey), // สีเมื่อไม่ Focus
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF103533),
+                          ), // สีเมื่อ Focus
+                        ),
                         errorText: errorTextEmail,
                       ),
+                      cursorColor: Colors.grey.shade400,
                       onChanged: (value) {
                         value.isEmpty || value.length < 5
                             ? errorTextEmail = 'กรุณากรอกอีเมลให้ครบถ้วน'
@@ -236,8 +258,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             labelStyle: TextStyle(
                               fontSize: 30.sp,
                             ),
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.grey), // สีเมื่อไม่ Focus
+                            ),
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0xFF103533),
+                              ), // สีเมื่อ Focus
+                            ),
                             errorText: errorsentAddressuser,
                           ),
+                          cursorColor: Colors.grey.shade400,
                           onChanged: (value) {
                             value.isEmpty || value.length < 5
                                 ? errorsentAddressuser =
@@ -329,6 +361,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     style: TextStyle(
                       fontSize: 22.sp,
                       fontWeight: FontWeight.w400,
+                      color: Colors.white,
                     ),
                   ),
                 ),

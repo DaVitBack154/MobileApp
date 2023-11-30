@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/controller/getpromotion.dart';
 import 'package:mobile_chaseapp/model/respon_promotion.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/promotion/knowledge_content_bon.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class Slide extends StatefulWidget {
   const Slide({super.key});
@@ -68,12 +72,34 @@ class _SlideState extends State<Slide> {
                               );
                             },
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                '$imageUrl/public/image/${item.image ?? ''}',
-                                width: double.infinity,
+                              borderRadius: BorderRadius.circular(15),
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) =>
+                                    LoadingAnimationWidget.threeArchedCircle(
+                                  color: Colors.teal.shade700,
+                                  size: 35.w,
+                                ),
                                 fit: BoxFit.cover,
-                                height: 160.h,
+                                imageUrl:
+                                    '$imageUrl/public/image/${item.image ?? ''}',
+                                // errorWidget: (context, url, error) => Padding(
+                                //   padding: const EdgeInsets.all(25.0),
+                                //   child: Image.asset(
+                                //     MyConstant.error1,
+                                //     fit: BoxFit.cover,
+                                //   ),
+                                // ),
+                                imageBuilder: (context, imageProvider) {
+                                  return Image(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: ResponsiveHeightContext.isMobile(
+                                            context)
+                                        ? 155.h
+                                        : 170.h,
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -118,7 +144,7 @@ class _SlideState extends State<Slide> {
                 ).toList(),
               ),
               SizedBox(
-                height: 15.h,
+                height: ResponsiveHeightContext.isMobile(context) ? 20.h : 10.h,
               ),
             ],
           );
