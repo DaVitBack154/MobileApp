@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/controller/register_controller.dart';
+import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/screen/login_page/pin_page.dart';
 import 'package:pinput/pinput.dart';
@@ -10,10 +12,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../component/debouncer.dart';
 import '../../component/textfield.dart';
 import '../../utils/key_storage.dart';
-import 'component/format_phone.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({
+    Key? key,
+    this.yomrub1,
+    this.yomrub2,
+    this.yomrub3,
+    this.yomrub4,
+    this.yomrub5,
+  }) : super(key: key);
+
+  final String? yomrub1;
+  final String? yomrub2;
+  final String? yomrub3;
+  final String? yomrub4;
+  final String? yomrub5;
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -21,6 +35,8 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final RegisterController _registerController = RegisterController();
+  final CreateOTPController createotpController = CreateOTPController();
+  final UpdateController authController = UpdateController();
 
   Timer? _timer;
 
@@ -28,12 +44,14 @@ class _RegisterPageState extends State<RegisterPage> {
   int countdown = 30; // เวลานับถอยหลังเริ่มต้นที่ 30 วินาที
 
   bool idNotExists = false;
+  bool isPhone = true;
   String? errorTextGentName;
   String? errorTextName;
   String? errorTextSurName;
   String? errorTextIdCard;
   String? errorTextEmail;
   String? errorTextPhone;
+  String? getotpstatus;
 
   String profileImg = 'assets/image/user.png';
   String contractImg = 'assets/image/unread.png';
@@ -61,10 +79,19 @@ class _RegisterPageState extends State<RegisterPage> {
     _registerController.pinController.addListener(_listener);
   }
 
+  // รอแก้ไขตรงนี้
   _listener() async {
     final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
+    // print(firebaseToken.toString() + 'lololo');
+
     if (_registerController.pinController.text.length == 6) {
-      if (_registerController.pinController.text == '111111') {
+      String sub = _registerController.phoneController.text;
+      sub = '66' + sub.substring(1);
+      print(_registerController.pinController.text + 'sdssddsdsd');
+      getotpstatus = await createotpController.getOTP(
+          phone: sub, otp: _registerController.pinController.text);
+      print(getotpstatus);
+      if (getotpstatus == 'true') {
         String result = await _registerController.fetchRegisterUser(
           gentname: _registerController.gentnameController.text,
           name: _registerController.nameController.text,
@@ -72,7 +99,12 @@ class _RegisterPageState extends State<RegisterPage> {
           idCard: _registerController.idCardController.text,
           email: _registerController.emailController.text,
           phone: _registerController.phoneController.text,
-          device: firebaseToken ?? '',
+          device: firebaseToken,
+          yomrub1: widget.yomrub1.toString(),
+          yomrub2: widget.yomrub2.toString(),
+          yomrub3: widget.yomrub3.toString(),
+          yomrub4: widget.yomrub4.toString(),
+          yomrub5: widget.yomrub5.toString(),
         );
         if (result.isNotEmpty) {
           // ignore: use_build_context_synchronously
@@ -83,50 +115,59 @@ class _RegisterPageState extends State<RegisterPage> {
           );
           return;
         }
-
-        if (_registerController.userModel.user != null &&
-            _registerController.userModel.user?.id != null) {
-          final prefs = await SharedPreferences.getInstance();
-
-          await prefs.setString(
-              KeyStorage.uid, _registerController.userModel.user!.id!);
-
-          // ignore: use_build_context_synchronously
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
-            ),
-          );
-        } else {
-          // ignore: use_build_context_synchronously
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("แจ้งเตือน"),
-                content: Text("ขออภัยระบบขัดข้อง"),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("ปิด"),
-                  ),
-                ],
-              );
-            },
-          );
-        }
+        // print('object ------');
+        // print(_registerController.userModel.user.toString());
+        // if (_registerController.userModel.user != null &&
+        //     _registerController.userModel.user?.id != null) {
+        // final prefs = await SharedPreferences.getInstance();
+        // await prefs.setString(
+        //     KeyStorage.uid, _registerController.userModel.user!.id!);
+        // await prefs.setString(
+        //     KeyStorage.token, _registerController.userModel.token!);
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+          ),
+        );
+        // } else {
+        //   // ignore: use_build_context_synchronously
+        //   showDialog(
+        //     context: context,
+        //     builder: (context) {
+        //       return AlertDialog(
+        //         title: Text("แจ้งเตือน"),
+        //         content: Text("ขออภัยระบบขัดข้องA1"),
+        //         actions: [
+        //           TextButton(
+        //             onPressed: () {
+        //               Navigator.of(context).pop();
+        //             },
+        //             child: Text("ปิด"),
+        //           ),
+        //         ],
+        //       );
+        //     },
+        //   );
+        // }
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) =>
+        //         const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+        //   ),
+        // );
       } else {
         _registerController.pinController.clear();
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               title: Text("แจ้งเตือน"),
-              content: Text("ขออภัยระบบขัดข้อง"),
+              content: Text("ขออภัยระบบขัดข้องA2"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -140,6 +181,12 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     }
+  }
+
+  Future setOTP() async {
+    String sub = _registerController.phoneController.text;
+    sub = '66' + sub.substring(1);
+    getotpstatus = await createotpController.createPhoneOTP(phone: sub);
   }
 
   void startCountdown() {
@@ -163,6 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     // double height = MediaQuery.of(context).size.height;
+    final query = MediaQuery.of(context);
 
     List<Widget> pages = [
       _profile(),
@@ -170,259 +218,273 @@ class _RegisterPageState extends State<RegisterPage> {
       _otp(),
     ];
 
-    return GestureDetector(
-      child: WillPopScope(
-        child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            automaticallyImplyLeading: false,
-            leading: currentIndex == 0
-                ? null
-                : IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    onPressed: () {
-                      if (currentIndex > 0) {
-                        setState(() {
-                          currentIndex--;
-                          //  profileColor =  Colors.white;
-                          //  line1Color = const Color(0x33F2F2F2);
-                          //  profileImg = 'assets/image/user.png';
-                        });
-                      }
-                    },
-                  ),
-          ),
-          // resizeToAvoidBottomInset: false,
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          body: Column(
-            children: [
-              Container(
-                width: width,
-                height: 165.h + kToolbarHeight,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/image/bg_2.png',
-                    ),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      'ลงทะเบียน',
-                      style: TextStyle(
+    return MediaQuery(
+      data: query.copyWith(
+        // ignore: deprecated_member_use
+        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
+      ),
+      child: GestureDetector(
+        child: WillPopScope(
+          child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              leading: currentIndex == 0
+                  ? null
+                  : IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
                         color: Colors.white,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w700,
+                        size: 25,
                       ),
+                      onPressed: () {
+                        if (currentIndex > 0) {
+                          setState(() {
+                            currentIndex--;
+                            //  profileColor =  Colors.white;
+                            //  line1Color = const Color(0x33F2F2F2);
+                            //  profileImg = 'assets/image/user.png';
+                          });
+                        }
+                      },
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _circle(
-                          assetImage: currentIndex == 0 ? profileImg : null,
-                          title: 'ขั้นตอนที่ 1',
-                          detail: 'ข้อมูลส่วนตัว',
-                          color: profileColor,
-                        ),
-                        _line(line1Color),
-                        _circle(
-                          assetImage: currentIndex <= 1 ? contractImg : null,
-                          title: 'ขั้นตอนที่ 2',
-                          detail: 'ข้อมูลการติดต่อ',
-                          color: contractColor,
-                        ),
-                        _line(line2Color),
-                        _circle(
-                          assetImage: currentIndex <= 2 ? verifyImg : null,
-                          title: 'ขั้นตอนที่ 3',
-                          detail: 'ยืนยันตัวตน',
-                          color: verifyColor,
-                        ),
-                      ],
+            ),
+            // resizeToAvoidBottomInset: false,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            body: Column(
+              children: [
+                Container(
+                  width: width,
+                  height: 165.h + kToolbarHeight,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
                     ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  // reverse: true,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/image/bg_2.png',
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.w,
-                          vertical: 25.h,
-                        ),
-                        child: pages[currentIndex],
-                      ),
-                      if (currentIndex != 2) ...[
-                        ElevatedButton(
-                          onPressed: () async {
-                            switch (currentIndex) {
-                              case 0:
-                                {
-                                  if (_registerController
-                                      .gentnameController.text.isEmpty) {
-                                    errorTextGentName = 'กรุณาเลือกคำนำหน้า';
-                                  } else {
-                                    errorTextGentName = null;
-                                  }
-
-                                  if (_registerController.nameController.text
-                                      .trim()
-                                      .isEmpty) {
-                                    errorTextName = 'กรุณากรอกชื่อ';
-                                  } else if (_registerController
-                                          .nameController.text
-                                          .trim()
-                                          .length <=
-                                      2) {
-                                    errorTextName = 'กรุณากรอกชื่อให้ครบถ้วน';
-                                  } else {
-                                    errorTextName = null;
-                                  }
-
-                                  if (_registerController.surnameController.text
-                                      .trim()
-                                      .isEmpty) {
-                                    errorTextSurName = 'กรุณากรอกนามสกุล';
-                                  } else if (_registerController
-                                          .surnameController.text
-                                          .trim()
-                                          .length <=
-                                      2) {
-                                    errorTextSurName =
-                                        'กรุณากรอกนามสกุลให้ครบถ้วน';
-                                  } else {
-                                    errorTextSurName = null;
-                                  }
-
-                                  if (_registerController.idCardController.text
-                                      .trim()
-                                      .isEmpty) {
-                                    errorTextIdCard =
-                                        'กรุณากรอกหมายเลขบัตรประชาชน';
-                                  } else if (_registerController
-                                          .idCardController.text
-                                          .trim()
-                                          .length <
-                                      13) {
-                                    errorTextIdCard =
-                                        'กรุณากรอกหมายเลขบัตรประชาชนให้ครบถ้วน';
-                                  } else {
-                                    if (idNotExists) {
-                                      errorTextIdCard =
-                                          'มีเลขบัตรประชาชนในระบบแล้ว';
-                                    } else {
-                                      errorTextIdCard = null;
-                                    }
-                                  }
-
-                                  if (errorTextGentName == null &&
-                                      errorTextName == null &&
-                                      errorTextSurName == null &&
-                                      errorTextIdCard == null) {
-                                    currentIndex++;
-                                    profileColor = const Color(0xFF648CF3);
-                                    line1Color = const Color(0xFF648CF3);
-                                  }
-                                  setState(() {});
-                                }
-                                break;
-
-                              case 1:
-                                {
-                                  if (_registerController.emailController.text
-                                      .trim()
-                                      .isEmpty) {
-                                    errorTextEmail = 'กรุณากรอกอีเมลล์';
-                                  } else if (_registerController
-                                          .emailController.text
-                                          .trim()
-                                          .length <=
-                                      2) {
-                                    errorTextEmail =
-                                        'กรุณากรอกอีเมลล์ให้ครบถ้วน';
-                                  } else if (!EmailValidator.validate(
-                                    _registerController.emailController.text
-                                        .trim(),
-                                  )) {
-                                    errorTextEmail = 'รูปแบบอีเมลไม่ถูกต้อง';
-                                  } else {
-                                    errorTextEmail = null;
-                                  }
-
-                                  if (_registerController.phoneController.text
-                                      .trim()
-                                      .isEmpty) {
-                                    errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์';
-                                  } else if (_registerController
-                                          .phoneController.text
-                                          .trim()
-                                          .length <=
-                                      2) {
-                                    errorTextPhone =
-                                        'กรุณากรอกเบอร์โทรศัพท์ให้ครบถ้วน';
-                                  } else {
-                                    errorTextPhone = null;
-                                  }
-                                  if (errorTextEmail == null &&
-                                      errorTextPhone == null) {
-                                    currentIndex++;
-                                    line2Color = const Color(0xFF648CF3);
-                                    contractColor = const Color(0xFF648CF3);
-                                    startCountdown();
-                                  }
-                                  setState(() {});
-                                }
-                                break;
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: Size(width * 0.8, 50),
-                            backgroundColor: const Color(0xFF103533),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            'ถัดไป',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 22.sp),
-                          ),
-                        ),
-                      ],
                       SizedBox(
                         height: 20.h,
+                      ),
+                      Text(
+                        'ลงทะเบียน',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          _circle(
+                            assetImage: currentIndex == 0 ? profileImg : null,
+                            title: 'ขั้นตอนที่ 1',
+                            detail: 'ข้อมูลส่วนตัว',
+                            color: profileColor,
+                          ),
+                          _line(line1Color),
+                          _circle(
+                            assetImage: currentIndex <= 1 ? contractImg : null,
+                            title: 'ขั้นตอนที่ 2',
+                            detail: 'ข้อมูลการติดต่อ',
+                            color: contractColor,
+                          ),
+                          _line(line2Color),
+                          _circle(
+                            assetImage: currentIndex <= 2 ? verifyImg : null,
+                            title: 'ขั้นตอนที่ 3',
+                            detail: 'ยืนยันตัวตน',
+                            color: verifyColor,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    // reverse: true,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 15.w,
+                            vertical: 25.h,
+                          ),
+                          child: pages[currentIndex],
+                        ),
+                        if (currentIndex != 2) ...[
+                          ElevatedButton(
+                            onPressed: () async {
+                              switch (currentIndex) {
+                                case 0:
+                                  {
+                                    if (_registerController
+                                        .gentnameController.text.isEmpty) {
+                                      errorTextGentName = 'กรุณาเลือกคำนำหน้า';
+                                    } else {
+                                      errorTextGentName = null;
+                                    }
+
+                                    if (_registerController.nameController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      errorTextName = 'กรุณากรอกชื่อ';
+                                    } else if (_registerController
+                                            .nameController.text
+                                            .trim()
+                                            .length <=
+                                        2) {
+                                      errorTextName = 'กรุณากรอกชื่อให้ครบถ้วน';
+                                    } else {
+                                      errorTextName = null;
+                                    }
+
+                                    if (_registerController
+                                        .surnameController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      errorTextSurName = 'กรุณากรอกนามสกุล';
+                                    } else if (_registerController
+                                            .surnameController.text
+                                            .trim()
+                                            .length <=
+                                        2) {
+                                      errorTextSurName =
+                                          'กรุณากรอกนามสกุลให้ครบถ้วน';
+                                    } else {
+                                      errorTextSurName = null;
+                                    }
+
+                                    if (_registerController
+                                        .idCardController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      errorTextIdCard =
+                                          'กรุณากรอกหมายเลขบัตรประชาชน';
+                                    } else if (_registerController
+                                            .idCardController.text
+                                            .trim()
+                                            .length <
+                                        13) {
+                                      errorTextIdCard =
+                                          'กรุณากรอกหมายเลขบัตรประชาชนให้ครบถ้วน';
+                                    } else {
+                                      if (idNotExists) {
+                                        errorTextIdCard =
+                                            'มีเลขบัตรประชาชนในระบบแล้ว';
+                                      } else {
+                                        errorTextIdCard = null;
+                                      }
+                                    }
+
+                                    if (errorTextGentName == null &&
+                                        errorTextName == null &&
+                                        errorTextSurName == null &&
+                                        errorTextIdCard == null) {
+                                      currentIndex++;
+                                      profileColor = const Color(0xFF648CF3);
+                                      line1Color = const Color(0xFF648CF3);
+                                    }
+                                    setState(() {});
+                                  }
+                                  break;
+
+                                case 1:
+                                  {
+                                    if (_registerController.emailController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      errorTextEmail = 'กรุณากรอกอีเมลล์';
+                                    } else if (_registerController
+                                            .emailController.text
+                                            .trim()
+                                            .length <=
+                                        2) {
+                                      errorTextEmail =
+                                          'กรุณากรอกอีเมลล์ให้ครบถ้วน';
+                                    } else if (!EmailValidator.validate(
+                                      _registerController.emailController.text
+                                          .trim(),
+                                    )) {
+                                      errorTextEmail = 'รูปแบบอีเมลไม่ถูกต้อง';
+                                    } else {
+                                      errorTextEmail = null;
+                                    }
+
+                                    if (_registerController.phoneController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์';
+                                    } else if (_registerController
+                                            .phoneController.text
+                                            .trim()
+                                            .length <=
+                                        2) {
+                                      errorTextPhone =
+                                          'กรุณากรอกเบอร์โทรศัพท์ให้ครบถ้วน';
+                                      //TODO รอพี่พาทำ
+                                    } else if (isPhone) {
+                                      errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
+                                    } else {
+                                      errorTextPhone = null;
+                                    }
+
+                                    if (errorTextEmail == null &&
+                                        errorTextPhone == null) {
+                                      await setOTP();
+
+                                      currentIndex++;
+                                      line2Color = const Color(0xFF648CF3);
+                                      contractColor = const Color(0xFF648CF3);
+                                      startCountdown();
+                                    }
+                                    setState(() {});
+                                  }
+                                  break;
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: Size(width * 0.8, 50),
+                              backgroundColor: const Color(0xFF103533),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              'ถัดไป',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 22.sp),
+                            ),
+                          ),
+                        ],
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+          onWillPop: () async {
+            return false;
+          },
         ),
-        onWillPop: () async {
-          return false;
-        },
       ),
     );
   }
@@ -686,9 +748,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์'
                 : errorTextPhone = null;
             setState(() {});
+            //TODO รอพี่พาทำ
+            if (value.isNotEmpty && value.length == 10) {
+              _debouncer.call(() async {
+                var result = await authController.fetchGetPhone(value);
+                isPhone = result;
+                if (isPhone) {
+                  errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
+                  setState(() {});
+                }
+              });
+            } else {
+              isPhone = true;
+            }
           },
           keyboardType: TextInputType.phone,
-          inputFormatter: [PhoneFormatter()],
+          maxLength: 10,
         ),
       ],
     );
@@ -755,7 +830,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   'ขอ OTP ใหม่อีกครั้ง',
                   style: TextStyle(
-                    fontSize: 17.sp,
+                    fontSize: 16.sp,
                     color: Colors.grey.shade500,
                   ),
                 ),
@@ -771,9 +846,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       )
                     : GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           if (countdown == 0) {
-                            startCountdown(); // เริ่มนับถอยหลังเมื่อกด "ขอ OTP ใหม่อีกครั้ง"
+                            await setOTP();
+                            startCountdown(); // เริ่มนับถอยหลังเมื่อกด "ขอ OTP ใหม่อีกครั้ง"'
+
                             // ตรวจสอบว่ากำลังนับถอยหลังหรือไม่ก่อนที่จะรับ OTP ใหม่
                             // แล้วค่อยเรียกฟังก์ชันส่ง OTP ใหม่
                           }
@@ -781,7 +858,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           'กดที่นี่เพื่อขอ OTP ใหม่',
                           style: TextStyle(
-                            fontSize: 17.sp,
+                            fontSize: 16.sp,
                             color: const Color(0xFF103533),
                             decoration: TextDecoration.underline,
                           ),

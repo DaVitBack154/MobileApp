@@ -10,7 +10,6 @@ class RegisterController {
   final _userService = UserService();
 
   UserModel userModel = UserModel();
-
   TextEditingController gentnameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController surnameController = TextEditingController();
@@ -19,6 +18,9 @@ class RegisterController {
   TextEditingController phoneController = TextEditingController();
   TextEditingController pinController = TextEditingController();
   TextEditingController deviceController = TextEditingController();
+  TextEditingController yomrub1Controller = TextEditingController();
+  TextEditingController yomrub2Controller = TextEditingController();
+  TextEditingController yomrub3Controller = TextEditingController();
 
   Future<String> fetchRegisterUser({
     required String gentname,
@@ -27,6 +29,11 @@ class RegisterController {
     required String idCard,
     required String email,
     required String phone,
+    required String yomrub1,
+    required String yomrub2,
+    required String yomrub3,
+    required String yomrub4,
+    required String yomrub5,
     String? device,
     String? pin,
   }) async {
@@ -43,13 +50,20 @@ class RegisterController {
         phone: phone,
         pin: pin,
         device: device,
+        yomrub1: yomrub1,
+        yomrub2: yomrub2,
+        yomrub3: yomrub3,
+        yomrub4: yomrub4,
+        yomrub5: yomrub5,
       );
-
+      print("TOKENAAA: ${response.statusCode}");
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
-
+        print('TOKENBB: ${json}');
         userModel = UserModel.fromJson(json);
-
+        print('TOKENBB: ${userModel.toString()}');
+        print('TOKENBB: ${userModel.user.toString()}');
+        print('TOKENBB: ${userModel.user!.id.toString()}');
         await prefs.setString(KeyStorage.token, userModel.token!);
         await prefs.setString(KeyStorage.uid, userModel.user!.id!);
         await prefs.setString(KeyStorage.name, userModel.user!.name!);
@@ -58,20 +72,22 @@ class RegisterController {
         await prefs.setString(KeyStorage.idCard, userModel.user!.idCard!);
         await prefs.setString(
             KeyStorage.typeCustomer, userModel.user!.typeCustomer!);
-        // await prefs.setString(KeyStorage.device, userModel.user!.device!);
-
-        print('TOKEN: ${userModel.token}');
+        await prefs.setString(
+            KeyStorage.statusStar, userModel.user!.statusStar!);
+        if (userModel.user!.ciType != null) {
+          await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
+        }
 
         return '';
       } else {
         print('login Error');
         userModel = UserModel();
-        return 'เกิดข้อผิดพลาดในระบบ';
+        return '';
       }
     } catch (e) {
       print('Error: $e'); // แสดงข้อความผิดพลาดในกรณีเกิด Exception
       userModel = UserModel();
-      return 'เกิดข้อผิดพลาดในระบบ';
+      return '';
     }
   }
 

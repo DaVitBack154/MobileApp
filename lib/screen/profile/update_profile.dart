@@ -169,7 +169,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         errorText: errorTextPhone,
                       ),
                       cursorColor: Colors.grey.shade400,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 10,
                       keyboardType: TextInputType.phone,
                       onChanged: (value) {
                         value.isEmpty

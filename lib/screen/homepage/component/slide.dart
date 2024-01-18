@@ -94,10 +94,22 @@ class _SlideState extends State<Slide> {
                                     image: imageProvider,
                                     fit: BoxFit.cover,
                                     width: double.infinity,
-                                    height: ResponsiveHeightContext.isMobile(
-                                            context)
-                                        ? 155.h
-                                        : 170.h,
+                                    height: ResponsiveHeightContext
+                                            .isMobileFoldVertical(context)
+                                        ? MyConstant.setMediaQueryHeight(
+                                            context, 180)
+                                        : ResponsiveHeightContext.isMobileSmall(
+                                                context)
+                                            ? MyConstant.setMediaQueryHeight(
+                                                context, 190)
+                                            : ResponsiveHeightContext.isMobile(
+                                                    context)
+                                                ? MyConstant
+                                                    .setMediaQueryHeight(
+                                                        context, 200)
+                                                : MyConstant
+                                                    .setMediaQueryHeight(
+                                                        context, 210),
                                   );
                                 },
                               ),
@@ -144,7 +156,13 @@ class _SlideState extends State<Slide> {
                 ).toList(),
               ),
               SizedBox(
-                height: ResponsiveHeightContext.isMobile(context) ? 20.h : 10.h,
+                height: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 10)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 12)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 25)
+                            : MyConstant.setMediaQueryHeight(context, 25),
               ),
             ],
           );

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 

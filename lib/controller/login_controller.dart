@@ -28,8 +28,7 @@ class LoginController {
         var json = jsonDecode(response.body);
 
         userModel = UserModel.fromJson(json);
-
-        debugPrint('TOKEN: ${userModel.token}');
+        // debugPrint('TOKEN: ${userModel.token}');
         await prefs.setString(KeyStorage.token, userModel.token!);
         await prefs.setString(KeyStorage.uid, userModel.user!.id!);
         await prefs.setString(KeyStorage.name, userModel.user!.name!);
@@ -38,7 +37,10 @@ class LoginController {
         await prefs.setString(KeyStorage.idCard, userModel.user!.idCard!);
         await prefs.setString(
             KeyStorage.typeCustomer, userModel.user!.typeCustomer!);
-
+        await prefs.setString(
+            KeyStorage.statusStar, userModel.user!.statusStar!);
+        await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
+        print('TOKEN: ${userModel.token}');
         return '';
       } else {
         print('Login Error');

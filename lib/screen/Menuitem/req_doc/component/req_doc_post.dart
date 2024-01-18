@@ -125,7 +125,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.w,
-                              vertical: 5.h,
+                              vertical: 2.h,
                             ),
                             child: Text(
                               'โปรดระบุเอกสารที่ต้องการ',
@@ -151,7 +151,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                   children: [
                                     Image.asset(
                                       'assets/image/receipt.png',
-                                      height: 30.h,
+                                      height: 25.h,
                                     ),
                                     SizedBox(
                                       width: 30.w,
@@ -185,9 +185,10 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                 elevation: 1,
                                 child: RadioListTile(
                                   title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Image.asset('assets/image/closebg.png',
-                                          height: 30.h),
+                                      Image.asset('assets/image/closebg2.png',
+                                          height: 25.h),
                                       SizedBox(width: 30.w),
                                       Text(
                                         'หนังสือปิดบัญชี',
@@ -217,7 +218,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                   children: [
                                     Image.asset(
                                       'assets/image/edit2.png',
-                                      height: 30.h,
+                                      height: 25.h,
                                     ),
                                     SizedBox(
                                       width: 30.w,
@@ -302,12 +303,13 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ReqDocFromUser(
-                                    documentChose: choseRadio,
-                                    customerId: accController.userAccModel
-                                        .data![_currentIndex].customerId,
-                                    other:
-                                        userReqController.otherController.text,
-                                  ),
+                                      documentChose: choseRadio,
+                                      customerId: accController.userAccModel
+                                          .data![_currentIndex].customerId,
+                                      other: userReqController
+                                          .otherController.text,
+                                      callcenter: accController.userAccModel
+                                          .data![_currentIndex].callCenter),
                                 ),
                               );
                             }
@@ -316,11 +318,13 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ReqDocFromUser(
-                                  documentChose: choseRadio,
-                                  customerId: accController.userAccModel
-                                      .data![_currentIndex].customerId,
-                                  other: userReqController.otherController.text,
-                                ),
+                                    documentChose: choseRadio,
+                                    customerId: accController.userAccModel
+                                        .data![_currentIndex].customerId,
+                                    other:
+                                        userReqController.otherController.text,
+                                    callcenter: accController.userAccModel
+                                        .data![_currentIndex].callCenter),
                               ),
                             );
                           }

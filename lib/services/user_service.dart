@@ -30,6 +30,11 @@ class UserService extends BaseService {
     required String idCard,
     required String email,
     required String phone,
+    required String yomrub1,
+    required String yomrub2,
+    required String yomrub3,
+    required String yomrub4,
+    required String yomrub5,
     String? pin,
     String? device,
   }) async {
@@ -49,9 +54,13 @@ class UserService extends BaseService {
         "phone": phone,
         "pin": pin,
         "device": device,
+        "yomrub1": yomrub1,
+        "yomrub2": yomrub2,
+        "yomrub3": yomrub3,
+        "yomrub4": yomrub4,
+        "yomrub5": yomrub5,
       }),
     );
-
     return response;
   }
 
@@ -99,6 +108,27 @@ class UserService extends BaseService {
                             "postcode": postcode,
                           })
                         : jsonEncode({}));
+
+    return response;
+  }
+
+  Future<Response?> updateUserStar({
+    required String id,
+    required String? statusStar,
+    required String? comment,
+    required String? starPoint,
+  }) async {
+    String url = '$domain/updatestar/$id';
+
+    Response response = await put(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "status_star": statusStar,
+        "comment": comment,
+        "starpoint": starPoint,
+      }),
+    );
 
     return response;
   }
@@ -208,6 +238,28 @@ class UserService extends BaseService {
     return response;
   }
 
+  Future<Response> updateNotifyPay({
+    String? token,
+    required String? statusRead,
+    required Map<String, dynamic> requestBody,
+  }) async {
+    try {
+      String url = '$domain/updatepaynotify';
+      Response response = await put(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "tokenmobile": token.toString(),
+        },
+        body: jsonEncode({"Status_Read": statusRead}),
+      );
+      return response;
+    } catch (e) {
+      // print("Error ${e}");
+      throw e;
+    }
+  }
+
   Future<Response> getPromotion(String token) async {
     String url = '$domain/promotion';
 
@@ -298,6 +350,57 @@ class UserService extends BaseService {
 
   Future<Response> getSaleHomeID(String id) async {
     String url = '$domain/getsalehome/$id';
+
+    Response response = await get(
+      Uri.parse(url),
+    );
+    return response;
+  }
+
+  Future<Response> createPhoneOTP({
+    required String phone,
+    String? otp,
+  }) async {
+    String url = '$domain/request-otp';
+
+    Response response = await post(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "phone": phone,
+        "otp": otp,
+      }),
+    );
+    return response;
+  }
+
+  Future<Response> postOTP({
+    required String phone,
+    required String otp,
+  }) async {
+    String url = '$domain/verify-otp';
+    Response response = await post(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "phone": phone,
+        "otp": otp,
+      }),
+    );
+    return response;
+  }
+
+  Future<Response> getCompanyname() async {
+    String url = '$domain/getcompany';
+
+    Response response = await get(
+      Uri.parse(url),
+    );
+    return response;
+  }
+
+  Future<Response> getCompanyContract() async {
+    String url = '$domain/getcompany_contract';
 
     Response response = await get(
       Uri.parse(url),

@@ -123,7 +123,7 @@ class _SlideAccState extends State<SlideAcc> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 2,
-                  color: Color(0xFFFF4F4F4),
+                  color: Color.fromARGB(255, 250, 250, 250),
                   child: Column(
                     children: [
                       if ((accController.userAccModel.data ?? [])
@@ -147,7 +147,7 @@ class _SlideAccState extends State<SlideAcc> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey.shade600,
-                                      fontSize: 17.sp,
+                                      fontSize: 16.sp,
                                     ),
                                   ),
                                   Text(
@@ -156,46 +156,54 @@ class _SlideAccState extends State<SlideAcc> {
                                         .trim(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                height: 1, // กำหนดความสูงของเส้น
-                                color: Color.fromARGB(255, 207, 204, 204), // กำหนดสีของเส้น
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              
-                              //ลบวันที่ผู้รับโอนสิทธ์
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'ผู้โอนสิทธิ์ :',
-                                    style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    accController.userAccModel
-                                        .data![_currentIndex].tBuyFromName
-                                        .trim(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
                                       fontSize: 16.sp,
                                     ),
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: 1, // กำหนดความสูงของเส้น
+                                color: Color.fromARGB(
+                                    255, 207, 204, 204), // กำหนดสีของเส้น
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+
+                              //ลบวันที่ผู้รับโอนสิทธ์
+
+                              accController.userAccModel.data![_currentIndex]
+                                          .tBuyFromName
+                                          .trim() ==
+                                      ''
+                                  ? SizedBox.shrink()
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'ผู้โอนสิทธิ์ :',
+                                          style: TextStyle(
+                                            color: Colors.grey.shade600,
+                                            fontSize: 17.sp,
+                                          ),
+                                        ),
+                                        Text(
+                                          accController.userAccModel
+                                              .data![_currentIndex].tBuyFromName
+                                              .trim(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
                               SizedBox(
                                 height: 10.h,
                               ),
@@ -210,17 +218,31 @@ class _SlideAccState extends State<SlideAcc> {
                                       fontSize: 17.sp,
                                     ),
                                   ),
-                                  Text(
-                                    formattedDate.format(
-                                      DateTime.parse(accController.userAccModel
-                                          .data![_currentIndex].lastPayDate
-                                          .toString()),
-                                    ),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
+                                  accController
+                                              .userAccModel
+                                              .data![_currentIndex]
+                                              .lastPayDate ==
+                                          null
+                                      ? Text(
+                                          'ไม่พบข้อมูล',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.sp,
+                                          ),
+                                        )
+                                      : Text(
+                                          formattedDate.format(
+                                            DateTime.parse(accController
+                                                .userAccModel
+                                                .data![_currentIndex]
+                                                .lastPayDate
+                                                .toString()),
+                                          ),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
                                 ],
                               ),
                               SizedBox(

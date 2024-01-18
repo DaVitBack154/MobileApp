@@ -59,7 +59,7 @@ class _NavbarProfileState extends State<NavbarProfile> {
             Image.asset(
               'assets/image/w_Arma.png',
               fit: BoxFit.cover,
-              height: 100.h,
+              height: 80.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

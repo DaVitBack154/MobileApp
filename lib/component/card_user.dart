@@ -26,7 +26,7 @@ class CardUser extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding:  EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: 10.w,
           ),
           child: Column(
@@ -42,12 +42,9 @@ class CardUser extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          data.tCompanyName ==
-                                  'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด         '
-                              ? 'CF Asia Assets Management CO.,LTD.'
-                              : 'Resolution Way CO.,LTD.',
+                          data.eCompanyName,
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.normal,
                             height: 0.06,
                             color: Color(0xFF5C5C5C),
@@ -60,7 +57,7 @@ class CardUser extends StatelessWidget {
                         Text(
                           data.tCompanyName,
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.normal,
                             color: Color(0xFF5C5C5C),
                           ),
@@ -70,8 +67,8 @@ class CardUser extends StatelessWidget {
                     Column(
                       children: [
                         Image.asset(
-                          'assets/image/${data.companyId == 'CFAA' ? 'cfam.png' : 'rway.png'}',
-                          height: 18,
+                          'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
+                          height: 17,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(
@@ -83,7 +80,7 @@ class CardUser extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10.h,
+                height: 7.h,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,42 +106,47 @@ class CardUser extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 15.h,
+                height: 10.h,
               ),
-              Row(
-                children: [
-                  Text(
-                    'Name : ',
-                    style: TextStyle(
-                      color: const Color(0xFF8A8A8A),
-                      fontSize: 18.sp,
-                      height: 1.2,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Text(
-                    '${data.tCustomerName}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 18.sp,
-                      height: 1.2,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Text(
-                    '${data.tCustomerSurname}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 18.sp,
-                      height: 1.2,
-                    ),
-                  ),
-                ],
+              // Row(
+              //   children: [
+              //     Text(
+              //       'Name :',
+              //       style: TextStyle(
+              //         color: Color(0xFF8A8A8A),
+              //         fontSize: 18.sp,
+              //         height: 1.2,
+              //         fontWeight: FontWeight.normal,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: 5.w,
+              //     ),
+              //     Text(
+              //       '${data.tCustomerName} ${data.tCustomerSurname}',
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.normal,
+              //         fontSize: 18.sp,
+              //         height: 1.2,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Text(
+                'Name :',
+                style: TextStyle(
+                  color: const Color(0xFF8A8A8A),
+                  fontSize: 18.sp,
+                  height: 1.2,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              Text(
+                '${data.tCustomerName} ${data.tCustomerSurname}',
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 17.sp,
+                ),
               ),
               SizedBox(
                 height: 5.h,
@@ -173,7 +175,6 @@ class CardUser extends StatelessWidget {
                   ),
                 ],
               ),
-              // Text(data.flagCode)
             ],
           ),
         ),

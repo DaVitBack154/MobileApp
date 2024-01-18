@@ -64,7 +64,7 @@ class _PinCodeState extends State<PinCode> {
           builder: (context) {
             return AlertDialog(
               content: SizedBox(
-                height: 180.h,
+                height: 200.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -80,7 +80,7 @@ class _PinCodeState extends State<PinCode> {
                       "รหัส PIN ไม่ถูกต้องกรุณากรอก PIN ใหม่อีกครั้ง",
                       style: TextStyle(
                         fontSize: 19.sp,
-                        color: Colors.grey.shade500,
+                        // color: Colors.grey.shade500,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -99,7 +99,7 @@ class _PinCodeState extends State<PinCode> {
                           ),
                           child: Icon(
                             Icons.close,
-                            size: 30.h,
+                            size: 25.h,
                             color: Colors.white,
                           ),
                         ),

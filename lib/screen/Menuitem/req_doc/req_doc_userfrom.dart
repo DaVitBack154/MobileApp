@@ -20,11 +20,13 @@ class ReqDocFromUser extends StatefulWidget {
     this.documentChose,
     this.customerId,
     this.other,
+    this.callcenter,
   }) : super(key: key);
 
   final String? documentChose; // รับค่าที่ส่งมาจากหน้าก่อนหน้า
   final String? customerId; // รับค่าที่ส่งมาจากหน้าก่อนหน้า
   final String? other;
+  final String? callcenter;
 
   @override
   State<ReqDocFromUser> createState() => _ReqDocFromUserState();
@@ -258,6 +260,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                 ),
                               ],
                             ),
+
                             Row(
                               children: [
                                 Text(
@@ -508,17 +511,17 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                               ],
                             ),
                             Text(
-                              'รายการขอเอกสารจะมีระยะเวลาในวันทำการ 2 วันทำการ',
+                              'รายการขอเอกสารจะมีระยะเวลาในวันทำการ 7 วันทำการ',
                               style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 16.sp,
+                                fontSize: 17.sp,
                               ),
                             ),
                             Text(
-                              'หากมีข้อสงสัยกรุณาติดต่อ Callcenter 02-002-0033',
+                              'หากมีข้อสงสัย ติดต่อ Callcenter : ${widget.callcenter}',
                               style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 16.sp,
+                                fontSize: 17.sp,
                               ),
                             ),
                             SizedBox(

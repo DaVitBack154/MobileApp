@@ -17,19 +17,20 @@ class ResponsiveHeightContext extends StatelessWidget {
     required this.desktop,
   }) : super(key: key);
 
-  // static bool isMobileFoldVertical(BuildContext context) =>
-  //     MediaQuery.of(context).size.height < 360;
-
-  static bool isMobileSmall(BuildContext context) =>
+  static bool isMobileFoldVertical(BuildContext context) =>
       MediaQuery.of(context).size.height < 700;
 
-  static bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.height < 1100 &&
+  static bool isMobileSmall(BuildContext context) =>
+      MediaQuery.of(context).size.height < 800 &&
       MediaQuery.of(context).size.height >= 700;
+
+  static bool isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.height < 1000 &&
+      MediaQuery.of(context).size.height >= 800;
 
   static bool isTablet(BuildContext context) =>
       MediaQuery.of(context).size.height < 1300 &&
-      MediaQuery.of(context).size.height >= 1100;
+      MediaQuery.of(context).size.height >= 1000;
 
   static bool isDesktop(BuildContext context) =>
       MediaQuery.of(context).size.height >= 1300;
@@ -39,12 +40,14 @@ class ResponsiveHeightContext extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     if (size.height >= 1300) {
       return desktop;
-    } else if (size.height >= 1100) {
+    } else if (size.height >= 1000) {
       return tablet;
-    } else if (size.height >= 700) {
+    } else if (size.height >= 800) {
       return mobile;
-    } else {
+    } else if (size.height >= 700) {
       return mobilesmall;
+    } else {
+      return mobilefoldvertical;
     }
   }
 }

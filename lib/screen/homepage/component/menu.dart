@@ -29,8 +29,20 @@ class _MenuState extends State<Menu> {
           child: Column(
             children: [
               Container(
-                width: 60.w,
-                height: 55.h,
+                width: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : null,
+                height: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : MyConstant.setMediaQueryHeight(context, 60),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -38,9 +50,6 @@ class _MenuState extends State<Menu> {
                 child: const Image(
                   image: AssetImage('assets/image/icon1.png'),
                 ),
-              ),
-              SizedBox(
-                height: 5.h,
               ),
               Text(
                 'ชำระเงิน',
@@ -80,8 +89,20 @@ class _MenuState extends State<Menu> {
           child: Column(
             children: [
               Container(
-                width: 60.w,
-                height: 55.h,
+                width: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : null,
+                height: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : MyConstant.setMediaQueryHeight(context, 60),
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.white,
@@ -92,9 +113,6 @@ class _MenuState extends State<Menu> {
                   // width: 70,
                   // height: 70,
                 ),
-              ),
-              SizedBox(
-                height: 5.h,
               ),
               Text(
                 'ขอเอกสาร',
@@ -131,8 +149,20 @@ class _MenuState extends State<Menu> {
           child: Column(
             children: [
               Container(
-                width: 60.w,
-                height: 55.h,
+                width: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : null,
+                height: ResponsiveHeightContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryHeight(context, 55)
+                    : ResponsiveHeightContext.isMobileSmall(context)
+                        ? MyConstant.setMediaQueryHeight(context, 60)
+                        : ResponsiveHeightContext.isMobile(context)
+                            ? MyConstant.setMediaQueryHeight(context, 60)
+                            : MyConstant.setMediaQueryHeight(context, 60),
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.white,
@@ -143,9 +173,6 @@ class _MenuState extends State<Menu> {
                   // width: 70,
                   // height: 70,
                 ),
-              ),
-              SizedBox(
-                height: 5.h,
               ),
               Text(
                 'ประวัติชำระ',

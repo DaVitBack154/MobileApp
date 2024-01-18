@@ -38,15 +38,16 @@ class _PromotionBonState extends State<PromotionBon> {
               image: DecorationImage(
                 image: NetworkImage(
                     '$imageUrl/public/image/${widget.item.image ?? ''}'),
-                fit: BoxFit.cover, // ให้รูปภาพปรับขนาดให้เต็ม Container
+                fit: BoxFit.cover,
+                // ให้รูปภาพปรับขนาดให้เต็ม Container
               ),
             ),
           ),
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.white,
-              size: 20.h,
+              color: Colors.orange,
+              size: 25.h,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -58,7 +59,7 @@ class _PromotionBonState extends State<PromotionBon> {
         width: width,
         height: height,
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -106,7 +107,7 @@ class _PromotionBonState extends State<PromotionBon> {
                       ],
                     ),
               SizedBox(
-                height: 15.h,
+                height: 10.h,
               ),
               Expanded(
                 child: SingleChildScrollView(

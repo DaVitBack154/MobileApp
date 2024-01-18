@@ -27,6 +27,7 @@ class SaleHome {
 
 class Datum {
   String? id;
+  String? numberHome;
   String? nameHome;
   String? province;
   String? locationHome;
@@ -37,6 +38,7 @@ class Datum {
 
   Datum({
     this.id,
+    this.numberHome,
     this.nameHome,
     this.province,
     this.locationHome,
@@ -52,6 +54,7 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
+        numberHome: json["number_home"],
         nameHome: json["name_home"],
         province: json["province"],
         locationHome: json["location_home"],
@@ -65,6 +68,7 @@ class Datum {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
+        "number_home": numberHome,
         "name_home": nameHome,
         "province": province,
         "location_home": locationHome,

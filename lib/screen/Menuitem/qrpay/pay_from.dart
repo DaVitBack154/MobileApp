@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_accform.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class PayFrom extends StatefulWidget {
@@ -14,7 +15,7 @@ class PayFrom extends StatefulWidget {
 class _PayFromState extends State<PayFrom> {
   @override
   Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     //double height = MediaQuery.of(context).size.height;
     final query = MediaQuery.of(context);
     return GestureDetector(
@@ -53,9 +54,9 @@ class _PayFromState extends State<PayFrom> {
                 ],
               ),
               Container(
-                // height: height,
-                width: double.infinity,
+                // height: MyConstant.setMediaQueryHeightFull(context),
                 margin: const EdgeInsets.only(top: kToolbarHeight + 40).h,
+                width: width,
                 child: const SlideFrom(),
               ),
             ],

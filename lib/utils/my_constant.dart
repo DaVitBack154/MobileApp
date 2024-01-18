@@ -12,6 +12,7 @@ class MyConstant {
   static String routeinternetspeddtest = '/....';
   static String saklogoblue = 'as.../...';
   static Color dark1 = const Color(0xFF374352);
+  static Color red = Color.fromARGB(255, 82, 55, 55);
 
   static double setMediaQueryWidthFull(BuildContext context) =>
       MediaQuery.of(context).size.width;
@@ -55,15 +56,15 @@ class MyConstant {
   }
 
   static double setMediaQueryHeight(BuildContext context, double setint) {
-    if (ResponsiveHeightContext.isMobileSmall(context)) {
-      return ((setint / MediaQuery.of(context).size.height) *
-              MediaQuery.of(context).size.height) -
-          ((((setint * 15) / 100) / MediaQuery.of(context).size.height) *
-              MediaQuery.of(context).size.height);
-    } else {
-      return ((setint / MediaQuery.of(context).size.height) *
-          MediaQuery.of(context).size.height);
-    }
+    // if (ResponsiveHeightContext.isMobileSmall(context)) {
+    //   return ((setint / MediaQuery.of(context).size.height) *
+    //           MediaQuery.of(context).size.height) -
+    //       ((((setint * 15) / 100) / MediaQuery.of(context).size.height) *
+    //           MediaQuery.of(context).size.height);
+    // } else {
+    return ((setint / MediaQuery.of(context).size.height) *
+        MediaQuery.of(context).size.height);
+    // }
   }
 
   TextStyle stylePrimary() => TextStyle(

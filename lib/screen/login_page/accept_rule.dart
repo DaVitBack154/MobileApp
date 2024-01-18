@@ -13,186 +13,546 @@ class Accept_rule extends StatefulWidget {
 
 class _Accept_ruleState extends State<Accept_rule> {
   bool? isCheckbox = false;
+  String currentYomrub1 = 'ยินยอม';
+  String currentYomrub2 = 'ยินยอม';
+  String currentYomrub3 = 'ยินยอม';
+  String currentYomrub4 = 'ยินยอม';
+  String currentYomrub5 = 'ยินยอม';
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     final query = MediaQuery.of(context);
     return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
+        data: query.copyWith(
+          // ignore: deprecated_member_use
+          textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('ข้อกำหนดและเงื่อนไข'),
+            backgroundColor: Color(0xFF103533),
+            foregroundColor: Colors.white,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
               children: [
                 Container(
-                  width: double.infinity,
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                  height: 100.h + kToolbarHeight,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/image/bgpin.jpg'),
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.black.withOpacity(.1),
-                        ),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new_outlined,
-                            size: 23,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: 30.w,
-                        ),
-                        child: Text(
-                          'ข้อกำหนดและเงื่อนไข',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      SizedBox.shrink(),
-                    ],
-                  ),
+                  child: textOne(),
                 ),
               ],
             ),
-            Container(
-              margin: const EdgeInsets.only(top: kToolbarHeight + 70).h,
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
-              decoration: BoxDecoration(
-                color: Color(0xfff395d5d),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+          ),
+        )
+
+        // Scaffold(
+        //   body: Stack(
+        //     children: [
+        //       Column(
+        //         children: [
+        //           Container(
+        //             width: double.infinity,
+        //             padding:
+        //                 EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+        //             height: 100.h + kToolbarHeight,
+        //             decoration: const BoxDecoration(
+        //               image: DecorationImage(
+        //                 image: AssetImage('assets/image/bgpin.jpg'),
+        //                 fit: BoxFit.cover,
+        //                 alignment: Alignment.topCenter,
+        //               ),
+        //             ),
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //               children: [
+        //                 Container(
+        //                   decoration: BoxDecoration(
+        //                     borderRadius: BorderRadius.circular(15),
+        //                     color: Colors.black.withOpacity(.1),
+        //                   ),
+        //                   child: IconButton(
+        //                     icon: const Icon(
+        //                       Icons.arrow_back_ios_new_outlined,
+        //                       size: 23,
+        //                       color: Colors.white,
+        //                     ),
+        //                     onPressed: () {
+        //                       Navigator.pop(context);
+        //                     },
+        //                   ),
+        //                 ),
+        //                 Container(
+        //                   margin: EdgeInsets.only(
+        //                     right: 30.w,
+        //                   ),
+        //                   child: Text(
+        //                     'ข้อกำหนดและเงื่อนไข',
+        //                     style: TextStyle(
+        //                       fontSize: 25,
+        //                       fontWeight: FontWeight.w500,
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 SizedBox.shrink(),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //       Container(
+        //         margin: const EdgeInsets.only(top: kToolbarHeight + 70).h,
+        //         width: double.infinity,
+        //         padding: EdgeInsets.symmetric(horizontal: 15.w),
+        //         decoration: BoxDecoration(
+        //           color: Color(0xfff395d5d),
+        //           borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(20),
+        //             topRight: Radius.circular(20),
+        //           ),
+        //         ),
+        //         child: Container(
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Container(
+        //                 child: SingleChildScrollView(
+        //                   child: Column(
+        //                     children: [
+        //                       Align(
+        //                         alignment: Alignment.center,
+        //                         child: Text(
+        //                           AppInfo.termsAndConditions,
+        //                           style: TextStyle(
+        //                             fontWeight: FontWeight.w500,
+        //                             color: Colors.white,
+        //                             fontSize: 16.sp,
+        //                             letterSpacing: 1.2.w,
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ),
+        //               Row(
+        //                 mainAxisAlignment: MainAxisAlignment.start,
+        //                 children: [
+        //                   Checkbox(
+        //                     value: isCheckbox,
+        //                     onChanged: (newBool) {
+        //                       setState(() {
+        //                         isCheckbox = newBool;
+        //                       });
+        //                     },
+        //                     fillColor: MaterialStateColor.resolveWith(
+        //                       (states) =>
+        //                           isCheckbox! ? Colors.blue : Colors.white,
+        //                     ),
+        //                     activeColor: Colors
+        //                         .blue, // เปลี่ยนเส้น Checkbox เป็นสีฟ้าเมื่อถูกเลือก
+        //                     checkColor: Colors.white,
+        //                   ),
+        //                   Text(
+        //                     'ยินยอมข้อมูลส่วนบุคคล',
+        //                     style: TextStyle(
+        //                       fontSize: 20,
+        //                       fontWeight: FontWeight.w400,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //               ElevatedButton(
+        //                 onPressed: () async {
+        //                   if (isCheckbox == true) {
+        //                     // เช็กว่า Checkbox ถูกเลือกหรือไม่
+        //                     Navigator.push(
+        //                       context,
+        //                       MaterialPageRoute(
+        //                         builder: (context) => RegisterPage(),
+        //                       ),
+        //                     );
+        //                   } else {
+        //                     // แสดง SnackBar หรือข้อความเตือนให้ผู้ใช้เลือกยินยอมก่อน
+        //                     ScaffoldMessenger.of(context).showSnackBar(
+        //                       SnackBar(
+        //                         content: Center(
+        //                           child: Text(
+        //                             'กรุณายินยอมข้อมูลส่วนบุคคลก่อนกดถัดไป',
+        //                             style: TextStyle(
+        //                                 color: Colors.white), // กำหนดสีข้อความ
+        //                           ),
+        //                         ),
+        //                         backgroundColor:
+        //                             Colors.red, // กำหนดสีพื้นหลังของ SnackBar
+        //                       ),
+        //                     );
+        //                   }
+        //                 },
+        //                 style: ButtonStyle(
+        //                   fixedSize: MaterialStateProperty.all<Size>(
+        //                     Size(width, 40),
+        //                   ),
+        //                   backgroundColor: MaterialStateProperty.all<Color>(
+        //                     Color.fromARGB(
+        //                         255, 236, 237, 237), // กำหนดสีพื้นหลังของปุ่ม
+        //                   ),
+        //                 ),
+        //                 child: Text(
+        //                   'ถัดไป',
+        //                   style: TextStyle(
+        //                     fontSize: 22.sp,
+        //                     fontWeight: FontWeight.w500,
+        //                     color: Color(0xFF103533),
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
+
+        );
+  }
+
+  Widget textOne() {
+    double width = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 15.h,
+          ),
+          Text(
+            'ความยินยอม',
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 15.h,
+            ),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'ข้าพเจ้าขอแสดงเจตนายินยอมให้บริษัท เชฎฐ์ เอเชีย จำกัด (มหาชน) และบริษัทในเครือ ซึ่งประกอบด้วยบริษัท รีโซลูชั่น เวย์ จำกัด บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด และบริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด (รวมเรียกว่า “บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้า เพื่อวัตถุประสงค์ดังนี้',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  ),
                 ),
-              ),
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  '1. เพื่อแจ้งข้อมูลสิทธิพิเศษ : ให้ท่านได้รับสิทธิประโยชน์จากข้อมูลข่าวสารสำคัญ โปรโมชั่น การประชาสัมพันธ์ และการนำเสนอข้อมูลผลิตภัณฑ์หรือบริการ',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Row(
                   children: [
-                    Container(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                AppInfo.termsAndConditions,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 16.sp,
-                                  letterSpacing: 1.2.w,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          value: isCheckbox,
-                          onChanged: (newBool) {
-                            setState(() {
-                              isCheckbox = newBool;
-                            });
-                          },
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) =>
-                                isCheckbox! ? Colors.blue : Colors.white,
-                          ),
-                          activeColor: Colors
-                              .blue, // เปลี่ยนเส้น Checkbox เป็นสีฟ้าเมื่อถูกเลือก
-                          checkColor: Colors.white,
-                        ),
-                        Text(
-                          'ยินยอมข้อมูลส่วนบุคคล',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (isCheckbox == true) {
-                          // เช็กว่า Checkbox ถูกเลือกหรือไม่
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RegisterPage(),
-                            ),
-                          );
-                        } else {
-                          // แสดง SnackBar หรือข้อความเตือนให้ผู้ใช้เลือกยินยอมก่อน
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Center(
-                                child: Text(
-                                  'กรุณายินยอมข้อมูลส่วนบุคคลก่อนกดถัดไป',
-                                  style: TextStyle(
-                                      color: Colors.white), // กำหนดสีข้อความ
-                                ),
-                              ),
-                              backgroundColor:
-                                  Colors.red, // กำหนดสีพื้นหลังของ SnackBar
-                            ),
-                          );
-                        }
+                    Radio(
+                      value: 'ยินยอม',
+                      groupValue: currentYomrub1,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub1 = value!;
+                        });
                       },
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all<Size>(
-                          Size(width, 40),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(
-                              255, 236, 237, 237), // กำหนดสีพื้นหลังของปุ่ม
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Radio(
+                      value: 'ไม่ยินยอม',
+                      groupValue: currentYomrub1,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub1 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ไม่ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Text(
+                  '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business) : การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯ เพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "ยินยอม",
+                      groupValue: currentYomrub2,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub2 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Radio(
+                      value: "ไม่ยินยอม",
+                      groupValue: currentYomrub2,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub2 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ไม่ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Text(
+                  '3. เพื่อใช้สำหรับการยืนยันตัวตน : กรณีที่เอกสารระบุตัวตนของท่าน เช่น บัตรประชาชน หนังสือเดินทาง หรือเอกสารอื่นใดที่ออกโดยหน่วยงานราชการ ซึ่งมีข้อมูลส่วนบุคคลที่มีความอ่อนไหว (Sensitive data) เช่น เชื้อชาติ ศาสนา โดยบริษัทฯ จะไม่นำข้อมูลดังกล่าวไปใช้เพื่อวัตถุประสงค์อื่น และคำนึงถึงความปลอดภัยของข้อมูลท่านเป็นสำคัญ',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "ยินยอม",
+                      groupValue: currentYomrub3,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub3 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Radio(
+                      value: "ไม่ยินยอม",
+                      groupValue: currentYomrub3,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub3 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ไม่ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Text(
+                  '4. เพื่อใช้สำหรับการยอมรับเอกสารอิเล็กทรอนิกส์ : กรณีนี้จะถือว่า ท่านไม่ประสงค์ในการรับบริการจัดส่งเอกสาร เช่น ใบเสร็จรับเงิน ใบกำกับภาษี หรือเอกสารอื่น ๆ ในรูปแบบต้นฉบับเอกสาร (Hard Copy) โดยบริษัทฯ จะจัดส่งเอกสารให้แก่ท่านผ่านทางอีเมลซึ่งแจ้งไว้ในระบบ',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "ยินยอม",
+                      groupValue: currentYomrub4,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub4 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Radio(
+                      value: "ไม่ยินยอม",
+                      groupValue: currentYomrub4,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub4 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ไม่ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Text(
+                  '5. เพื่อใช้สำหรับการโอนข้อมูลส่วนบุคลไปต่างประเทศ : ในบางกรณีที่บริษัทฯ มีความจำเป็นต้องส่งหรือโอนข้อมูลส่วนบุคคลของท่านไปยังต่างประเทศ เพื่อดำเนินการตามวัตถุประสงค์ในการให้บริการแก่ท่าน เช่น เพื่อส่งข้อมูลส่วนบุคคลไปยังระบบคลาวด์ (Cloud) ที่มีแพลตฟอร์มหรือเครื่องแม่ข่าย (Server) อยู่ต่างประเทศ เช่น ประเทศสิงคโปร์ หรือสหรัฐอเมริกา โดยบริษัทฯ ได้ดำเนินการตามหลักเกณฑ์การให้ความคุ้มครองข้อมูลส่วนบุคคลที่ส่งหรือโอนไปยังต่างประเทศที่คณะกรรมการคุ้มครองข้อมูลส่วนบุคคลประกาศกำหนด',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "ยินยอม",
+                      groupValue: currentYomrub5,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub5 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Radio(
+                      value: "ไม่ยินยอม",
+                      groupValue: currentYomrub5,
+                      onChanged: (value) {
+                        setState(() {
+                          currentYomrub5 = value!;
+                        });
+                      },
+                      activeColor: Colors.teal.shade700,
+                    ),
+                    Text(
+                      "ไม่ยินยอม",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  'ข้าพเจ้ายินยอมให้บริษัทฯ เก็บ รวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าตามวัตถุประสงค์ข้างต้น',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'ข้าพเจ้าได้อ่านและเข้าใจในรายละเอียดเกี่ยวกับการเก็บ รวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของบริษัทฯ ตามที่ระบุในนโยบายคุ้มครองข้อมูลส่วนบุคคล รวมถึงประกาศความเป็นส่วนตัวที่เกี่ยวข้องแล้ว (รายละเอียดตามที่ปรากฏในเว็บไซต์ https://www.chase.co.th/th/corporate-governance/privacy-notice) ทั้งนี้ ข้าพเจ้ารับทราบว่า ข้าพเจ้ามีสิทธิในการเพิกถอนความยินยอมดังกล่าวได้ตลอดเวลา',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 15.h,
+                    horizontal: 10.w,
+                  ),
+                  child: Container(
+                    width: width,
+                    height: 30.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(
+                              yomrub1: currentYomrub1,
+                              yomrub2: currentYomrub2,
+                              yomrub3: currentYomrub3,
+                              yomrub4: currentYomrub4,
+                              yomrub5: currentYomrub5,
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // fixedSize: Size(double.infinity, 20.h),
+                        backgroundColor: const Color(0xFF103533),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       child: Text(
                         'ถัดไป',
                         style: TextStyle(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF103533),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

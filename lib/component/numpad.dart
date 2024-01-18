@@ -22,6 +22,7 @@ class Numpad extends StatefulWidget {
 
 class _NumpadState extends State<Numpad> {
   String number = '';
+  String resetpin = 'reset';
 
   setValue(String val) {
     if (number.length < widget.length) {
@@ -62,14 +63,15 @@ class _NumpadState extends State<Numpad> {
           !widget.isCreatePin
               ? TextButton(
                   onPressed: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.remove(KeyStorage.pin);
+                    // SharedPreferences prefs =
+                    //     await SharedPreferences.getInstance();
+                    // resetpin = prefs.getString(KeyStorage.pin);
+                    // await prefs.remove(KeyStorage.pin);
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Phone_page(),
+                        builder: (context) => Phone_page(clearpin: resetpin),
                       ),
                     );
                   },

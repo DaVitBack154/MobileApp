@@ -27,7 +27,7 @@ class UserNotify {
 
 class Datum {
   String? id;
-  DateTime? notifiDate;
+  DateTime? notifyDate;
   String? personalId;
   String? customerId;
   String? companyId;
@@ -35,10 +35,11 @@ class Datum {
   DateTime? payDate;
   double? payAmount;
   String? flag;
+  String? statusRead;
 
   Datum({
     this.id,
-    this.notifiDate,
+    this.notifyDate,
     this.personalId,
     this.customerId,
     this.companyId,
@@ -46,6 +47,7 @@ class Datum {
     this.payDate,
     this.payAmount,
     this.flag,
+    this.statusRead,
   });
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
@@ -54,9 +56,9 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
-        notifiDate: json["NotifiDate"] == null
+        notifyDate: json["NotifyDate"] == null
             ? null
-            : DateTime.parse(json["NotifiDate"]),
+            : DateTime.parse(json["NotifyDate"]),
         personalId: json["PersonalID"],
         customerId: json["CustomerID"],
         companyId: json["CompanyID"],
@@ -65,11 +67,12 @@ class Datum {
             json["PayDate"] == null ? null : DateTime.parse(json["PayDate"]),
         payAmount: json["PayAmount"]?.toDouble(),
         flag: json["Flag"],
+        statusRead: json["Status_Read"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "NotifiDate": notifiDate?.toIso8601String(),
+        "NotifyDate": notifyDate?.toIso8601String(),
         "PersonalID": personalId,
         "CustomerID": customerId,
         "CompanyID": companyId,
@@ -77,5 +80,6 @@ class Datum {
         "PayDate": payDate?.toIso8601String(),
         "PayAmount": payAmount,
         "Flag": flag,
+        "Status_Read": statusRead,
       };
 }

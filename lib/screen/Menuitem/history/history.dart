@@ -16,6 +16,7 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   String? typeCustomer;
+  String? ciType;
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _HistoryState extends State<History> {
   Future<void> getTypeCustomer() async {
     final prefs = await SharedPreferences.getInstance();
     typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
-    //print('typeCustomeritempayment : $typeCustomer');
+    ciType = prefs.getString(KeyStorage.ciType) ?? 'T';
     setState(() {});
   }
 
@@ -47,7 +48,7 @@ class _HistoryState extends State<History> {
               width: double.infinity,
               // height: 320.h + kToolbarHeight,
               height: ResponsiveHeightContext.isMobile(context)
-                  ? 320.h + kToolbarHeight
+                  ? 310.h + kToolbarHeight
                   : 310.h + kToolbarHeight,
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -64,10 +65,66 @@ class _HistoryState extends State<History> {
             Container(
               width: width,
               margin: const EdgeInsets.only(top: kToolbarHeight + 65).h,
-              child: typeCustomer == null
-                  ? const SizedBox()
-                  : typeCustomer == 'Y'
-                      ? const SlideHis()
+              child: typeCustomer == 'Y' && ciType == 'T'
+                  ? const SlideHis()
+                  : ciType == 'F'
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 30.h,
+                                horizontal: 25.w,
+                              ),
+                              child: SizedBox(
+                                width: width,
+                                height: 370.h,
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  elevation: 2,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/danger.png',
+                                        height: 60.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(
+                                        'ไม่พบข้อมูลสมาชิก',
+                                        style: TextStyle(
+                                          fontSize: 30.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 25.h,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 10.h,
+                                          horizontal: 25.w,
+                                        ),
+                                        child: Text(
+                                          'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
+                                          style: TextStyle(
+                                            fontSize: 19.sp,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       : Column(
                           children: [
                             Padding(
@@ -111,7 +168,7 @@ class _HistoryState extends State<History> {
                                           horizontal: 25.w,
                                         ),
                                         child: Text(
-                                          'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-002-2032',
+                                          'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-821-1055',
                                           style: TextStyle(
                                             fontSize: 19.sp,
                                             color: Colors.grey.shade500,
@@ -125,6 +182,68 @@ class _HistoryState extends State<History> {
                             ),
                           ],
                         ),
+
+              // typeCustomer == null
+              //     ? const SizedBox()
+              //     : typeCustomer == 'Y'
+              //         ? const SlideHis()
+              //         : Column(
+              //             children: [
+              //               Padding(
+              //                 padding: EdgeInsets.symmetric(
+              //                   vertical: 30.h,
+              //                   horizontal: 25.w,
+              //                 ),
+              //                 child: SizedBox(
+              //                   width: width,
+              //                   height: 370.h,
+              //                   child: Card(
+              //                     clipBehavior: Clip.antiAlias,
+              //                     shape: RoundedRectangleBorder(
+              //                       borderRadius: BorderRadius.circular(20),
+              //                     ),
+              //                     elevation: 2,
+              //                     child: Column(
+              //                       mainAxisAlignment: MainAxisAlignment.center,
+              //                       children: [
+              //                         Image.asset(
+              //                           'assets/image/danger.png',
+              //                           height: 60.h,
+              //                           fit: BoxFit.cover,
+              //                         ),
+              //                         SizedBox(
+              //                           height: 20.h,
+              //                         ),
+              //                         Text(
+              //                           'ไม่พบข้อมูล',
+              //                           style: TextStyle(
+              //                             fontSize: 30.sp,
+              //                             fontWeight: FontWeight.bold,
+              //                           ),
+              //                         ),
+              //                         SizedBox(
+              //                           height: 25.h,
+              //                         ),
+              //                         Padding(
+              //                           padding: EdgeInsets.symmetric(
+              //                             vertical: 10.h,
+              //                             horizontal: 25.w,
+              //                           ),
+              //                           child: Text(
+              //                             'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-002-2032',
+              //                             style: TextStyle(
+              //                               fontSize: 19.sp,
+              //                               color: Colors.grey.shade500,
+              //                             ),
+              //                           ),
+              //                         )
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
             ),
           ],
         ),

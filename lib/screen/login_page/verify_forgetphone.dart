@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
-import 'package:mobile_chaseapp/screen/login_page/component/format_phone.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
 
@@ -25,6 +25,15 @@ class _Forget_phoneState extends State<Forget_phone> {
   );
 
   String? validator;
+  String? validator1;
+
+  final CreateOTPController createotpController = CreateOTPController();
+
+  Future setOTP() async {
+    String sub = authController.phoneNewController.text;
+    sub = '66' + sub.substring(1);
+    await createotpController.createPhoneOTP(phone: sub);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +65,45 @@ class _Forget_phoneState extends State<Forget_phone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'เปลี่ยนหมายเลขโทรศัพท์',
-                      style: TextStyle(
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
+                    Row(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                size: 25,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Phone_page(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 25.w,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'เปลี่ยนหมายเลขโทรศัพท์',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 15.h,
@@ -128,17 +169,30 @@ class _Forget_phoneState extends State<Forget_phone> {
                           ),
                         ),
                         cursorColor: Colors.grey.shade400,
-                        // inputFormatters: [PhoneFormatter()],
                         keyboardType: TextInputType.phone,
-                        onChanged: (value) {},
+                        maxLength: 10,
+                        onChanged: (value) {
+                          validator = null;
+                          setState(() {});
+
+                          _debouncer.call(() async {
+                            if (value.length < 10) {
+                              validator = 'ใส่หมายเลขให้ครบ 10 หลัก';
+                              setState(() {});
+                            } else {
+                              await authController
+                                  .fetchGetPhone(
+                                      authController.phoneController.text)
+                                  .then((value) {
+                                validator =
+                                    value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
+                                setState(() {});
+                              });
+                            }
+                          });
+                        },
                         validator: (value) {
-                          print(value);
-                          if (value == null || value.isEmpty) {
-                            return 'กรุณาใส่เบอร์โทรศัพท์เดิม';
-                          } else if (value.length < 10) {
-                            return 'กรุณาใส่เบอร์โทรศัพท์เดิมให้ครบ';
-                          }
-                          return null;
+                          return validator;
                         },
                       ),
                       SizedBox(height: 20.h),
@@ -175,14 +229,14 @@ class _Forget_phoneState extends State<Forget_phone> {
                                   1.0, // เปลี่ยนความหนาของเส้นขอบตามที่คุณต้องการ
                             ),
                           ),
+                          errorText: validator1,
                           errorStyle: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.red,
                           ),
                         ),
-                        cursorColor: Colors.grey.shade400,
                         keyboardType: TextInputType.number,
-                        // inputFormatters: [PhoneFormatter()],
+                        maxLength: 10,
                         validator: (value) {
                           print(value);
                           if (value == null || value.isEmpty) {
@@ -197,47 +251,35 @@ class _Forget_phoneState extends State<Forget_phone> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            validator = null;
-
-                            if (authController.phoneController.text.length <
-                                10) {
-                              validator = 'ใส่หมายเลขให้ครบ 10 หลัก';
+                            bool isphone = await authController.fetchGetPhone(
+                                authController.phoneController.text);
+                            if (isphone) {
+                              // await authController.fetchUpdateProfile(
+                              //   phone: authController.phoneNewController.text,
+                              // );
+                              await setOTP();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Phone_page(
+                                      newphone: authController
+                                          .phoneNewController.text),
+                                ),
+                              );
+                              print('ถูกต้อง ทำการอัพเดทข้อมูล');
+                              // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
+                              // ...
                             } else {
-                              await authController
-                                  .fetchGetPhone(
-                                      authController.phoneController.text)
-                                  .then((value) async {
-                                validator =
-                                    value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
-                                if (value == true) {
-                                  await authController.fetchUpdateProfile(
-                                    phone:
-                                        authController.phoneNewController.text,
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Phone_page(),
-                                    ),
-                                  );
-                                  print('ถูกต้อง ทำการอัพเดทข้อมูล');
-                                  // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
-                                  // ...
-                                } else {
-                                  print(
-                                      'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
-                                  // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
-                                  // ...
-                                }
-                                setState(() {});
-                              });
+                              print(
+                                  'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
+                              // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
+                              // ...
                             }
-                            setState(() {});
                           }
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
-                            Size(width, 45),
+                            Size(width, 50),
                           ),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -253,7 +295,7 @@ class _Forget_phoneState extends State<Forget_phone> {
                         child: Text(
                           'บันทึกข้อมูล',
                           style: TextStyle(
-                            fontSize: 22.sp,
+                            fontSize: 24.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),

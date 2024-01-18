@@ -49,7 +49,7 @@ class _Create_pinState extends State<Create_pin> {
         // TODO: เหมือนกันให้ทำอะไร
         print('pin ถูก');
 
-        await prefs.setBool(KeyStorage.cfPin, true);
+        // await prefs.setBool(KeyStorage.cfPin, true);
         // ignore: use_build_contxt_synchronously, use_build_context_synchronously
         showDialog(
           barrierDismissible: false,
@@ -85,7 +85,7 @@ class _Create_pinState extends State<Create_pin> {
           builder: (context) {
             return AlertDialog(
               content: SizedBox(
-                height: 180.h,
+                height: 200.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -120,7 +120,7 @@ class _Create_pinState extends State<Create_pin> {
                           ),
                           child: Icon(
                             Icons.close,
-                            size: 30.h,
+                            size: 25.h,
                             color: Colors.white,
                           ),
                         ),

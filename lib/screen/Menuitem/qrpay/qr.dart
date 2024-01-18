@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/utils/permission/permission_handler.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -56,7 +57,7 @@ class _QRPaymentState extends State<QRPayment> {
         child: Column(
           children: [
             Container(
-              height: 400.h + kToolbarHeight,
+              height: 390.h + kToolbarHeight,
               decoration: const BoxDecoration(
                 color: Color(0xFF395D5D),
                 borderRadius: BorderRadius.only(
@@ -68,7 +69,7 @@ class _QRPaymentState extends State<QRPayment> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 70.h,
+                      top: 55.h,
                       left: 30.w,
                     ),
                     child: bar(),
@@ -77,8 +78,8 @@ class _QRPaymentState extends State<QRPayment> {
                     height: 30.h,
                   ),
                   Container(
-                    width: 240.w,
-                    height: 200.h,
+                    width: 210.w,
+                    height: 190.h,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -106,7 +107,7 @@ class _QRPaymentState extends State<QRPayment> {
                     ),
                   ),
                   SizedBox(
-                    height: 25.h,
+                    height: 30.h,
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -214,7 +215,7 @@ class _QRPaymentState extends State<QRPayment> {
                     'ยอดชำระจะมีผลภายใน 2 วันทำการ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 17.sp,
+                      fontSize: 19.sp,
                     ),
                   ),
                 ],
@@ -234,20 +235,20 @@ class _QRPaymentState extends State<QRPayment> {
                         Text(
                           'ขั้นตอนการชำระเงิน',
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize: 19.sp,
                           ),
                         ),
                         Text(
                           '• บันทึก QR Code',
                           style: TextStyle(
-                            fontSize: 15.sp,
+                            fontSize: 16.sp,
                             color: Colors.grey,
                           ),
                         ),
                         Text(
                           '• นำ QR Code ที่บันทึกชำระเงินที่แอพธนาคาร',
                           style: TextStyle(
-                            fontSize: 15.sp,
+                            fontSize: 16.sp,
                             color: Colors.grey,
                           ),
                         ),
@@ -296,6 +297,8 @@ class _QRPaymentState extends State<QRPayment> {
     return Row(
       children: [
         Container(
+          width: 45.w,
+          height: 40.h,
           decoration: const BoxDecoration(
             color: Color(0x0DFFFFFF),
             borderRadius: BorderRadius.all(

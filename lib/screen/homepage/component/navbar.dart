@@ -9,6 +9,8 @@ import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/model/respon_notipromotion.dart';
 import 'package:mobile_chaseapp/screen/homepage/notify.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/key_storage.dart';
 
@@ -33,9 +35,7 @@ class _NavbarState extends State<Navbar> {
       // String? uid = prefs.getString(KeyStorage.uid);
       name = prefs.getString(KeyStorage.name);
       notipromotion = await notifyPromotionController.fetchNotifyPromotion();
-
       readed = !(notipromotion!.data!.any((val) => val.statusRead == 'N'));
-
       setState(() {});
       //showNotify();
     } catch (error) {
@@ -57,10 +57,17 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    print(height);
     return Column(
       children: [
         SizedBox(
-          height: height * 0.06.h,
+          height: ResponsiveHeightContext.isMobileFoldVertical(context)
+              ? MyConstant.setMediaQueryHeight(context, 30)
+              : ResponsiveHeightContext.isMobileSmall(context)
+                  ? MyConstant.setMediaQueryHeight(context, 40)
+                  : ResponsiveHeightContext.isMobile(context)
+                      ? MyConstant.setMediaQueryHeight(context, 60)
+                      : MyConstant.setMediaQueryHeight(context, 60),
         ),
         Container(
           padding: const EdgeInsets.symmetric(

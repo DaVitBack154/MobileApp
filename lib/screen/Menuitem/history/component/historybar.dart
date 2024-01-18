@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class HisBar extends StatefulWidget {
   const HisBar({super.key});
@@ -18,10 +19,14 @@ class _HisBarState extends State<HisBar> {
         Container(
           padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
           alignment: Alignment.bottomCenter,
-          height: 70.h + kToolbarHeight,
+          height: ResponsiveHeightContext.isMobile(context)
+              ? 65.h + kToolbarHeight
+              : 60.h + kToolbarHeight,
           child: Row(
             children: [
               Container(
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.black.withOpacity(.1),
@@ -29,7 +34,7 @@ class _HisBarState extends State<HisBar> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    size: 30,
+                    size: 25,
                     color: Colors.white,
                   ),
                   onPressed: () {

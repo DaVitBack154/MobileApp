@@ -15,6 +15,7 @@ class ReqDocument extends StatefulWidget {
 
 class _ReqDocumentState extends State<ReqDocument> {
   String? typeCustomer;
+  String? ciType;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _ReqDocumentState extends State<ReqDocument> {
   Future<void> getTypeCustomer() async {
     final prefs = await SharedPreferences.getInstance();
     typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
-    //print('typeCustomeritempayment : $typeCustomer');
+    ciType = prefs.getString(KeyStorage.ciType) ?? 'T';
     setState(() {});
   }
 
@@ -73,10 +74,66 @@ class _ReqDocumentState extends State<ReqDocument> {
             Container(
               margin: const EdgeInsets.only(top: kToolbarHeight + 50).h,
               width: double.infinity,
-              child: typeCustomer == null
-                  ? const SizedBox()
-                  : typeCustomer == 'Y'
-                      ? const ReqDocumentFrom()
+              child: typeCustomer == 'Y' && ciType == 'T'
+                  ? const ReqDocumentFrom()
+                  : ciType == 'F'
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 30.h,
+                                horizontal: 25.w,
+                              ),
+                              child: SizedBox(
+                                width: width,
+                                height: 370.h,
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  elevation: 2,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/danger.png',
+                                        height: 60.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(
+                                        'ไม่พบข้อมูลสมาชิก',
+                                        style: TextStyle(
+                                          fontSize: 30.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 25.h,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 10.h,
+                                          horizontal: 25.w,
+                                        ),
+                                        child: Text(
+                                          'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
+                                          style: TextStyle(
+                                            fontSize: 19.sp,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       : Column(
                           children: [
                             Padding(
@@ -120,7 +177,7 @@ class _ReqDocumentState extends State<ReqDocument> {
                                           horizontal: 25.w,
                                         ),
                                         child: Text(
-                                          'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-002-2032',
+                                          'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-821-1055',
                                           style: TextStyle(
                                             fontSize: 19.sp,
                                             color: Colors.grey.shade500,

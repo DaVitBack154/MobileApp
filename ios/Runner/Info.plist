@@ -67,5 +67,9 @@
 		<string>sms</string>
 		<string>tel</string>
 	</array>
+	<!-- notification -->
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Application for notification permission to notify company news and sending various system status report messages, with audible alarms and badges with icons, These notifications can be modified in settings.</string>
+	<!-- notification -->
 </dict>
 </plist>

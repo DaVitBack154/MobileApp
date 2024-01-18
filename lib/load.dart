@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-// import 'package:flutter/cupertino.dart';
 import 'package:animations/animations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -41,9 +39,8 @@ class _LoaddingState extends State<Loadding> {
 
       final prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString(KeyStorage.token);
-
       String? pin = prefs.getString(KeyStorage.pin);
-      bool cfPin = prefs.getBool(KeyStorage.cfPin) ?? false;
+      // bool cfPin = prefs.getBool(KeyStorage.cfPin) ?? false;
       if (token == null) {
         Navigator.pushReplacement(
           context,
@@ -63,7 +60,13 @@ class _LoaddingState extends State<Loadding> {
             ),
           );
         } else {
-          pin == null || !cfPin
+          // if (pin != null) {
+          //   AppNavigator.pushReplacementNamed(
+          //     PinCode.routeName,
+          //     arguments: const PinCodeArgs(isGotoNotif: false),
+          //   );
+          // }
+          pin == null
               ? Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -77,294 +80,6 @@ class _LoaddingState extends State<Loadding> {
         }
       }
     });
-  }
-
-  Future<bool> confirmAllrowNotificationDialog(
-      BuildContext context, String title, String? message) async {
-    final formkey = GlobalKey<FormState>();
-
-    Future<bool> onWillPop() async {
-      return false;
-    }
-
-    final query = MediaQuery.of(context);
-
-    bool status = await showModal(
-      configuration: const FadeScaleTransitionConfiguration(
-        transitionDuration: Duration(milliseconds: 300),
-        reverseTransitionDuration: Duration(milliseconds: 150),
-        barrierDismissible: false,
-      ),
-      context: context,
-      builder: (context) => MediaQuery(
-        data: query.copyWith(
-          textScaleFactor: query.textScaleFactor.clamp(1.0, 1.0),
-        ),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(
-            FocusNode(),
-          ),
-          behavior: HitTestBehavior.opaque,
-          child: LayoutBuilder(
-            builder: (context, constraints) => WillPopScope(
-              onWillPop: () => onWillPop().catchError(
-                (error) {
-                  if (kDebugMode) {
-                    print(
-                      'error ===>> $error',
-                    );
-                  }
-                  return false;
-                },
-              ),
-              child: Scaffold(
-                // backgroundColor: MyConstant.clear,
-                body: Form(
-                  key: formkey,
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Dialog(
-                            shape: RoundedRectangleBorder(
-                                // borderRadius:
-                                //     MyConstant.borderRadiusCircularSet30(
-                                //         constraints),
-                                ),
-                            child: Container(
-                              constraints: BoxConstraints(
-                                  // minHeight: MyConstant.setConstraintsMaxHeight(
-                                  //     constraints, 320),
-                                  minHeight: 320.h),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  //   SizedBox(
-                                  //     height: MyConstant.setConstraintsMaxHeight(
-                                  //         constraints, 160),
-                                  //     width: double.infinity,
-                                  //     child: ClipRRect(
-                                  //       borderRadius: BorderRadius.only(
-                                  //         topLeft: MyConstant.radiusCircularSet30(
-                                  //             constraints),
-                                  //         topRight:
-                                  //             MyConstant.radiusCircularSet30(
-                                  //                 constraints),
-                                  //       ),
-                                  //       child: SizedBox.fromSize(
-                                  //         child:
-                                  //             ShowImage(path: MyConstant.confirm),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  //   Container(
-                                  //     padding: EdgeInsets.only(
-                                  //       top: MyConstant.setConstraintsMaxHeight(
-                                  //           constraints,
-                                  //           message != null ? 20 : 30),
-                                  //       bottom:
-                                  //           MyConstant.setConstraintsMaxHeight(
-                                  //               constraints, 15),
-                                  //     ),
-                                  //     constraints: BoxConstraints(
-                                  //       minHeight: MyConstant
-                                  //               .setConstraintsMaxHeight(
-                                  //                   constraints, 320) -
-                                  //           MyConstant.setConstraintsMaxHeight(
-                                  //               constraints, 160),
-                                  //     ),
-                                  //     child: Column(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.center,
-                                  //       children: [
-                                  //         Padding(
-                                  //           padding: EdgeInsets.only(
-                                  //             left: MyConstant
-                                  //                 .setConstraintsMaxWidth(
-                                  //                     constraints, 8),
-                                  //             right: MyConstant
-                                  //                 .setConstraintsMaxWidth(
-                                  //                     constraints, 8),
-                                  //           ),
-                                  //           child: Row(
-                                  //             mainAxisAlignment:
-                                  //                 MainAxisAlignment.center,
-                                  //             children: [
-                                  //               Column(
-                                  //                 mainAxisAlignment:
-                                  //                     MainAxisAlignment.center,
-                                  //                 children: [
-                                  //                   Container(
-                                  //                     constraints: BoxConstraints(
-                                  //                       maxWidth: MyConstant
-                                  //                           .setConstraintsMaxWidthRowText(
-                                  //                               constraints, 275),
-                                  //                     ),
-                                  //                     child:
-                                  //                         ShowTitleNormalCenter(
-                                  //                       title: title,
-                                  //                       style: MyConstant()
-                                  //                           .h3StyleDark(
-                                  //                               constraints),
-                                  //                     ),
-                                  //                   ),
-                                  //                   if (message != null) ...[
-                                  //                     Container(
-                                  //                       constraints:
-                                  //                           BoxConstraints(
-                                  //                         maxWidth: MyConstant
-                                  //                             .setConstraintsMaxWidthRowText(
-                                  //                                 constraints,
-                                  //                                 275),
-                                  //                       ),
-                                  //                       child:
-                                  //                           ShowTitleNormalCenter(
-                                  //                         title: message,
-                                  //                         style: MyConstant()
-                                  //                             .h3_5StyleDark(
-                                  //                                 constraints),
-                                  //                       ),
-                                  //                     ),
-                                  //                   ] else ...[
-                                  //                     const SizedBox(),
-                                  //                   ],
-                                  //                 ],
-                                  //               ),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //         if (message != null) ...[
-                                  //           Container(
-                                  //             margin: EdgeInsets.only(
-                                  //               top: MyConstant
-                                  //                   .setConstraintsMaxHeight(
-                                  //                       constraints, 25),
-                                  //             ),
-                                  //             child: Row(
-                                  //               mainAxisAlignment:
-                                  //                   MainAxisAlignment.center,
-                                  //               children: [
-                                  //                 ElevatedButton(
-                                  //                   style: MyConstant()
-                                  //                       .myButtonStylePrimary10(
-                                  //                           constraints),
-                                  //                   onPressed: () {
-                                  //                     Navigator.of(context)
-                                  //                         .pop(true);
-                                  //                   },
-                                  //                   child: ShowTitleMaxLines1(
-                                  //                     title: 'ยืนยัน',
-                                  //                     style: MyConstant()
-                                  //                         .h4StyleWhile(
-                                  //                             constraints),
-                                  //                   ),
-                                  //                 ),
-                                  //                 Container(
-                                  //                   margin: EdgeInsets.only(
-                                  //                     left: MyConstant
-                                  //                         .setConstraintsMaxWidth(
-                                  //                             constraints, 30),
-                                  //                   ),
-                                  //                   child: ElevatedButton(
-                                  //                     style: MyConstant()
-                                  //                         .myButtonStyleRed10(
-                                  //                             constraints),
-                                  //                     onPressed: () {
-                                  //                       Navigator.of(context)
-                                  //                           .pop(false);
-                                  //                     },
-                                  //                     child: ShowTitleMaxLines1(
-                                  //                       title: 'ไม่',
-                                  //                       style: MyConstant()
-                                  //                           .h4StyleWhile(
-                                  //                               constraints),
-                                  //                     ),
-                                  //                   ),
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //           ),
-                                  //         ] else ...[
-                                  //           Container(
-                                  //             margin: EdgeInsets.only(
-                                  //               top: MyConstant
-                                  //                   .setConstraintsMaxHeight(
-                                  //                       constraints, 40),
-                                  //             ),
-                                  //             child: Row(
-                                  //               mainAxisAlignment:
-                                  //                   MainAxisAlignment.center,
-                                  //               children: [
-                                  //                 ElevatedButton(
-                                  //                   style: MyConstant()
-                                  //                       .myButtonStylePrimary10(
-                                  //                           constraints),
-                                  //                   onPressed: () {
-                                  //                     Navigator.of(context)
-                                  //                         .pop(true);
-                                  //                   },
-                                  //                   child: ShowTitleMaxLines1(
-                                  //                     title: 'ยืนยัน',
-                                  //                     style: MyConstant()
-                                  //                         .h4StyleWhile(
-                                  //                             constraints),
-                                  //                   ),
-                                  //                 ),
-                                  //                 Container(
-                                  //                   margin: EdgeInsets.only(
-                                  //                     left: MyConstant
-                                  //                         .setConstraintsMaxWidth(
-                                  //                             constraints, 30),
-                                  //                   ),
-                                  //                   child: ElevatedButton(
-                                  //                     style: MyConstant()
-                                  //                         .myButtonStyleRed10(
-                                  //                             constraints),
-                                  //                     onPressed: () {
-                                  //                       Navigator.of(context)
-                                  //                           .pop(false);
-                                  //                     },
-                                  //                     child: ShowTitleMaxLines1(
-                                  //                       title: 'ไม่',
-                                  //                       style: MyConstant()
-                                  //                           .h4StyleWhile(
-                                  //                               constraints),
-                                  //                     ),
-                                  //                   ),
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ).catchError(
-      (error) {
-        if (kDebugMode) {
-          print(
-            'error ===>> $error',
-          );
-        }
-      },
-    );
-
-    return status;
   }
 
   @override
