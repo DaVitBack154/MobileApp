@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/login_page/register_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../config/app_info.dart';
 
 class Accept_rule extends StatefulWidget {
@@ -18,6 +20,100 @@ class _Accept_ruleState extends State<Accept_rule> {
   String currentYomrub3 = 'ยินยอม';
   String currentYomrub4 = 'ยินยอม';
   String currentYomrub5 = 'ยินยอม';
+
+  Future<void> openlaunchUrl(Uri url) async {
+    if (mounted) {
+      if (await canLaunchUrl(url)
+          .timeout(
+        const Duration(seconds: 20),
+      )
+          .catchError(
+        (error) {
+          if (kDebugMode) {
+            print(
+              'error ===>> $error',
+            );
+          }
+          return false;
+        },
+      )) {
+        if (!await launchUrl(url)
+            .timeout(
+          const Duration(seconds: 20),
+        )
+            .catchError(
+          (error) {
+            if (kDebugMode) {
+              print(
+                'error ===>> $error',
+              );
+            }
+            return false;
+          },
+        )) {
+          if (kDebugMode) {
+            print(
+              'Could not launch $url',
+            );
+          }
+        }
+      } else {
+        if (kDebugMode) {
+          print(
+            'Could not launch $url',
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> openlaunchUrlAppOther(String url) async {
+    if (mounted) {
+      // ignore: deprecated_member_use
+      if (await canLaunch(url)
+          .timeout(
+        const Duration(seconds: 20),
+      )
+          .catchError(
+        (error) {
+          if (kDebugMode) {
+            print(
+              'error ===>> $error',
+            );
+          }
+          return false;
+        },
+      )) {
+        // ignore: deprecated_member_use
+        if (!await launch(url)
+            .timeout(
+          const Duration(seconds: 20),
+        )
+            .catchError(
+          (error) {
+            if (kDebugMode) {
+              print(
+                'error ===>> $error',
+              );
+            }
+            return false;
+          },
+        )) {
+          if (kDebugMode) {
+            print(
+              'Could not launch $url',
+            );
+          }
+        }
+      } else {
+        if (kDebugMode) {
+          print(
+            'Could not launch $url',
+          );
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,23 +338,22 @@ class _Accept_ruleState extends State<Accept_rule> {
             ),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'ข้าพเจ้าขอแสดงเจตนายินยอมให้บริษัท เชฎฐ์ เอเชีย จำกัด (มหาชน) และบริษัทในเครือ ซึ่งประกอบด้วยบริษัท รีโซลูชั่น เวย์ จำกัด บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด และบริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด (รวมเรียกว่า “บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้า เพื่อวัตถุประสงค์ดังนี้',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                    ),
+                Text(
+                  'ข้าพเจ้าขอแสดงเจตนายินยอมให้ บริษัทเชฎฐ์เอเชียจำกัด(มหาชน) และบริษัทในเครือซึ่งประกอบด้วย บริษัทรีโซลูชั่นเวย์จำกัด บริษัทบริหารสินทรัพย์ซีเอฟเอเชียจำกัด และ บริษัทคอร์ทส์เม็กก้าสโตร์ (ประเทศไทย)จำกัด (รวมเรียกว่า“บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าเพื่อวัตถุประสงค์ดังนี้',
+                  style: TextStyle(
+                    fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
                 Text(
-                  '1. เพื่อแจ้งข้อมูลสิทธิพิเศษ : ให้ท่านได้รับสิทธิประโยชน์จากข้อมูลข่าวสารสำคัญ โปรโมชั่น การประชาสัมพันธ์ และการนำเสนอข้อมูลผลิตภัณฑ์หรือบริการ',
+                  '1. เพื่อแจ้งข้อมูลสิทธิพิเศษ ให้ท่านได้รับสิทธิประโยชน์จากข้อมูลข่าวสารสำคัญ โปรโมชั่น การประชาสัมพันธ์ และการนำเสนอข้อมูลผลิตภัณฑ์หรือบริการ',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Row(
                   children: [
@@ -302,10 +397,11 @@ class _Accept_ruleState extends State<Accept_rule> {
                   ],
                 ),
                 Text(
-                  '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business) : การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯ เพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
+                  '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business) การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯเพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Row(
                   children: [
@@ -349,10 +445,11 @@ class _Accept_ruleState extends State<Accept_rule> {
                   ],
                 ),
                 Text(
-                  '3. เพื่อใช้สำหรับการยืนยันตัวตน : กรณีที่เอกสารระบุตัวตนของท่าน เช่น บัตรประชาชน หนังสือเดินทาง หรือเอกสารอื่นใดที่ออกโดยหน่วยงานราชการ ซึ่งมีข้อมูลส่วนบุคคลที่มีความอ่อนไหว (Sensitive data) เช่น เชื้อชาติ ศาสนา โดยบริษัทฯ จะไม่นำข้อมูลดังกล่าวไปใช้เพื่อวัตถุประสงค์อื่น และคำนึงถึงความปลอดภัยของข้อมูลท่านเป็นสำคัญ',
+                  '3. เพื่อใช้สำหรับการยืนยันตัวตน กรณีที่เอกสารระบุตัวตนของท่าน เช่น บัตรประชาชน หนังสือเดินทาง หรือเอกสารอื่นใดที่ออกโดยหน่วยงานราชการซึ่งมีข้อมูลส่วนบุคคลที่มีความอ่อนไหว (Sensitive data) เช่น เชื้อชาติ ศาสนา โดยบริษัทฯ จะไม่นำข้อมูลดังกล่าวไปใช้เพื่อวัตถุประสงค์อื่น และคำนึงถึงความปลอดภัยของข้อมูลท่านเป็นสำคัญ',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Row(
                   children: [
@@ -396,10 +493,11 @@ class _Accept_ruleState extends State<Accept_rule> {
                   ],
                 ),
                 Text(
-                  '4. เพื่อใช้สำหรับการยอมรับเอกสารอิเล็กทรอนิกส์ : กรณีนี้จะถือว่า ท่านไม่ประสงค์ในการรับบริการจัดส่งเอกสาร เช่น ใบเสร็จรับเงิน ใบกำกับภาษี หรือเอกสารอื่น ๆ ในรูปแบบต้นฉบับเอกสาร (Hard Copy) โดยบริษัทฯ จะจัดส่งเอกสารให้แก่ท่านผ่านทางอีเมลซึ่งแจ้งไว้ในระบบ',
+                  '4. เพื่อใช้สำหรับการยอมรับเอกสารอิเล็กทรอนิกส์ กรณีนี้จะถือว่าท่านไม่ประสงค์ในการรับบริการจัดส่งเอกสาร เช่น ใบเสร็จรับเงิน ใบกำกับภาษี หรือเอกสารอื่น ๆ ในรูปแบบต้นฉบับเอกสาร (Hard Copy) โดยบริษัทฯ จะจัดส่งเอกสารให้แก่ท่านผ่านทางอีเมลซึ่งแจ้งไว้ในระบบ',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Row(
                   children: [
@@ -443,10 +541,11 @@ class _Accept_ruleState extends State<Accept_rule> {
                   ],
                 ),
                 Text(
-                  '5. เพื่อใช้สำหรับการโอนข้อมูลส่วนบุคลไปต่างประเทศ : ในบางกรณีที่บริษัทฯ มีความจำเป็นต้องส่งหรือโอนข้อมูลส่วนบุคคลของท่านไปยังต่างประเทศ เพื่อดำเนินการตามวัตถุประสงค์ในการให้บริการแก่ท่าน เช่น เพื่อส่งข้อมูลส่วนบุคคลไปยังระบบคลาวด์ (Cloud) ที่มีแพลตฟอร์มหรือเครื่องแม่ข่าย (Server) อยู่ต่างประเทศ เช่น ประเทศสิงคโปร์ หรือสหรัฐอเมริกา โดยบริษัทฯ ได้ดำเนินการตามหลักเกณฑ์การให้ความคุ้มครองข้อมูลส่วนบุคคลที่ส่งหรือโอนไปยังต่างประเทศที่คณะกรรมการคุ้มครองข้อมูลส่วนบุคคลประกาศกำหนด',
+                  '5. เพื่อใช้สำหรับการโอนข้อมูลส่วนบุคลไปต่างประเทศในบางกรณีที่บริษัทฯมีความจำเป็นต้องส่งหรือโอนข้อมูลส่วนบุคคลของท่านไปยังต่างประเทศเพื่อดำเนินการตามวัตถุประสงค์ในการให้บริการแก่ท่าน เช่น เพื่อส่งข้อมูลส่วนบุคคลไปยังระบบคลาวด์ (Cloud) ที่มีแพลตฟอร์มหรือเครื่องแม่ข่าย (Server) อยู่ต่างประเทศ เช่น ประเทศสิงคโปร์ หรือสหรัฐอเมริกา โดยบริษัทฯ ได้ดำเนินการตามหลักเกณฑ์การให้ความคุ้มครองข้อมูลส่วนบุคคลที่ส่งหรือโอนไปยังต่างประเทศที่คณะกรรมการคุ้มครองข้อมูลส่วนบุคคลประกาศกำหนด',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Row(
                   children: [
@@ -497,15 +596,48 @@ class _Accept_ruleState extends State<Accept_rule> {
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
+                  textAlign: TextAlign.justify,
                 ),
                 Text(
-                  'ข้าพเจ้าได้อ่านและเข้าใจในรายละเอียดเกี่ยวกับการเก็บ รวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของบริษัทฯ ตามที่ระบุในนโยบายคุ้มครองข้อมูลส่วนบุคคล รวมถึงประกาศความเป็นส่วนตัวที่เกี่ยวข้องแล้ว (รายละเอียดตามที่ปรากฏในเว็บไซต์ https://www.chase.co.th/th/corporate-governance/privacy-notice) ทั้งนี้ ข้าพเจ้ารับทราบว่า ข้าพเจ้ามีสิทธิในการเพิกถอนความยินยอมดังกล่าวได้ตลอดเวลา',
+                  'ข้าพเจ้าได้อ่านและเข้าใจในรายละเอียดเกี่ยวกับการเก็บ รวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของบริษัทฯตามที่ระบุในนโยบายคุ้มครองข้อมูลส่วนบุคคลรวมถึงประกาศความเป็นส่วนตัวที่เกี่ยวข้องแล้ว รายละเอียดตามที่ปรากฏในเว็บไซต์',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
+                  textAlign: TextAlign.justify,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (mounted) {
+                      openlaunchUrl(
+                        Uri.parse(
+                            'https://www.chase.co.th/th/corporate-governance/privacy-notice'),
+                      ).catchError(
+                        (error) {
+                          if (kDebugMode) {
+                            print(
+                              'error ===>> $error',
+                            );
+                          }
+                          return false;
+                        },
+                      );
+                    }
+                  },
+                  child: Text(
+                    'https://www.chase.co.th/th/corporate-governance/privacy-notice',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.blue.shade800,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                Text(
+                  'ทั้งนี้ข้าพเจ้ารับทราบว่าข้าพเจ้ามีสิทธิในการเพิกถอนความยินยอมดังกล่าวได้ตลอดเวลา',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

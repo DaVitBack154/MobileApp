@@ -172,8 +172,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       maxLength: 10,
                       keyboardType: TextInputType.phone,
                       onChanged: (value) {
-                        value.isEmpty
-                            ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์ให้ครบ'
+                        value.isEmpty || value.length < 10
+                            ? errorTextPhone =
+                                'กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก'
                             : errorTextPhone = null;
                         setState(() {});
                       },
@@ -307,40 +308,70 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (_updateController.phoneController.text.isNotEmpty) {
-                      await _updateController.fetchUpdateProfile(
-                        phone: _updateController.phoneController.text,
-                      );
-                    } else if (_updateController
-                        .emailController.text.isNotEmpty) {
-                      if (!EmailValidator.validate(
-                          _updateController.emailController.text)) {
+                    if (_updateController.phoneController.text.length < 10) {
+                      setState(() {
+                        errorTextPhone;
+                      });
+                    } else {
+                      if (_updateController.phoneController.text[0] == '0') {
+                        await _updateController.fetchUpdateProfile(
+                          phone: _updateController.phoneController.text,
+                        );
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Phone_page(),
+                          ),
+                        );
+                      } else {
                         setState(() {
-                          errorTextEmail = 'กรุณากรอกรูปแบบ อีเมลให้ถูกต้อง';
+                          errorTextPhone = 'เบอร์โทรศัพท์ไม่ถูกต้อง';
                         });
-                        return;
                       }
-                      await _updateController.fetchUpdateProfile(
-                        email: _updateController.emailController.text,
-                      );
-                    } else if (_updateController
-                        .sentAddressuser.text.isNotEmpty) {
-                      await _updateController.fetchUpdateProfile(
-                          sentAddressuser:
-                              _updateController.sentAddressuser.text,
-                          provin: nameProvin ?? widget.provin.toString(),
-                          district: nameDistrict ?? widget.district.toString(),
-                          subdistrict:
-                              nameSubdistrict ?? widget.subdistrict.toString(),
-                          postcode: namePostcode ?? widget.postcode.toString());
                     }
+
+                    // if (_updateController.phoneController.text.isNotEmpty ||
+                    //     _updateController.phoneController.text.length >= 10) {
+                    //   await _updateController.fetchUpdateProfile(
+                    //     phone: _updateController.phoneController.text,
+                    //   );
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const Phone_page(),
+                    //     ),
+                    //   );
+                    // } else if (_updateController
+                    //     .emailController.text.isNotEmpty) {
+                    //   if (!EmailValidator.validate(
+                    //       _updateController.emailController.text)) {
+                    //     setState(() {
+                    //       errorTextEmail = 'กรุณากรอกรูปแบบ อีเมลให้ถูกต้อง';
+                    //     });
+                    //     return;
+                    //   }
+                    //   await _updateController.fetchUpdateProfile(
+                    //     email: _updateController.emailController.text,
+                    //   );
+                    // } else if (_updateController
+                    //     .sentAddressuser.text.isNotEmpty) {
+                    //   await _updateController.fetchUpdateProfile(
+                    //       sentAddressuser:
+                    //           _updateController.sentAddressuser.text,
+                    //       provin: nameProvin ?? widget.provin.toString(),
+                    //       district: nameDistrict ?? widget.district.toString(),
+                    //       subdistrict:
+                    //           nameSubdistrict ?? widget.subdistrict.toString(),
+                    //       postcode: namePostcode ?? widget.postcode.toString());
+                    // }
                     // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Phone_page(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const Phone_page(),
+                    //   ),
+                    // );
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(

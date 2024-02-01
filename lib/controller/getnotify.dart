@@ -18,7 +18,8 @@ class NotifyController {
     try {
       var response = await _userService.getNotify(token);
       if (response.statusCode == 200) {
-        
+        print('response.body -------');
+        print(response.body);
         usernotify = UserNotify.fromJson(json.decode(response.body));
         // print(UserNotify.fromJson(json.decode(response.body)).toJson());
       } else {

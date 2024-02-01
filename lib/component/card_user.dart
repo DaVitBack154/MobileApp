@@ -38,32 +38,86 @@ class CardUser extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.eCompanyName,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.normal,
-                            height: 0.06,
-                            color: Color(0xFF5C5C5C),
-                            //color: Colors.grey.shade600,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Text(
-                          data.tCompanyName,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFF5C5C5C),
-                          ),
-                        ),
-                      ],
-                    ),
+                    data.companyId == 'RWAY'
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Resolution Way Co., Ltd.',
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.normal,
+                                  height: 0.06,
+                                  color: Color(0xFF5C5C5C),
+                                  //color: Colors.grey.shade600,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Text(
+                                'บริษัท รีโซลูชั่น เวย์ จำกัด',
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color(0xFF5C5C5C),
+                                ),
+                              ),
+                            ],
+                          )
+                        : data.companyId == 'CFAA'
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'CF Asia Asset Management Co., Ltd.',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.normal,
+                                      height: 0.06,
+                                      color: Color(0xFF5C5C5C),
+                                      //color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Text(
+                                    'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF5C5C5C),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Courts Megastore (Thailand) Co., Ltd.',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.normal,
+                                      height: 0.06,
+                                      color: Color(0xFF5C5C5C),
+                                      //color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Text(
+                                    'บริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF5C5C5C),
+                                    ),
+                                  ),
+                                ],
+                              ),
                     Column(
                       children: [
                         Image.asset(
@@ -148,33 +202,38 @@ class CardUser extends StatelessWidget {
                   fontSize: 17.sp,
                 ),
               ),
-              SizedBox(
-                height: 5.h,
+              Text(
+                '${data.customerId}',
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18.sp,
+                  height: 1.1,
+                ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'No Card : ',
-                    style: TextStyle(
-                      color: Color(0xFF8A8A8A),
-                      fontSize: 18.sp,
-                      height: 1.2,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Text(
-                    '${data.customerId}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 18.sp,
-                      height: 1.1,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'No Card : ',
+              //       style: TextStyle(
+              //         color: Color(0xFF8A8A8A),
+              //         fontSize: 18.sp,
+              //         height: 1.2,
+              //         fontWeight: FontWeight.normal,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: 5.w,
+              //     ),
+              //     Text(
+              //       '${data.customerId}',
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.normal,
+              //         fontSize: 18.sp,
+              //         height: 1.1,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),

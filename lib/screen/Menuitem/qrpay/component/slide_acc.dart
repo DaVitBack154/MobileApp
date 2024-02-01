@@ -142,23 +142,49 @@ class _SlideAccState extends State<SlideAcc> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'ผู้รับโอนสิทธิ์ :',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey.shade600,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    accController.userAccModel
-                                        .data![_currentIndex].tCompanyName
-                                        .trim(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
+                                  accController.userAccModel
+                                              .data![_currentIndex].companyId ==
+                                          'CORT'
+                                      ? Text(
+                                          'บริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.sp,
+                                          ),
+                                        )
+                                      : Row(
+                                          children: [
+                                            Text(
+                                              'ผู้รับโอนสิทธิ์ : ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.grey.shade600,
+                                                fontSize: 16.sp,
+                                              ),
+                                            ),
+                                            accController
+                                                        .userAccModel
+                                                        .data![_currentIndex]
+                                                        .companyId ==
+                                                    'CFAA'
+                                                ? Text(
+                                                    'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16.sp,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'บริษัท รีโซลูชั่น เวย์ จำกัด',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16.sp,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
                                 ],
                               ),
                               SizedBox(

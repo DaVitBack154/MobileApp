@@ -104,7 +104,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
   }
 
   generateMonthsList() {
-    //print('now =>' + dateServer.toString());
+    print('now =>' + dateServer.toString());
     // _dateServer = '2025-03-04 22:41:36';
     final currentYear = int.parse(dateServer.toString().substring(0, 4));
     //currentValue = currentYear.toString() + dateServer.toString().substring(5, 7);
@@ -115,7 +115,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
       for (var m in defaultDate) {
         if (int.parse(m["id"].toString()) ==
             (newMonth <= 0 ? newMonth + 12 : newMonth)) {
-          // print('i==' + i.toString() + ' newmonth ' + newMonth.toString());
+          print('i==' + i.toString() + ' newmonth ' + newMonth.toString());
           var yyyymm;
           yyyymm = newMonth > 0
               ? currentYear.toString()
@@ -144,6 +144,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
     double width = MediaQuery.of(context).size.width;
     final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
     final query = MediaQuery.of(context);
+
     return MediaQuery(
       data: query.copyWith(
         // ignore: deprecated_member_use
@@ -297,7 +298,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                       Row(
                                         children: [
                                           Text(
-                                            'รายการใบเสร็จย้อนหลัง 6 เดือน',
+                                            'กรุณาเลือกใบเสร็จย้อนหลัง 6 เดือน',
                                             style: TextStyle(
                                               color: Color(0xFF5C5C5C),
                                               fontSize: 19.sp,
@@ -347,10 +348,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        'ไม่พบข้อมูลการจ่ายเงินของเดือนนี้',
+                                                        'ไม่พบข้อมูลการชำระเงินภายในเดือนนี้',
                                                         style: TextStyle(
                                                           color: Colors
-                                                              .grey.shade500,
+                                                              .red.shade500,
                                                           fontSize: 18.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -424,8 +425,8 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                                               'ยอดที่ชำระแล้ว',
                                                                               style: TextStyle(
                                                                                 fontWeight: FontWeight.normal,
-                                                                                fontSize: 18.sp,
-                                                                                color: Colors.grey.shade500,
+                                                                                fontSize: 19.sp,
+                                                                                color: Colors.grey.shade700,
                                                                               ),
                                                                             ),
                                                                             Row(
@@ -434,8 +435,8 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                                                   thaiBahtFormat.format(payment.payAmount),
                                                                                   style: TextStyle(
                                                                                     fontWeight: FontWeight.normal,
-                                                                                    fontSize: 18.sp,
-                                                                                    color: Colors.grey.shade500,
+                                                                                    fontSize: 19.sp,
+                                                                                    color: Colors.grey.shade700,
                                                                                   ),
                                                                                 ),
                                                                                 SizedBox(
@@ -445,8 +446,8 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                                                   'บาท',
                                                                                   style: TextStyle(
                                                                                     fontWeight: FontWeight.normal,
-                                                                                    fontSize: 18.sp,
-                                                                                    color: Colors.grey.shade500,
+                                                                                    fontSize: 19.sp,
+                                                                                    color: Colors.grey.shade700,
                                                                                   ),
                                                                                 )
                                                                               ],
@@ -454,7 +455,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
 
                                                                             //ค่านี้คือเดือน ค่ามันคือเลขที่สัญญา filชื่อ receiptNo  ในบอกที่หน้าจอ  ค่านี้อยู่ไหน
                                                                             // Text(payment.receiptNo.toString()) //R000000001
-                                                                          ], //ก็เอาไปเเบบนี้เเละ
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                     ),
@@ -467,31 +468,37 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                       }(),
                                       //card ด้านล่างทั้งหมด
                                       (isSelectedReceiptNo ?? true) != true
-                                          ? Text(
-                                              'กรุณาเลือกใบเสร็จที่ต้องการ',
-                                              style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: 19.sp),
+                                          ? Row(
+                                              children: [
+                                                Text(
+                                                  'กรุณาเลือกใบเสร็จที่ต้องการ',
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 19.sp),
+                                                ),
+                                              ],
                                             )
                                           : const SizedBox(),
                                     ],
                                   )
-                                : SizedBox(
-                                    width: width,
-                                    child: Card(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          widget.other ?? 'tdfdf',
-                                          style: TextStyle(
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.51,
+                                : widget.documentChose == 'หนังสือปิดบัญชี'
+                                    ? const SizedBox.shrink()
+                                    : SizedBox(
+                                        width: width,
+                                        child: Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              widget.other ?? 'tdfdf',
+                                              style: TextStyle(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.51,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
 
                             //ในส่วนการ ส่งค่ามาว่า user เลือก อะไรมา
                             SizedBox(
@@ -513,15 +520,15 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                             Text(
                               'รายการขอเอกสารจะมีระยะเวลาในวันทำการ 7 วันทำการ',
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17.sp,
+                                color: Colors.grey.shade600,
+                                fontSize: 18.sp,
                               ),
                             ),
                             Text(
                               'หากมีข้อสงสัย ติดต่อ Callcenter : ${widget.callcenter}',
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17.sp,
+                                color: Colors.grey.shade600,
+                                fontSize: 18.sp,
                               ),
                             ),
                             SizedBox(
@@ -777,7 +784,9 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         setState(() {
                                           isSelectedReceiptNo = true;
                                         });
-                                        print(chosesentRadio);
+
+                                        print(
+                                            'เคสออกมาได้แล้ว: $chosesentRadio');
                                         if (chosesentRadio == 'ส่งแบบอีเมล') {
                                           String result =
                                               await userReqController
@@ -805,27 +814,21 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           }
                                         } else if (chosesentRadio ==
                                             'ส่งแบบที่อยู่อาศัย') {
-                                          if (userReqController
-                                              .sentAddressuserController
-                                              .text
-                                              .isEmpty) {
-                                            errorTextaddress =
-                                                'กรุณากรอกที่อยู่ให้ถูกต้อง';
-                                            setState(() {});
-                                            return;
-                                          }
-
-                                          _formKey.currentState!.validate();
-
+                                          // _formKey.currentState!.validate();
+                                          print('object-------');
+                                          print(profileController
+                                              .userModel.user?.sentAddressuser);
                                           if (profileController.userModel.user
                                                   ?.sentAddressuser !=
                                               null) {
                                             print('Check value 4: $nameProvin');
-                                            if (nameProvin == null ||
-                                                nameProvin!.isEmpty) {
-                                              print('this condition');
-                                              return;
-                                            }
+
+                                            // if (nameProvin == null ||
+                                            //     nameProvin!.isEmpty) {
+                                            //   print('this condition');
+                                            //   return;
+                                            // }
+
                                             String result =
                                                 await userReqController
                                                     .fetchUserReq(
@@ -850,6 +853,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                   .userModel.user?.postcode,
                                             );
 
+                                            print('object----');
+                                            print(result);
+
+                                            // String updateProfile = await
                                             if (result.isNotEmpty) {
                                               // ignore: use_build_context_synchronously
                                               ScaffoldMessenger.of(context)
@@ -861,8 +868,25 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                               return;
                                             }
                                           } else {
+                                            if (userReqController
+                                                .sentAddressuserController
+                                                .text
+                                                .isEmpty) {
+                                              errorTextaddress =
+                                                  'กรุณากรอกที่อยู่ให้ถูกต้อง';
+                                              setState(() {});
+                                              return;
+                                            }
+                                            _formKey.currentState!.validate();
                                             if (nameProvin == null ||
                                                 nameProvin!.isEmpty) {
+                                              return;
+                                            } else if (nameDistrict == null ||
+                                                nameDistrict!.isEmpty) {
+                                              return;
+                                            } else if (nameSubdistrict ==
+                                                    null ||
+                                                nameSubdistrict!.isEmpty) {
                                               return;
                                             }
 
@@ -996,6 +1020,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         });
                                       }
                                     } else {
+                                      print('อันนี้ส่วน เอล: $chosesentRadio');
                                       if (chosesentRadio == 'ส่งแบบอีเมล') {
                                         String result = await userReqController
                                             .fetchUserReq(
@@ -1034,7 +1059,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           print('Check value1: $nameProvin');
                                           if (nameProvin == null ||
                                               nameProvin!.isEmpty) {
-                                            print('this condition');
+                                            print('this conditionccccccccß');
                                             return;
                                           }
                                           String result =

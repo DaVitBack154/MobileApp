@@ -61,7 +61,7 @@ class UserReqController {
         var json = jsonDecode(response.body);
         userreq = UserReq.fromJson(json);
         //save this token in shared preferences and make user logged in and navigate
-        print('Test: ${userreq}');
+        print('Testaaaa: ${userreq}');
 
         return '';
       } else {

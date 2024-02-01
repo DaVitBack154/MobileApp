@@ -225,7 +225,7 @@ class _QRPaymentState extends State<QRPayment> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 10.h,
+                    height: 15.h,
                   ),
                   SizedBox(
                     child: Column(
@@ -235,20 +235,20 @@ class _QRPaymentState extends State<QRPayment> {
                         Text(
                           'ขั้นตอนการชำระเงิน',
                           style: TextStyle(
-                            fontSize: 19.sp,
+                            fontSize: 20.sp,
                           ),
                         ),
                         Text(
-                          '• บันทึก QR Code',
+                          '• กดปุ่มบันทึก QR Code',
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             color: Colors.grey,
                           ),
                         ),
                         Text(
                           '• นำ QR Code ที่บันทึกชำระเงินที่แอพธนาคาร',
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 18.sp,
                             color: Colors.grey,
                           ),
                         ),

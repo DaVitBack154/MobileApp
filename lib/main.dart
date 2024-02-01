@@ -15,6 +15,7 @@ void main() async {
   LocalNotification.init();
   FirebaseCloudMessagingProvider.onFirebaseMessageReceived();
   FirebaseCloudMessagingProvider.setupInteractedMessage();
+
   runApp(const MyApp());
 }
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, child) {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         return MaterialApp(
           title: 'Chase Mobile',
           navigatorKey: AppNavigator.navigatorKey,

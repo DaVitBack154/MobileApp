@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/controller/register_controller.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
@@ -41,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Timer? _timer;
 
   int currentIndex = 0;
-  int countdown = 30; // เวลานับถอยหลังเริ่มต้นที่ 30 วินาที
+  int countdown = 60; // เวลานับถอยหลังเริ่มต้นที่ 30 วินาที
 
   bool idNotExists = false;
   bool isPhone = true;
@@ -125,13 +126,39 @@ class _RegisterPageState extends State<RegisterPage> {
         // await prefs.setString(
         //     KeyStorage.token, _registerController.userModel.token!);
         // ignore: use_build_context_synchronously
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) =>
+        //         const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+        //   ),
+        // );
+
+        // ignore: use_build_context_synchronously
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Center(
+              child: LoadingAnimationWidget.twistingDots(
+                leftDotColor: Color.fromARGB(255, 241, 162, 3),
+                rightDotColor: Color.fromARGB(255, 227, 11, 11),
+                size: 60,
+              ),
+            );
+          },
+        );
+        await Future.delayed(const Duration(seconds: 4));
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
+            builder: (context) => const Pin_page(),
           ),
         );
+
         // } else {
         //   // ignore: use_build_context_synchronously
         //   showDialog(
@@ -166,16 +193,54 @@ class _RegisterPageState extends State<RegisterPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("แจ้งเตือน"),
-              content: Text("ขออภัยระบบขัดข้องA2"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("ปิด"),
+              content: SizedBox(
+                height: 190.h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/image/danger.png',
+                      height: 50.h,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      "รหัส OTP ไม่ถูกต้องกรุณาลองใหม่อีกครั้ง",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        // color: Colors.grey.shade500,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            size: 25.h,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
+              // actions: [
+
+              // ],
             );
           },
         );
@@ -191,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void startCountdown() {
     setState(() {
-      countdown = 30; // เริ่มนับถอยหลัง 30 วินาที
+      countdown = 60; // เริ่มนับถอยหลัง 30 วินาที
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -199,7 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
         countdown--; // ลดเวลานับถอยหลังลงทีละ 1 วินาที
       });
 
-      if (timer.tick == 30) {
+      if (timer.tick == 60) {
         timer.cancel();
         _timer?.cancel();
       }
@@ -835,7 +900,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(
-                  width: 20.w,
+                  width: 10.w,
                 ),
                 countdown > 0
                     ? Text(

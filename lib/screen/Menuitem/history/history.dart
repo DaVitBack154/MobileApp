@@ -168,10 +168,10 @@ class _HistoryState extends State<History> {
                                           horizontal: 25.w,
                                         ),
                                         child: Text(
-                                          'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-821-1055',
+                                          'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
                                           style: TextStyle(
                                             fontSize: 19.sp,
-                                            color: Colors.grey.shade500,
+                                            color: Colors.grey.shade700,
                                           ),
                                         ),
                                       )

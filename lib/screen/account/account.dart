@@ -191,11 +191,11 @@ class _AccountState extends State<Account> {
                                                       horizontal: 25.w,
                                                     ),
                                                     child: Text(
-                                                      'ไม่พบข้อมูลสมาชิกในระบบ สนใจสินเชื่อกรุณาติดต่อ CallCenter 02-821-1055',
+                                                      'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
                                                       style: TextStyle(
                                                         fontSize: 20.sp,
                                                         color: Colors
-                                                            .grey.shade500,
+                                                            .grey.shade700,
                                                       ),
                                                     ),
                                                   )

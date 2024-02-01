@@ -33,7 +33,7 @@ class _HomepageState extends State<Homepage> {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString(KeyStorage.token) ?? '';
     await profileController.fetchProfileData(token);
-    print('${profileController.userModel.user?.statusStar}+aaaaaa');
+    // print('${profileController.userModel.user?.statusStar}+aaaaaa');
     if (profileController.userModel.user?.statusStar == 'Y') {
       _showRatingDialog(context);
     }

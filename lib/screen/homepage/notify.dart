@@ -34,6 +34,8 @@ class _NotifyState extends State<Notify> {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('token'); // ดึง Token
+      print('object ----- :token');
+      print(token);
 
       UpdateNotiPromotion updateNotiPromotion = UpdateNotiPromotion();
       await updateNotiPromotion.fetchUpdateNotiPromotion(
@@ -50,6 +52,12 @@ class _NotifyState extends State<Notify> {
       await notifyController.fetchNotify();
       await notifyPromotionController.fetchNotifyPromotion();
       loading = false;
+
+      // print('------->');
+      // print(notifyController.usernotify.data![0].id);
+      // // print(notifyPromotionController.notipromotion.data);
+      // print('------->');
+
       setState(() {});
     } catch (error) {
       //print('เกิดข้อผิดพลาดในการดึงข้อมูล: $error');
@@ -167,7 +175,7 @@ class _NotifyState extends State<Notify> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (notifyController.usernotify.data!.isNotEmpty &&
+                            if (notifyController.usernotify.data!.isNotEmpty ||
                                 notifyPromotionController
                                     .notipromotion.data!.isNotEmpty) ...[
                               ...List.generate(
@@ -175,6 +183,7 @@ class _NotifyState extends State<Notify> {
                                 (index) {
                                   final data =
                                       notifyController.usernotify.data?[index];
+
                                   if (data?.flag == 'One') {
                                     return Padding(
                                       padding: EdgeInsets.symmetric(
@@ -304,63 +313,63 @@ class _NotifyState extends State<Notify> {
                                     );
                                   }
 
-                                  if (data?.flag == 'All' ||
-                                      data?.title == 'แจ้งปิดปรับปรุงระบบ') {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 10.h,
-                                        horizontal: 10.w,
-                                      ),
-                                      child: Container(
-                                        width: width,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 10.h,
-                                            vertical: 10.w,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/image/danger.png',
-                                                    height: 20.h,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10.w,
-                                                  ),
-                                                  Text(
-                                                    data?.title.toString() ??
-                                                        '',
-                                                    style: TextStyle(
-                                                      fontSize: 20.sp,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                'ทางระบบจะปิดปรับปรุง เวลา 20.00 และเปิดทำการ เวลา 21.00 ขอบคุณที่ใช้บริการ',
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
+                                  // if (data?.flag == 'All' ||
+                                  //     data?.title == 'แจ้งปิดปรับปรุงระบบ') {
+                                  //   return Padding(
+                                  //     padding: EdgeInsets.symmetric(
+                                  //       vertical: 10.h,
+                                  //       horizontal: 10.w,
+                                  //     ),
+                                  //     child: Container(
+                                  //       width: width,
+                                  //       decoration: BoxDecoration(
+                                  //         color: Colors.grey.shade100,
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(10),
+                                  //       ),
+                                  //       child: Padding(
+                                  //         padding: EdgeInsets.symmetric(
+                                  //           horizontal: 10.h,
+                                  //           vertical: 10.w,
+                                  //         ),
+                                  //         child: Column(
+                                  //           mainAxisAlignment:
+                                  //               MainAxisAlignment.center,
+                                  //           children: [
+                                  //             Row(
+                                  //               children: [
+                                  //                 Image.asset(
+                                  //                   'assets/image/danger.png',
+                                  //                   height: 20.h,
+                                  //                   fit: BoxFit.cover,
+                                  //                 ),
+                                  //                 SizedBox(
+                                  //                   width: 10.w,
+                                  //                 ),
+                                  //                 Text(
+                                  //                   data?.title.toString() ??
+                                  //                       '',
+                                  //                   style: TextStyle(
+                                  //                     fontSize: 20.sp,
+                                  //                   ),
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //             SizedBox(
+                                  //               height: 10.h,
+                                  //             ),
+                                  //             Text(
+                                  //               'ทางระบบจะปิดปรับปรุง เวลา 20.00 และเปิดทำการ เวลา 21.00 ขอบคุณที่ใช้บริการ',
+                                  //               style: TextStyle(
+                                  //                 fontSize: 16.sp,
+                                  //               ),
+                                  //             )
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   );
+                                  // }
 
                                   return const Text('ไม่พบข้อมูล');
                                 },

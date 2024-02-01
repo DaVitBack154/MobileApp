@@ -222,9 +222,9 @@ class _LoginState extends State<Login> {
                                                   Text(
                                                     "ไม่พบเลขบัตรประชาชนในระบบ กรุณาสมัครสมาชิกเพื่อเข้าสู่ระบบ",
                                                     style: TextStyle(
-                                                      fontSize: 19.sp,
+                                                      fontSize: 20.sp,
                                                       color:
-                                                          Colors.grey.shade500,
+                                                          Colors.grey.shade600,
                                                       fontWeight:
                                                           FontWeight.normal,
                                                     ),

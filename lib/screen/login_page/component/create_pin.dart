@@ -26,11 +26,6 @@ class _Create_pinState extends State<Create_pin> {
   onChange(String number) async {
     if (number.length == length) {
       final prefs = await SharedPreferences.getInstance();
-
-      await _updateController.fetchUpdateProfile(
-        pin: number,
-      );
-
       await prefs.setString(KeyStorage.pin, number);
 
       controller.clear();
@@ -44,8 +39,10 @@ class _Create_pinState extends State<Create_pin> {
     if (number.length == length) {
       final prefs = await SharedPreferences.getInstance();
       String pin = prefs.getString(KeyStorage.pin) ?? '';
-
       if (pin == number) {
+        await _updateController.fetchUpdateProfile(
+          pin: number,
+        );
         // TODO: เหมือนกันให้ทำอะไร
         print('pin ถูก');
 
@@ -57,8 +54,8 @@ class _Create_pinState extends State<Create_pin> {
           builder: (BuildContext context) {
             return Center(
               child: LoadingAnimationWidget.twistingDots(
-                leftDotColor: const Color.fromARGB(255, 236, 160, 6),
-                rightDotColor: const Color(0xFFEA3799),
+                leftDotColor: Color.fromARGB(255, 246, 165, 3),
+                rightDotColor: Color.fromARGB(255, 224, 24, 24),
                 size: 60,
               ),
             );
@@ -101,7 +98,7 @@ class _Create_pinState extends State<Create_pin> {
                       "รหัส PIN ไม่ถูกต้องกรุณากรอก PIN ใหม่อีกครั้ง",
                       style: TextStyle(
                         fontSize: 19.sp,
-                        color: Colors.grey.shade500,
+                        color: Colors.grey.shade600,
                         fontWeight: FontWeight.normal,
                       ),
                     ),

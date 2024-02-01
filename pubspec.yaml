@@ -47,6 +47,7 @@ dependencies:
   email_validator: ^2.1.17
   loading_animation_widget: ^1.2.0+4
   snippet_coder_utils: ^1.0.14
+  keyboard_actions: ^4.2.0
   flutter_screenutil: ^5.9.0
   flutter_launcher_icons: ^0.13.1
   rename: ^3.0.1

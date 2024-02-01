@@ -26,7 +26,8 @@ class _Forget_phoneState extends State<Forget_phone> {
 
   String? validator;
   String? validator1;
-
+  bool statusNumber = false;
+  // bool newnumber = false;
   final CreateOTPController createotpController = CreateOTPController();
 
   Future setOTP() async {
@@ -171,6 +172,10 @@ class _Forget_phoneState extends State<Forget_phone> {
                         cursorColor: Colors.grey.shade400,
                         keyboardType: TextInputType.phone,
                         maxLength: 10,
+                        // onChanged: (va) {
+                        //   print('aaaaaaa');
+
+                        // },
                         onChanged: (value) {
                           validator = null;
                           setState(() {});
@@ -184,9 +189,11 @@ class _Forget_phoneState extends State<Forget_phone> {
                                   .fetchGetPhone(
                                       authController.phoneController.text)
                                   .then((value) {
-                                validator =
-                                    value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
-                                setState(() {});
+                                setState(() {
+                                  validator =
+                                      value ? null : 'ไม่พบเบอร์โทรศัพท์ในระบบ';
+                                  statusNumber = value;
+                                });
                               });
                             }
                           });
@@ -237,26 +244,41 @@ class _Forget_phoneState extends State<Forget_phone> {
                         ),
                         keyboardType: TextInputType.number,
                         maxLength: 10,
+                        // validator: (value) {
+                        //   print(value);
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'กรุณาใส่เบอร์โทรศัพท์ใหม่';
+                        //   } else if (value.length < 10) {
+                        //     return 'กรุณาใส่เบอร์โทรศัพท์ใหม่ให้ครบ';
+                        //   }
+                        //   return null;
+                        // },
+                        onChanged: (value) {
+                          validator1 = null;
+                          setState(() {});
+
+                          _debouncer.call(() async {
+                            if (value.length < 10) {
+                              validator1 = 'ใส่หมายเลขให้ครบ 10 หลัก';
+                              setState(() {});
+                            } else if (value[0] != '0') {
+                              validator1 = 'เบอร์โทรศัพท์ไม่ถูกต้อง';
+                              setState(() {});
+                            }
+                          });
+                        },
                         validator: (value) {
-                          print(value);
-                          if (value == null || value.isEmpty) {
-                            return 'กรุณาใส่เบอร์โทรศัพท์ใหม่';
-                          } else if (value.length < 10) {
-                            return 'กรุณาใส่เบอร์โทรศัพท์ใหม่ให้ครบ';
-                          }
-                          return null;
+                          return validator1;
                         },
                       ),
                       SizedBox(height: 30.h),
                       ElevatedButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            bool isphone = await authController.fetchGetPhone(
-                                authController.phoneController.text);
-                            if (isphone) {
-                              // await authController.fetchUpdateProfile(
-                              //   phone: authController.phoneNewController.text,
-                              // );
+                          if (statusNumber) {
+                            if (authController.phoneNewController.text.length ==
+                                    10 &&
+                                authController.phoneNewController.text[0] ==
+                                    "0") {
                               await setOTP();
                               Navigator.push(
                                 context,
@@ -266,16 +288,35 @@ class _Forget_phoneState extends State<Forget_phone> {
                                           .phoneNewController.text),
                                 ),
                               );
-                              print('ถูกต้อง ทำการอัพเดทข้อมูล');
-                              // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
-                              // ...
-                            } else {
-                              print(
-                                  'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
-                              // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
-                              // ...
                             }
                           }
+
+                          // bool isphone = await authController.fetchGetPhone(
+                          //     authController.phoneController.text);
+                          // if (_formKey.currentState!.validate()) {
+                          //   if (isphone) {
+                          //     // await authController.fetchUpdateProfile(
+                          //     //   phone: authController.phoneNewController.text,
+                          //     // );
+                          //     await setOTP();
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => Phone_page(
+                          //             newphone: authController
+                          //                 .phoneNewController.text),
+                          //       ),
+                          //     );
+                          //     print('ถูกต้อง ทำการอัพเดทข้อมูล');
+                          //     // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
+                          //     // ...
+                          //   } else {
+                          //     print(
+                          //         'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
+                          //     // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
+                          //     // ...
+                          //   }
+                          // }
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(

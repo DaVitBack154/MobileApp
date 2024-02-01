@@ -24,7 +24,7 @@ class Phone_page extends StatefulWidget {
 
 class _Phone_pageState extends State<Phone_page> {
   String phoneNumber = '';
-  int countdown = 30; // เวลานับถอยหลังเริ่มต้นที่ 30 วินาที
+  int countdown = 60; // เวลานับถอยหลังเริ่มต้นที่ 30 วินาที
   late Timer countdownTimer;
   String? getotpstatus;
 
@@ -63,7 +63,7 @@ class _Phone_pageState extends State<Phone_page> {
   //ฟังชั่นนับถอยหลังตอนลอคอิน
   void startCountdown() {
     setState(() {
-      countdown = 30; // เริ่มนับถอยหลัง 30 วินาที
+      countdown = 60; // เริ่มนับถอยหลัง 30 วินาที
     });
 
     countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {

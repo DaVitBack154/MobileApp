@@ -20,6 +20,8 @@ class AccController {
       //print(response);
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
+        print('object --->');
+        print(json);
         userAccModel = UserAccModel.fromJson(json);
         //print('userAccModel=>' + '$userAccModel');
         // debugPrint(userAccModel+'gfgfg');

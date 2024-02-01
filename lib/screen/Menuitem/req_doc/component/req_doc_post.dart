@@ -299,6 +299,19 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         onPressed: () {
                           if (choseRadio == 'เอกสารอื่นๆ') {
                             if (_formKey.currentState!.validate()) {
+                              String callcenterNumber = '';
+                              if (accController.userAccModel
+                                      .data![_currentIndex].companyId ==
+                                  'CFAA') {
+                                callcenterNumber = '02-826-5377';
+                              } else if (accController.userAccModel
+                                      .data![_currentIndex].companyId ==
+                                  'RWAY') {
+                                callcenterNumber = '02-821-1055';
+                              } else {
+                                callcenterNumber = '02-857-5188';
+                              }
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -308,12 +321,23 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                           .data![_currentIndex].customerId,
                                       other: userReqController
                                           .otherController.text,
-                                      callcenter: accController.userAccModel
-                                          .data![_currentIndex].callCenter),
+                                      callcenter: callcenterNumber),
                                 ),
                               );
                             }
                           } else {
+                            String callcenterNumber = '';
+                            if (accController.userAccModel.data![_currentIndex]
+                                    .companyId ==
+                                'CFAA') {
+                              callcenterNumber = '02-826-5377';
+                            } else if (accController.userAccModel
+                                    .data![_currentIndex].companyId ==
+                                'RWAY') {
+                              callcenterNumber = '02-821-1055';
+                            } else {
+                              callcenterNumber = '02-857-5188';
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -323,8 +347,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                         .data![_currentIndex].customerId,
                                     other:
                                         userReqController.otherController.text,
-                                    callcenter: accController.userAccModel
-                                        .data![_currentIndex].callCenter),
+                                    callcenter: callcenterNumber),
                               ),
                             );
                           }

@@ -56,14 +56,14 @@ class RegisterController {
         yomrub4: yomrub4,
         yomrub5: yomrub5,
       );
-      print("TOKENAAA: ${response.statusCode}");
+
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
-        print('TOKENBB: ${json}');
+        // print('TOKENBB: ${json}');
         userModel = UserModel.fromJson(json);
-        print('TOKENBB: ${userModel.toString()}');
-        print('TOKENBB: ${userModel.user.toString()}');
-        print('TOKENBB: ${userModel.user!.id.toString()}');
+
+        print('object-------');
+        print('TOKENBB: ${userModel.token.toString()}');
         await prefs.setString(KeyStorage.token, userModel.token!);
         await prefs.setString(KeyStorage.uid, userModel.user!.id!);
         await prefs.setString(KeyStorage.name, userModel.user!.name!);

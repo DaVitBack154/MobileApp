@@ -119,7 +119,7 @@ class _BottombarState extends State<Bottombar> {
                         width: 28.w,
                         height: 28.h,
                       ),
-                label: 'Contract',
+                label: 'Contact',
               ),
               BottomNavigationBarItem(
                 icon: pageIndex == 3

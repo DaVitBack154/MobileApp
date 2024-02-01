@@ -58,6 +58,7 @@ class _SlideHisState extends State<SlideHis> {
             data: query.copyWith(
               // ignore: deprecated_member_use
               textScaler:
+                  // ignore: deprecated_member_use
                   TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
             ),
             child: Column(
@@ -138,20 +139,42 @@ class _SlideHisState extends State<SlideHis> {
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.normal,
-                                color: Colors.grey,
+                                color: Colors.grey.shade700,
                               ),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
-                            Text(
-                              'หากมีข้อสงสัยกรุณาติดต่อ Call center : ${accController.userAccModel.data![_currentIndex].callCenter}',
-                              style: TextStyle(
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey,
-                              ),
-                            ),
+                            accController.userAccModel.data![_currentIndex]
+                                        .companyId ==
+                                    'CFAA'
+                                ? Text(
+                                    'หากมีข้อสงสัยกรุณาติดต่อ CallCenter : 02-826-5377',
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  )
+                                : accController.userAccModel
+                                            .data![_currentIndex].companyId ==
+                                        'RWAY'
+                                    ? Text(
+                                        'หากมีข้อสงสัยกรุณาติดต่อ CallCenter : 02-821-1055',
+                                        style: TextStyle(
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      )
+                                    : Text(
+                                        'หากมีข้อสงสัยกรุณาติดต่อ CallCenter : 02-857-5188',
+                                        style: TextStyle(
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
                           ],
                         )
                       : Expanded(

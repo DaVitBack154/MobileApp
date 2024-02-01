@@ -30,13 +30,13 @@ class Datum {
   final String tCustomerName;
   final String tCustomerSurname;
   final DateTime? birthDate;
-  final String eCompanyName;
-  final String callCenter;
-  final String emailCenter;
+  // final String eCompanyName;
+  // final String callCenter;
+  // final String emailCenter;
   final String companyId;
-  final String tCompanyName;
-  final String companyTaxId;
-  final String lineAd;
+  // final String tCompanyName;
+  // final String companyTaxId;
+  // final String lineAd;
   final DateTime reportDate;
   final double osBalance;
   final DateTime? lastPayDate;
@@ -59,13 +59,13 @@ class Datum {
     required this.tCustomerName,
     required this.tCustomerSurname,
     required this.birthDate,
-    required this.eCompanyName,
-    required this.callCenter,
-    required this.emailCenter,
+    // required this.eCompanyName,
+    // required this.callCenter,
+    // required this.emailCenter,
     required this.companyId,
-    required this.tCompanyName,
-    required this.companyTaxId,
-    required this.lineAd,
+    // required this.tCompanyName,
+    // required this.companyTaxId,
+    // required this.lineAd,
     required this.reportDate,
     required this.osBalance,
     required this.lastPayDate,
@@ -91,13 +91,13 @@ class Datum {
         birthDate: json["BirthDate"] == null
             ? null
             : DateTime.parse(json["BirthDate"]),
-        eCompanyName: json["ECompanyName"],
-        callCenter: json["CallCenter"],
-        emailCenter: json["EmailCenter"],
+        // eCompanyName: json["ECompanyName"],
+        // callCenter: json["CallCenter"],
+        // emailCenter: json["EmailCenter"],
         companyId: json["CompanyID"],
-        tCompanyName: json["TCompanyName"],
-        companyTaxId: json["CompanyTaxID"],
-        lineAd: json["LineAd"],
+        // tCompanyName: json["TCompanyName"],
+        // companyTaxId: json["CompanyTaxID"],
+        // lineAd: json["LineAd"],
         reportDate: DateTime.parse(json["ReportDate"]),
         osBalance: json["OSBalance"]?.toDouble(),
         lastPayDate: json["LastPayDate"] == null
@@ -123,13 +123,13 @@ class Datum {
         "TCustomerName": tCustomerName,
         "TCustomerSurname": tCustomerSurname,
         "BirthDate": birthDate?.toIso8601String(),
-        "ECompanyName": eCompanyName,
-        "CallCenter": callCenter,
-        "EmailCenter": emailCenter,
+        // "ECompanyName": eCompanyName,
+        // "CallCenter": callCenter,
+        // "EmailCenter": emailCenter,
         "CompanyID": companyId,
-        "TCompanyName": tCompanyName,
-        "CompanyTaxID": companyTaxId,
-        "LineAd": lineAd,
+        // "TCompanyName": tCompanyName,
+        // "CompanyTaxID": companyTaxId,
+        // "LineAd": lineAd,
         "ReportDate": reportDate.toIso8601String(),
         "OSBalance": osBalance,
         "LastPayDate": lastPayDate?.toIso8601String(),

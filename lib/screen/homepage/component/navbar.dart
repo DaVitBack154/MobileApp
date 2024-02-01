@@ -3,9 +3,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/controller/getnotify.dart';
 import 'package:mobile_chaseapp/controller/getnotifypromotion.dart';
 import 'package:mobile_chaseapp/controller/updatenotipromotion.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
+import 'package:mobile_chaseapp/model/respon_notify.dart';
 import 'package:mobile_chaseapp/model/respon_notipromotion.dart';
 import 'package:mobile_chaseapp/screen/homepage/notify.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
@@ -25,10 +27,13 @@ class _NavbarState extends State<Navbar> {
   NotifyPromotionController notifyPromotionController =
       NotifyPromotionController();
   UpdateNotiPromotion updateNotiPromotion = UpdateNotiPromotion();
+  NotifyController notifyController = NotifyController();
   String? name;
   bool? readed;
+  bool? readed2;
 
   NotiPromotion? notipromotion;
+  UserNotify? userNotify;
   Future<void> fetchProfileName() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -36,6 +41,9 @@ class _NavbarState extends State<Navbar> {
       name = prefs.getString(KeyStorage.name);
       notipromotion = await notifyPromotionController.fetchNotifyPromotion();
       readed = !(notipromotion!.data!.any((val) => val.statusRead == 'N'));
+
+      userNotify = await notifyController.fetchNotify();
+      readed2 = !(userNotify!.data!.any((val) => val.statusRead == 'N'));
       setState(() {});
       //showNotify();
     } catch (error) {
@@ -152,12 +160,12 @@ class _NavbarState extends State<Navbar> {
                             }
 
                             // อัปเดตค่า statusread เป็น "Y" ในฐานข้อมูล
-                            UpdateNotiPromotion updateNotiPromotion =
-                                UpdateNotiPromotion();
-                            await updateNotiPromotion.fetchUpdateNotiPromotion(
-                              token: token,
-                              statusRead: "Y",
-                            );
+                            // UpdateNotiPromotion updateNotiPromotion =
+                            //     UpdateNotiPromotion();
+                            // await updateNotiPromotion.fetchUpdateNotiPromotion(
+                            //   token: token,
+                            //   statusRead: "Y",
+                            // );
 
                             final result = await Navigator.push<bool>(
                               context,
@@ -176,7 +184,8 @@ class _NavbarState extends State<Navbar> {
                   ),
 
                   // != NULL AND equal to false
-                  if (readed != null && !readed!)
+                  if (readed != null && !readed! ||
+                      readed2 != null && !readed2!)
                     Container(
                       margin: const EdgeInsets.only(
                         left: 30,

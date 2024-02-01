@@ -84,6 +84,8 @@ class _ContractState extends State<Contract> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final query = MediaQuery.of(context);
+    print('object----');
+    print(width);
     return MediaQuery(
       data: query.copyWith(
         // ignore: deprecated_member_use
@@ -162,15 +164,15 @@ class _ContractState extends State<Contract> {
                                     switch (e.companyId) {
                                       case 'CFAA':
                                         path = 'assets/image/cfam.png';
-                                        size = 17;
+                                        size = 16;
                                         break;
                                       case 'RWAY':
                                         path = 'assets/image/rway.png';
-                                        size = 17;
+                                        size = 16;
                                         break;
                                       case 'CORT':
                                         path = 'assets/image/courts.png';
-                                        size = 15;
+                                        size = 14;
                                         break;
                                       default:
                                     }
