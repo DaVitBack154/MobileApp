@@ -53,7 +53,9 @@ class _NumpadState extends State<Numpad> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 45.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: 40.h,
+      ),
       child: Column(
         children: <Widget>[
           Preview(text: number, length: widget.length),

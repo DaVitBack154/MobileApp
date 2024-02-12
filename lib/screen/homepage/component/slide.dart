@@ -123,6 +123,7 @@ class _SlideState extends State<Slide> {
                 options: CarouselOptions(
                   viewportFraction: 0.9,
                   autoPlay: false,
+                  enableInfiniteScroll: false,
                   initialPage: currentIndex,
                   onPageChanged: (index, reason) {
                     setState(() {

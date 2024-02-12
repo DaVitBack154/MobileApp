@@ -1316,6 +1316,13 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
             district = DISTRICT
                 .where((element) => element["parentid"] == currentProvin)
                 .toList();
+            district.sort((a, b) {
+              String nameA = a["name"].toString();
+              String nameB = b["name"].toString();
+
+              // ใช้ Intl.collate เพื่อให้เปรียบเทียบตัวอักษรไทยได้ถูกต้อง
+              return nameA.compareTo(nameB);
+            });
           });
         },
         (onValidateVal) {

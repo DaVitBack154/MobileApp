@@ -81,6 +81,7 @@ class _SlideAccState extends State<SlideAcc> {
                       });
                     }),
               ),
+
               SizedBox(
                 height: 10.h,
               ),
@@ -138,55 +139,54 @@ class _SlideAccState extends State<SlideAcc> {
                           ),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  accController.userAccModel
-                                              .data![_currentIndex].companyId ==
-                                          'CORT'
-                                      ? Text(
+                              accController.userAccModel.data![_currentIndex]
+                                          .companyId ==
+                                      'CORT'
+                                  ? Row(
+                                      children: [
+                                        Text(
                                           'บริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16.sp,
                                           ),
-                                        )
-                                      : Row(
-                                          children: [
-                                            Text(
-                                              'ผู้รับโอนสิทธิ์ : ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.grey.shade600,
-                                                fontSize: 16.sp,
-                                              ),
-                                            ),
-                                            accController
-                                                        .userAccModel
-                                                        .data![_currentIndex]
-                                                        .companyId ==
-                                                    'CFAA'
-                                                ? Text(
-                                                    'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16.sp,
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    'บริษัท รีโซลูชั่น เวย์ จำกัด',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16.sp,
-                                                    ),
-                                                  ),
-                                          ],
                                         ),
-                                ],
-                              ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'ผู้รับโอนสิทธิ์ : ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.grey.shade600,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                        accController
+                                                    .userAccModel
+                                                    .data![_currentIndex]
+                                                    .companyId ==
+                                                'CFAA'
+                                            ? Text(
+                                                'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              )
+                                            : Text(
+                                                'บริษัท รีโซลูชั่น เวย์ จำกัด',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+
                               SizedBox(
                                 height: 15.h,
                               ),
@@ -317,7 +317,9 @@ class _SlideAccState extends State<SlideAcc> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PayFrom(),
+                      builder: (context) => PayFrom(
+                        currentIndex: _currentIndex,
+                      ),
                     ),
                   );
                 },

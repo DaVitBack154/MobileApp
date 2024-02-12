@@ -99,7 +99,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           title: () {
             if (widget.phone.isNotEmpty) {
               return Text(
-                'เบอร์โทรศัพ',
+                'เบอร์โทรศัพท์',
                 style: TextStyle(
                   fontSize: 23.sp,
                   fontWeight: FontWeight.bold,
@@ -274,7 +274,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           onChanged: (value) {
                             value.isEmpty || value.length < 5
                                 ? errorsentAddressuser =
-                                    'กรุณากรอกอีเมลให้ครบถ้วน'
+                                    'กรุณากรอกที่อยู่ให้ครบถ้วน'
                                 : errorsentAddressuser = null;
                             setState(() {});
                           },
@@ -301,6 +301,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   ),
                 ),
 
+              // Text(widget.phone.toString()),
+              // Text(widget.email.toString()),
+              // Text(widget.sentAddressuser.toString()),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 30.h,
@@ -308,27 +311,69 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (_updateController.phoneController.text.length < 10) {
-                      setState(() {
-                        errorTextPhone;
-                      });
-                    } else {
-                      if (_updateController.phoneController.text[0] == '0') {
-                        await _updateController.fetchUpdateProfile(
-                          phone: _updateController.phoneController.text,
-                        );
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Phone_page(),
-                          ),
-                        );
-                      } else {
+                    if (widget.phone.toString().isNotEmpty) {
+                      if (_updateController.phoneController.text.length < 10) {
                         setState(() {
-                          errorTextPhone = 'เบอร์โทรศัพท์ไม่ถูกต้อง';
+                          errorTextPhone;
                         });
+                      } else {
+                        if (_updateController.phoneController.text[0] == '0') {
+                          await _updateController.fetchUpdateProfile(
+                            phone: _updateController.phoneController.text,
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Phone_page(),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            errorTextPhone = 'เบอร์โทรศัพท์ไม่ถูกต้อง';
+                          });
+                        }
                       }
+                    } else if (widget.email.toString().isNotEmpty) {
+                      if (_updateController.emailController.text.isNotEmpty) {
+                        if (!EmailValidator.validate(
+                            _updateController.emailController.text)) {
+                          setState(() {
+                            errorTextEmail = 'กรุณากรอกรูปแบบ อีเมลให้ถูกต้อง';
+                          });
+                        } else {
+                          await _updateController.fetchUpdateProfile(
+                            email: _updateController.emailController.text,
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Phone_page(),
+                            ),
+                          );
+                        }
+                      }
+                    } else {
+                      if (_updateController.sentAddressuser.text.isNotEmpty) {
+                        await _updateController.fetchUpdateProfile(
+                            sentAddressuser:
+                                _updateController.sentAddressuser.text,
+                            provin: nameProvin ?? widget.provin.toString(),
+                            district:
+                                nameDistrict ?? widget.district.toString(),
+                            subdistrict: nameSubdistrict ??
+                                widget.subdistrict.toString(),
+                            postcode:
+                                namePostcode ?? widget.postcode.toString());
+                      }
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Phone_page(),
+                        ),
+                      );
                     }
 
                     // if (_updateController.phoneController.text.isNotEmpty ||
@@ -365,13 +410,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     //           nameSubdistrict ?? widget.subdistrict.toString(),
                     //       postcode: namePostcode ?? widget.postcode.toString());
                     // }
-                    // ignore: use_build_context_synchronously
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const Phone_page(),
-                    //   ),
-                    // );
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(

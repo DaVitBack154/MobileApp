@@ -121,7 +121,7 @@ class _ContractState extends State<Contract> {
                                   vertical: 70.h,
                                 ),
                                 child: Text(
-                                  'CONTRACT ',
+                                  'CONTACT ',
                                   style: TextStyle(
                                     fontSize: 28.sp,
                                     fontWeight: FontWeight.w700,

@@ -34,6 +34,7 @@ class _PromotionBonState extends State<PromotionBon> {
         child: AppBar(
           elevation: 0,
           flexibleSpace: Container(
+            width: width,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
@@ -43,15 +44,25 @@ class _PromotionBonState extends State<PromotionBon> {
               ),
             ),
           ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.orange,
-              size: 25.h,
+          leading: Container(
+            margin: EdgeInsets.symmetric(
+              vertical: 3.h,
+              horizontal: 3.w,
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.black.withOpacity(.3),
+            ),
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ),
       ),
@@ -65,50 +76,48 @@ class _PromotionBonState extends State<PromotionBon> {
             children: [
               widget.item.expiredDate == '' || widget.item.expiredDate == null
                   ? const SizedBox.shrink()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Color(0xFF395D5D),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'หมดเขตภายใน',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  formattedDate.format(
-                                    DateTime.parse(
-                                        widget.item.expiredDate.toString()),
-                                  ),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox.shrink(),
-                      ],
-                    ),
-              SizedBox(
-                height: 10.h,
-              ),
+                  : SizedBox(),
+              // : Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Container(
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(25),
+              //           color: Color(0xFF395D5D),
+              //         ),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(12),
+              //           child: Row(
+              //             children: [
+              //               Text(
+              //                 'หมดเขตภายใน',
+              //                 style: TextStyle(
+              //                   fontWeight: FontWeight.bold,
+              //                   fontSize: 17.sp,
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 width: 5.w,
+              //               ),
+              //               Text(
+              //                 formattedDate.format(
+              //                   DateTime.parse(
+              //                       widget.item.expiredDate.toString()),
+              //                 ),
+              //                 style: TextStyle(
+              //                   fontWeight: FontWeight.bold,
+              //                   fontSize: 17.sp,
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //       const SizedBox.shrink(),
+              //     ],
+              //   ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -136,6 +145,9 @@ class _PromotionBonState extends State<PromotionBon> {
                           color: Color(0xFF767676),
                         ),
                       ),
+                      SizedBox(
+                        height: 10.h,
+                      )
                     ],
                   ),
                 ),

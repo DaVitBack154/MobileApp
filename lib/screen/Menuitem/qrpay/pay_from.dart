@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/model/respon_accuser.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_accform.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class PayFrom extends StatefulWidget {
-  const PayFrom({super.key});
+  final int currentIndex;
+  const PayFrom({Key? key, required this.currentIndex}) : super(key: key);
+
+  // const PayFrom({Key? key, required this.data}) : super(key: key);
 
   @override
   State<PayFrom> createState() => _PayFromState();
@@ -57,7 +61,7 @@ class _PayFromState extends State<PayFrom> {
                 // height: MyConstant.setMediaQueryHeightFull(context),
                 margin: const EdgeInsets.only(top: kToolbarHeight + 40).h,
                 width: width,
-                child: const SlideFrom(),
+                child: SlideFrom(currentIndex: widget.currentIndex),
               ),
             ],
           ),

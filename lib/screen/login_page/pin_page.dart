@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/login_page/component/create_pin.dart';
+import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import '../../component/bottombar.dart';
 
@@ -14,6 +16,14 @@ class Pin_page extends StatefulWidget {
 }
 
 class _Pin_pageState extends State<Pin_page> {
+  // bool forgetpinFirst = false;
+  bool varifiy = false;
+
+  // onChageRepin() async {
+  //   forgetpinFirst = true;
+  //   setState(() {});
+  // }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -34,12 +44,41 @@ class _Pin_pageState extends State<Pin_page> {
                     alignment: Alignment.topCenter,
                   ),
                 ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/image/g_logo.png',
-                    fit: BoxFit.cover,
-                    height: 120.h,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    varifiy == true
+                        ? IconButton(
+                            onPressed: () async {
+                              varifiy = false;
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.remove(KeyStorage.pin);
+                              setState(() {});
+                            },
+                            icon: const Padding(
+                              padding: EdgeInsets.only(
+                                left: 10,
+                              ),
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                size: 30,
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: 55.w,
+                          ),
+                    Image.asset(
+                      'assets/image/g_logo.png',
+                      fit: BoxFit.cover,
+                      height: 90.h,
+                      width: 80.w,
+                    ),
+                    SizedBox(
+                      width: 55.w,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -54,7 +93,19 @@ class _Pin_pageState extends State<Pin_page> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: const Create_pin(),
+            child: Create_pin(
+              value: varifiy,
+              onchanged: (value) {
+                if (mounted) {
+                  varifiy = value;
+                  if (mounted) {
+                    setState(
+                      () {},
+                    );
+                  }
+                }
+              },
+            ),
           )
         ],
       ),

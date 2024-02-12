@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/controller/otp_controller.dart';
@@ -83,12 +84,11 @@ class _RegisterPageState extends State<RegisterPage> {
   // รอแก้ไขตรงนี้
   _listener() async {
     final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
-    // print(firebaseToken.toString() + 'lololo');
 
     if (_registerController.pinController.text.length == 6) {
       String sub = _registerController.phoneController.text;
       sub = '66' + sub.substring(1);
-      print(_registerController.pinController.text + 'sdssddsdsd');
+      // print(_registerController.pinController.text + 'sdssddsdsd');
       getotpstatus = await createotpController.getOTP(
           phone: sub, otp: _registerController.pinController.text);
       print(getotpstatus);
@@ -446,11 +446,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                       errorTextIdCard =
                                           'กรุณากรอกหมายเลขบัตรประชาชนให้ครบถ้วน';
                                     } else {
-                                      if (idNotExists) {
+                                      var result = await _registerController
+                                          .fetchGetIdCard(_registerController
+                                              .idCardController.text);
+
+                                      idNotExists = result.status!;
+
+                                      if (result.status!) {
                                         errorTextIdCard =
-                                            'มีเลขบัตรประชาชนในระบบแล้ว';
-                                      } else {
-                                        errorTextIdCard = null;
+                                            'พบเลขบัตรประชาชนในระบบ';
+                                        setState(() {});
                                       }
                                     }
 
@@ -499,15 +504,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                         2) {
                                       errorTextPhone =
                                           'กรุณากรอกเบอร์โทรศัพท์ให้ครบถ้วน';
-                                      //TODO รอพี่พาทำ
-                                    } else if (isPhone) {
-                                      errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
+                                      // } else if (isPhone) {
+                                      //   errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
                                     } else {
                                       errorTextPhone = null;
                                     }
 
+                                    var result = await authController
+                                        .fetchGetPhone(_registerController
+                                            .phoneController.text);
+                                    isPhone = result;
+                                    print('object ----- $isPhone');
+                                    if (isPhone == true) {
+                                      errorTextPhone = 'พบเบอร์โทรศัพท์ในระบบ';
+                                      setState(() {});
+                                    }
+
                                     if (errorTextEmail == null &&
-                                        errorTextPhone == null) {
+                                        errorTextPhone == null &&
+                                        isPhone == false) {
                                       await setOTP();
 
                                       currentIndex++;
@@ -680,6 +695,10 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.only(top: 3, bottom: 24),
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
             errorText: errorTextName,
+            inputFormatter: [
+              FilteringTextInputFormatter.deny(
+                  RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
+            ],
             onChanged: (value) {
               value.isEmpty
                   ? errorTextName = 'กรุณากรอกชื่อ'
@@ -705,6 +724,10 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.only(top: 3, bottom: 24),
             contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
             errorText: errorTextSurName,
+            inputFormatter: [
+              FilteringTextInputFormatter.deny(
+                  RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
+            ],
             onChanged: (value) {
               value.isEmpty
                   ? errorTextSurName = 'กรุณากรอกนามสกุล'
@@ -737,18 +760,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   : errorTextIdCard = null;
               setState(() {});
 
-              if (value.isNotEmpty && value.length == 13) {
-                _debouncer.call(() async {
-                  var result = await _registerController.fetchGetIdCard(value);
+              // if (value.isNotEmpty && value.length == 13) {
+              //   _debouncer.call(() async {
+              //     var result = await _registerController.fetchGetIdCard(value);
 
-                  idNotExists = result.status!;
+              //     idNotExists = result.status!;
 
-                  if (result.status!) {
-                    errorTextIdCard = result.message;
-                    setState(() {});
-                  }
-                });
-              }
+              //     if (result.status!) {
+              //       errorTextIdCard = result.message;
+              //       setState(() {});
+              //     }
+              //   });
+              // }
             },
           ),
         ],
@@ -809,23 +832,23 @@ class _RegisterPageState extends State<RegisterPage> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
           errorText: errorTextPhone,
           onChanged: (value) {
-            value.isEmpty
-                ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์'
+            value.isEmpty || value.length != 10
+                ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง'
                 : errorTextPhone = null;
             setState(() {});
             //TODO รอพี่พาทำ
-            if (value.isNotEmpty && value.length == 10) {
-              _debouncer.call(() async {
-                var result = await authController.fetchGetPhone(value);
-                isPhone = result;
-                if (isPhone) {
-                  errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
-                  setState(() {});
-                }
-              });
-            } else {
-              isPhone = true;
-            }
+            // if (value.isNotEmpty && value.length == 10) {
+            //   _debouncer.call(() async {
+            //     var result = await authController.fetchGetPhone(value);
+            //     isPhone = result;
+            //     if (isPhone) {
+            //       errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
+            //       setState(() {});
+            //     }
+            //   });
+            // } else {
+            //   isPhone = true;
+            // }
           },
           keyboardType: TextInputType.phone,
           maxLength: 10,

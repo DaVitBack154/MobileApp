@@ -10,7 +10,8 @@ import '../../../../controller/getacc_controller.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class SlideFrom extends StatefulWidget {
-  const SlideFrom({super.key});
+  final int currentIndex;
+  const SlideFrom({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
   State<SlideFrom> createState() => _SlideFromState();
@@ -45,6 +46,7 @@ class _SlideFromState extends State<SlideFrom> {
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.currentIndex;
     fetchAccData();
   }
 
@@ -239,8 +241,6 @@ class _SlideFromState extends State<SlideFrom> {
                                 cursorColor: Colors.grey.shade400,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'กรุณากรอกจำนวนเงิน';
-                                  } else if (value.length < 2) {
                                     return 'กรุณากรอกจำนวนเงิน';
                                   } else if (!RegExp(r'^\d+$')
                                       .hasMatch(value)) {

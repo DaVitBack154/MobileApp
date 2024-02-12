@@ -339,11 +339,11 @@ class _Accept_ruleState extends State<Accept_rule> {
             child: Column(
               children: [
                 Text(
-                  'ข้าพเจ้าขอแสดงเจตนายินยอมให้ บริษัทเชฎฐ์เอเชียจำกัด(มหาชน) และบริษัทในเครือซึ่งประกอบด้วย บริษัทรีโซลูชั่นเวย์จำกัด บริษัทบริหารสินทรัพย์ซีเอฟเอเชียจำกัด และ บริษัทคอร์ทส์เม็กก้าสโตร์ (ประเทศไทย)จำกัด (รวมเรียกว่า“บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าเพื่อวัตถุประสงค์ดังนี้',
+                  'ข้าพเจ้าขอแสดงเจตนายินยอมให้บริษัท เชฎฐ์ เอเชีย จำกัด(มหาชน) และ บริษัทในเครือ ซึ่งประกอบด้วยบริษัท รีโซลูชั่นเวย์ จำกัด บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด และบริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด (รวมเรียกว่า “บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้า เพื่อวัตถุประสงค์ดังนี้',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 SizedBox(
                   height: 10.h,
@@ -397,7 +397,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                   ],
                 ),
                 Text(
-                  '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business) การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯเพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
+                  '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business)การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯ เพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
@@ -644,43 +644,50 @@ class _Accept_ruleState extends State<Accept_rule> {
                     vertical: 15.h,
                     horizontal: 10.w,
                   ),
-                  child: Container(
-                    width: width,
-                    height: 30.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterPage(
-                              yomrub1: currentYomrub1,
-                              yomrub2: currentYomrub2,
-                              yomrub3: currentYomrub3,
-                              yomrub4: currentYomrub4,
-                              yomrub5: currentYomrub5,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: width,
+                        height: 30.h,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterPage(
+                                  yomrub1: currentYomrub1,
+                                  yomrub2: currentYomrub2,
+                                  yomrub3: currentYomrub3,
+                                  yomrub4: currentYomrub4,
+                                  yomrub5: currentYomrub5,
+                                ),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            // fixedSize: Size(double.infinity, 20.h),
+                            backgroundColor: const Color(0xFF103533),
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        // fixedSize: Size(double.infinity, 20.h),
-                        backgroundColor: const Color(0xFF103533),
-
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          child: Text(
+                            'ถัดไป',
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                      child: Text(
-                        'ถัดไป',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                      SizedBox(
+                        height: 10.h,
+                      )
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           ),

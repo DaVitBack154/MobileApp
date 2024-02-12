@@ -149,18 +149,14 @@ class _Forget_phoneState extends State<Forget_phone> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.grey
-                                  .shade300, // เปลี่ยนสีเป็นสีที่คุณต้องการ
-                              width:
-                                  1.0, // เปลี่ยนความหนาของเส้นขอบตามที่คุณต้องการ
+                              color: Colors.grey.shade300,
+                              width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.grey
-                                  .shade300, // เปลี่ยนสีเป็นสีที่คุณต้องการ
-                              width:
-                                  1.0, // เปลี่ยนความหนาของเส้นขอบตามที่คุณต้องการ
+                              color: Colors.grey.shade300,
+                              width: 1.0,
                             ),
                           ),
                           errorText: validator,
@@ -172,10 +168,6 @@ class _Forget_phoneState extends State<Forget_phone> {
                         cursorColor: Colors.grey.shade400,
                         keyboardType: TextInputType.phone,
                         maxLength: 10,
-                        // onChanged: (va) {
-                        //   print('aaaaaaa');
-
-                        // },
                         onChanged: (value) {
                           validator = null;
                           setState(() {});
@@ -290,33 +282,6 @@ class _Forget_phoneState extends State<Forget_phone> {
                               );
                             }
                           }
-
-                          // bool isphone = await authController.fetchGetPhone(
-                          //     authController.phoneController.text);
-                          // if (_formKey.currentState!.validate()) {
-                          //   if (isphone) {
-                          //     // await authController.fetchUpdateProfile(
-                          //     //   phone: authController.phoneNewController.text,
-                          //     // );
-                          //     await setOTP();
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => Phone_page(
-                          //             newphone: authController
-                          //                 .phoneNewController.text),
-                          //       ),
-                          //     );
-                          //     print('ถูกต้อง ทำการอัพเดทข้อมูล');
-                          //     // ID Card ถูกต้อง ทำการอัพเดทข้อมูล
-                          //     // ...
-                          //   } else {
-                          //     print(
-                          //         'ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ');
-                          //     // ID Card ไม่ถูกต้อง แสดงข้อความหรือทำอะไรตามที่คุณต้องการ
-                          //     // ...
-                          //   }
-                          // }
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(

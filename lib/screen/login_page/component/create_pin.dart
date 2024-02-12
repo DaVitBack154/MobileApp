@@ -8,7 +8,13 @@ import '../../../controller/update_controller.dart';
 import '../../../utils/key_storage.dart';
 
 class Create_pin extends StatefulWidget {
-  const Create_pin({super.key});
+  bool value;
+  final ValueChanged<bool>? onchanged;
+  Create_pin({
+    Key? key,
+    required this.value,
+    this.onchanged,
+  }) : super(key: key);
 
   @override
   State<Create_pin> createState() => _Create_pinState();
@@ -19,8 +25,6 @@ class _Create_pinState extends State<Create_pin> {
 
   TextEditingController controller = TextEditingController();
 
-  bool varifiy = false;
-
   int length = 6;
 
   onChange(String number) async {
@@ -29,7 +33,11 @@ class _Create_pinState extends State<Create_pin> {
       await prefs.setString(KeyStorage.pin, number);
 
       controller.clear();
-      varifiy = true;
+
+      if (widget.onchanged != null) {
+        widget.onchanged!(true);
+        widget.value = true;
+      }
       setState(() {});
     }
     print(number);
@@ -150,18 +158,24 @@ class _Create_pinState extends State<Create_pin> {
               vertical: 30.h,
               horizontal: 20.w,
             ),
-            child: Text(
-              varifiy ? 'ยืนยันรหัส PIN อีกครั้ง' : 'สร้างรหัส PIN เพื่อใช้งาน',
-              style: TextStyle(
-                fontSize: 25.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  widget.value
+                      ? 'ยืนยันรหัส PIN อีกครั้ง'
+                      : 'สร้างรหัส PIN เพื่อใช้งาน',
+                  style: TextStyle(
+                    fontSize: 25.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
           Numpad(
             length: 6,
-            onChange: !varifiy ? onChange : onChangeRe,
+            onChange: !widget.value ? onChange : onChangeRe,
             isCreatePin: true,
           ),
         ],

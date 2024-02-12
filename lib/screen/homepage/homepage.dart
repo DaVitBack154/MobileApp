@@ -115,7 +115,7 @@ class _HomepageState extends State<Homepage> {
                 horizontal: 15.w,
               ),
               child: Text(
-                'ที่ดินและบ้าน',
+                'บ้านและที่ดิน',
                 style: TextStyle(
                   fontSize: 19.sp,
                   fontWeight: FontWeight.bold,
@@ -141,7 +141,7 @@ class _HomepageState extends State<Homepage> {
                 child: Row(
                   children: [
                     Image.asset(
-                      'assets/image/salehome001.jpg',
+                      'assets/image/salehome01.png',
                       width: 180.w,
                       fit: BoxFit.cover,
                     ),
@@ -157,14 +157,20 @@ class _HomepageState extends State<Homepage> {
                             Text(
                               'ประกาศขาย',
                               style: TextStyle(
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                   color: const Color(0xfff395d5d)),
                             ),
                             Text(
-                              'ที่ดิน ทาวเฮาส์ บ้านมือสอง กรุงเทพและทั่วประเทศ',
+                              'บ้านเดี่ยว ทาวน์เฮ้าส์ และที่ดิน',
                               style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 15.sp,
+                              ),
+                            ),
+                            Text(
+                              'ทั่วประเทศไทย',
+                              style: TextStyle(
+                                fontSize: 15.sp,
                               ),
                             ),
                           ],
@@ -266,7 +272,7 @@ class _HomepageState extends State<Homepage> {
                                       ),
                                       Center(
                                         child: Text(
-                                          'ประเมิลการใช้งาน',
+                                          '😊  ประเมินการให้บริการ',
                                           style: TextStyle(
                                               color: Color(0xFF103533),
                                               fontWeight: FontWeight.bold,
@@ -283,7 +289,7 @@ class _HomepageState extends State<Homepage> {
                                             minRating: 1,
                                             direction: Axis.horizontal,
                                             allowHalfRating: false,
-                                            itemCount: 5,
+                                            itemCount: 3,
                                             itemSize: 40.0,
                                             itemBuilder: (context, _) =>
                                                 const Icon(
@@ -415,14 +421,10 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future updateFeedbackMessage() async {
-    if (rating == 5) {
-      feedbackMessage = 'ดีมาก';
-    } else if (rating == 4) {
-      feedbackMessage = 'ดี';
-    } else if (rating == 3) {
-      feedbackMessage = 'พอใช้';
+    if (rating == 3) {
+      feedbackMessage = 'พึงพอใจมาก';
     } else if (rating == 2) {
-      feedbackMessage = 'ไม่ค่อยพึงพอใจ';
+      feedbackMessage = 'พึงพอใจปานกลาง';
     } else if (rating == 1) {
       feedbackMessage = 'ไม่พึงพอใจ';
     }
