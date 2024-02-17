@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/pay_from.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../../../controller/getacc_controller.dart';
 
 class SlideAcc extends StatefulWidget {
@@ -70,8 +72,8 @@ class _SlideAccState extends State<SlideAcc> {
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
-                    viewportFraction: 0.95,
-                    height: 210.h,
+                    viewportFraction: 0.92,
+                    height: MyConstant.setMediaQueryWidth(context, 250),
                     autoPlay: false,
                     enableInfiniteScroll: false,
                     initialPage: _currentIndex,
@@ -83,7 +85,7 @@ class _SlideAccState extends State<SlideAcc> {
               ),
 
               SizedBox(
-                height: 10.h,
+                height: 5.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -92,8 +94,10 @@ class _SlideAccState extends State<SlideAcc> {
                     return GestureDetector(
                       onTap: () => carouselController.animateToPage(entry.key),
                       child: Container(
-                        width: _currentIndex == entry.key ? 20 : 7,
-                        height: 7.0,
+                        width: _currentIndex == entry.key
+                            ? MyConstant.setMediaQueryWidth(context, 20)
+                            : 7,
+                        height: 8.0,
                         margin: const EdgeInsets.symmetric(
                           horizontal: 3.0,
                         ),
@@ -148,7 +152,9 @@ class _SlideAccState extends State<SlideAcc> {
                                           'บริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 22),
                                           ),
                                         ),
                                       ],
@@ -162,7 +168,9 @@ class _SlideAccState extends State<SlideAcc> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             color: Colors.grey.shade600,
-                                            fontSize: 16.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 25),
                                           ),
                                         ),
                                         accController
@@ -174,14 +182,18 @@ class _SlideAccState extends State<SlideAcc> {
                                                 'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: 16.sp,
+                                                  fontSize: MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 23),
                                                 ),
                                               )
                                             : Text(
                                                 'บริษัท รีโซลูชั่น เวย์ จำกัด',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: 16.sp,
+                                                  fontSize: MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 23),
                                                 ),
                                               ),
                                       ],
@@ -215,7 +227,9 @@ class _SlideAccState extends State<SlideAcc> {
                                           'ผู้โอนสิทธิ์ :',
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
-                                            fontSize: 17.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 25),
                                           ),
                                         ),
                                         Text(
@@ -224,7 +238,9 @@ class _SlideAccState extends State<SlideAcc> {
                                               .trim(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 23),
                                           ),
                                         ),
                                       ],
@@ -241,7 +257,8 @@ class _SlideAccState extends State<SlideAcc> {
                                     'วันที่ชำระล่าสุด :',
                                     style: TextStyle(
                                       color: Colors.grey.shade600,
-                                      fontSize: 17.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 23),
                                     ),
                                   ),
                                   accController
@@ -253,7 +270,9 @@ class _SlideAccState extends State<SlideAcc> {
                                           'ไม่พบข้อมูล',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 23),
                                           ),
                                         )
                                       : Text(
@@ -266,7 +285,9 @@ class _SlideAccState extends State<SlideAcc> {
                                           ),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16.sp,
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 23),
                                           ),
                                         ),
                                 ],
@@ -282,7 +303,8 @@ class _SlideAccState extends State<SlideAcc> {
                                     'ยอดชำระครั้งล่าสุด (บาท) :',
                                     style: TextStyle(
                                       color: Colors.grey.shade600,
-                                      fontSize: 17.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 25),
                                     ),
                                   ),
                                   Text(
@@ -292,7 +314,8 @@ class _SlideAccState extends State<SlideAcc> {
                                         .lastPayAmount),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 23),
                                     ),
                                   ),
                                 ],
@@ -309,7 +332,7 @@ class _SlideAccState extends State<SlideAcc> {
                 ),
               ),
               SizedBox(
-                height: 15.h,
+                height: 10.h,
               ),
               //ปุ่มชำระเงิน
               ElevatedButton(
@@ -325,7 +348,7 @@ class _SlideAccState extends State<SlideAcc> {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
-                    Size(270, 45),
+                    Size(270, 60),
                   ),
                   backgroundColor: MaterialStateProperty.all<Color>(
                     const Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -340,7 +363,7 @@ class _SlideAccState extends State<SlideAcc> {
                 child: Text(
                   'ชำระเงิน',
                   style: TextStyle(
-                    fontSize: 22.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 22),
                     fontWeight: FontWeight.w400,
                     color: Colors.white,
                   ),

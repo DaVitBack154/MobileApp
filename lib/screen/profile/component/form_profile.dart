@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/profile/update_profile.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controller/getprofile_controller.dart';
 
@@ -47,404 +49,411 @@ class _FormProfileState extends State<FormProfile> {
 
     return SizedBox(
       width: width,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 20.w,
-          ),
-          CircleAvatar(
-            backgroundColor: Colors.grey.shade100,
-            radius: 33.h,
-            child: Image.asset(
-              'assets/image/icon_a.png',
-              fit: BoxFit.cover,
-              height: 35.h,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20.w,
             ),
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ).w,
-                child: Text(
-                  'เบอร์โทรศัพท์',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UpdateProfile(
-                    phone: _profileController.userModel.user!.phone!,
-                  ),
-                ),
-              ).then((_) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String token = prefs.getString(KeyStorage.token) ?? '';
-                await _profileController.fetchProfileData(token);
-
-                setState(() {});
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 20,
-              ).w,
-              child: Container(
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(
-                    10,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.phone_in_talk,
-                            color: Color(0xFF395D5D),
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Text(
-                            _profileController.userModel.user?.phone!
-                                    .replaceAllMapped(
-                                        RegExp(r'(\d{3})(\d{3})(\d+)'),
-                                        (Match m) =>
-                                            "${m[1]}-${m[2]}-${m[3]}") ??
-                                '',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF395D5D),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.edit_square,
-                            size: 25,
-                            color: Color(0xFF395D5D),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+            CircleAvatar(
+              backgroundColor: Colors.grey.shade100,
+              radius: 33.h,
+              child: Image.asset(
+                'assets/image/icon_a.png',
+                fit: BoxFit.cover,
+                height: 35.h,
               ),
             ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ).w,
-                child: Text(
-                  'อีเมล',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.grey.shade600,
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ).w,
+                  child: Text(
+                    'เบอร์โทรศัพท์',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
+              ],
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => UpdateProfile(
-                      email: _profileController.userModel.user!.email!,
+                      phone: _profileController.userModel.user!.phone!,
                     ),
-                  )).then((_) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String token = prefs.getString(KeyStorage.token) ?? '';
-                await _profileController.fetchProfileData(token);
-                setState(() {});
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 30,
-              ).w,
-              child: Container(
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(
-                    10,
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.email,
-                            size: 30,
-                            color: Color(0xFF395D5D),
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Text(
-                            _profileController.userModel.user?.email ?? '',
-                            style: TextStyle(
-                              fontSize: 19.sp,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF395D5D),
+                ).then((_) async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  String token = prefs.getString(KeyStorage.token) ?? '';
+                  await _profileController.fetchProfileData(token);
+
+                  setState(() {});
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 20,
+                ).w,
+                child: Container(
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.phone_in_talk,
+                              color: Color(0xFF395D5D),
+                              size: MyConstant.setMediaQueryWidth(context, 30),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.edit_square,
-                            size: 25,
-                            color: Color(0xFF395D5D),
-                          )
-                        ],
-                      )
-                    ],
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              _profileController.userModel.user?.phone!
+                                      .replaceAllMapped(
+                                          RegExp(r'(\d{3})(\d{3})(\d+)'),
+                                          (Match m) =>
+                                              "${m[1]}-${m[2]}-${m[3]}") ??
+                                  '',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF395D5D),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.edit_square,
+                              size: MyConstant.setMediaQueryWidth(context, 30),
+                              color: Color(0xFF395D5D),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          _profileController.userModel.user?.sentAddressuser != null
-              ? Row(
-                  children: [
-                    Padding(
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ).w,
+                  child: Text(
+                    'อีเมล',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdateProfile(
+                        email: _profileController.userModel.user!.email!,
+                      ),
+                    )).then((_) async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  String token = prefs.getString(KeyStorage.token) ?? '';
+                  await _profileController.fetchProfileData(token);
+                  setState(() {});
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 30,
+                ).w,
+                child: Container(
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.email,
+                              size: MyConstant.setMediaQueryWidth(context, 30),
+                              color: Color(0xFF395D5D),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              _profileController.userModel.user?.email ?? '',
+                              style: TextStyle(
+                                fontSize: 19.sp,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF395D5D),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.edit_square,
+                              size: MyConstant.setMediaQueryWidth(context, 30),
+                              color: Color(0xFF395D5D),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            _profileController.userModel.user?.sentAddressuser != null
+                ? Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                        ).w,
+                        child: Text(
+                          'ที่อยู่',
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+            SizedBox(
+              height: 5.h,
+            ),
+            _profileController.userModel.user?.sentAddressuser != null
+                ? GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateProfile(
+                              sentAddressuser: _profileController
+                                  .userModel.user!.sentAddressuser!,
+                              district:
+                                  _profileController.userModel.user!.district!,
+                              subdistrict: _profileController
+                                  .userModel.user!.subdistrict!,
+                              provin:
+                                  _profileController.userModel.user!.provin!,
+                              postcode:
+                                  _profileController.userModel.user!.postcode!,
+                            ),
+                          )).then((_) async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        String token = prefs.getString(KeyStorage.token) ?? '';
+                        await _profileController.fetchProfileData(token);
+                        setState(() {});
+                      });
+                    },
+                    child: Padding(
                       padding: const EdgeInsets.only(
                         left: 20,
                         right: 20,
+                        bottom: 30,
                       ).w,
-                      child: Text(
-                        'ที่อยู่',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox.shrink(),
-          SizedBox(
-            height: 5.h,
-          ),
-          _profileController.userModel.user?.sentAddressuser != null
-              ? GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateProfile(
-                            sentAddressuser: _profileController
-                                .userModel.user!.sentAddressuser!,
-                            district:
-                                _profileController.userModel.user!.district!,
-                            subdistrict:
-                                _profileController.userModel.user!.subdistrict!,
-                            provin: _profileController.userModel.user!.provin!,
-                            postcode:
-                                _profileController.userModel.user!.postcode!,
+                      child: Container(
+                        // height: 60.h,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(
+                            10,
                           ),
-                        )).then((_) async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      String token = prefs.getString(KeyStorage.token) ?? '';
-                      await _profileController.fetchProfileData(token);
-                      setState(() {});
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      bottom: 30,
-                    ).w,
-                    child: Container(
-                      // height: 60.h,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(
-                          10,
                         ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/image/iconaddress.png',
-                                  width: 27.w,
-                                  height: 27.h,
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          _profileController.userModel.user
-                                                  ?.sentAddressuser ??
-                                              '',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/image/iconaddress.png',
+                                    width: 27.w,
+                                    height: 27.h,
+                                  ),
+                                  SizedBox(
+                                    width: 20.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            _profileController.userModel.user
+                                                    ?.sentAddressuser ??
+                                                '',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'เขต : ',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'เขต : ',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          _profileController
-                                                  .userModel.user?.district ??
-                                              '',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                          Text(
+                                            _profileController
+                                                    .userModel.user?.district ??
+                                                '',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'แขวง : ',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                          SizedBox(
+                                            width: 5.w,
                                           ),
-                                        ),
-                                        Text(
-                                          _profileController.userModel.user
-                                                  ?.subdistrict ??
-                                              '',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'แขวง : ',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'จังหวัด : ',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                          Text(
+                                            _profileController.userModel.user
+                                                    ?.subdistrict ??
+                                                '',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          _profileController
-                                                  .userModel.user?.provin ??
-                                              '',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'จังหวัด : ',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w,
-                                        ),
-                                        Text(
-                                          _profileController
-                                                  .userModel.user?.postcode ??
-                                              '',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xFF395D5D),
+                                          Text(
+                                            _profileController
+                                                    .userModel.user?.provin ??
+                                                '',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Row(
-                              children: [
-                                Icon(
-                                  Icons.edit_square,
-                                  size: 25,
-                                  color: Color(0xFF395D5D),
-                                )
-                              ],
-                            )
-                          ],
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Text(
+                                            _profileController
+                                                    .userModel.user?.postcode ??
+                                                '',
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF395D5D),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.edit_square,
+                                    size: MyConstant.setMediaQueryWidth(
+                                        context, 30),
+                                    color: Color(0xFF395D5D),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              : const SizedBox.shrink()
-        ],
+                  )
+                : const SizedBox.shrink()
+          ],
+        ),
       ),
     );
   }

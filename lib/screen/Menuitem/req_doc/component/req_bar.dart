@@ -47,7 +47,9 @@ class _ReqDocBarState extends State<ReqDocBar> {
                   'ขอเอกสาร',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 25.sp,
+                    fontSize: ResponsiveHeightContext.isTablet(context)
+                        ? 20.sp
+                        : 25.sp,
                     fontWeight: FontWeight.normal,
                   ),
                 ),

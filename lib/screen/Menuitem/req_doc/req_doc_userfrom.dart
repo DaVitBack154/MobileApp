@@ -11,6 +11,7 @@ import 'package:mobile_chaseapp/controller/user_req_controller.dart';
 import 'package:mobile_chaseapp/model/respon_payment.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/component/req_format.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -198,7 +199,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                             Text(
                               'รายการขอเอกสาร',
                               style: TextStyle(
-                                fontSize: 25.sp,
+                                fontSize:
+                                    ResponsiveHeightContext.isTablet(context)
+                                        ? 20.sp
+                                        : 25.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
@@ -736,11 +740,20 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                 controller: userReqController
                                                     .sentAddressuserController,
                                                 hintStyle: TextStyle(
-                                                  fontSize: 19.sp,
+                                                  fontSize:
+                                                      ResponsiveHeightContext
+                                                              .isTablet(context)
+                                                          ? 16.sp
+                                                          : 19.sp,
                                                   color: Colors.grey.shade500,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 fillColor: Colors.white,
+                                                fontSize:
+                                                    ResponsiveHeightContext
+                                                            .isTablet(context)
+                                                        ? 14.sp
+                                                        : null,
                                                 autoFocus: false,
                                                 contentPadding:
                                                     const EdgeInsets.all(10),
@@ -930,7 +943,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           builder: (context) {
                                             return AlertDialog(
                                               content: SizedBox(
-                                                height: 210.h,
+                                                height: ResponsiveHeightContext
+                                                        .isTablet(context)
+                                                    ? 250.h
+                                                    : 210.h,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -1145,7 +1161,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         builder: (context) {
                                           return AlertDialog(
                                             content: SizedBox(
-                                              height: 210.h,
+                                              height: ResponsiveHeightContext
+                                                      .isTablet(context)
+                                                  ? 250.h
+                                                  : 210.h,
                                               child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -1230,7 +1249,12 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                   },
                                   style: ButtonStyle(
                                     fixedSize: MaterialStateProperty.all<Size>(
-                                      const Size(250, 40),
+                                      Size(
+                                          250,
+                                          ResponsiveHeightContext.isTablet(
+                                                  context)
+                                              ? 60
+                                              : 40),
                                     ),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
@@ -1248,7 +1272,11 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                   child: Text(
                                     'ส่ง',
                                     style: TextStyle(
-                                      fontSize: 24.sp,
+                                      fontSize:
+                                          ResponsiveHeightContext.isTablet(
+                                                  context)
+                                              ? 20.sp
+                                              : 24.sp,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white,
                                     ),
@@ -1293,7 +1321,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        hintFontSize: 18,
+        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
         paddingLeft: 0,
         paddingRight: 0,
       );
@@ -1339,7 +1367,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderRadius: 10,
         paddingLeft: 2,
         paddingRight: 2,
-        hintFontSize: 18,
+        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
       );
 
   Widget selectDistrict() => FormHelper.dropDownWidget(
@@ -1374,7 +1402,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderRadius: 10,
         paddingLeft: 2,
         paddingRight: 2,
-        hintFontSize: 18,
+        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
       );
 
   Widget selectSubdistrict() => FormHelper.dropDownWidget(
@@ -1409,7 +1437,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderRadius: 10,
         paddingLeft: 2,
         paddingRight: 2,
-        hintFontSize: 18,
+        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
       );
 
   Widget selectPostcode() => FormHelper.dropDownWidget(
@@ -1440,6 +1468,6 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderRadius: 10,
         paddingLeft: 2,
         paddingRight: 2,
-        hintFontSize: 18,
+        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
       );
 }

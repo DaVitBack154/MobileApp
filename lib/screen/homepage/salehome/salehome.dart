@@ -5,6 +5,7 @@ import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/salehome/salehome_detail.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class SaleHome extends StatefulWidget {
   const SaleHome({super.key});
@@ -83,9 +84,10 @@ class _SaleHomeState extends State<SaleHome> {
                                 color: Colors.black.withOpacity(.1),
                               ),
                               child: IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.arrow_back,
-                                  size: 25,
+                                  size: MyConstant.setMediaQueryWidth(
+                                      context, 25),
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
@@ -96,13 +98,14 @@ class _SaleHomeState extends State<SaleHome> {
                             Text(
                               'บ้านและที่ดิน',
                               style: TextStyle(
-                                fontSize: 25.sp,
+                                fontSize:
+                                    MyConstant.setMediaQueryWidth(context, 30),
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
                             SizedBox(
-                              width: 40.w,
+                              width: 50.w,
                             )
                           ],
                         ),
@@ -117,12 +120,13 @@ class _SaleHomeState extends State<SaleHome> {
               margin: EdgeInsets.only(
                 top: ResponsiveHeightContext.isMobile(context)
                     ? kToolbarHeight + 45.h
-                    : kToolbarHeight + 35.h,
+                    : ResponsiveWidthContext.isTablet(context)
+                        ? kToolbarHeight + 70.h
+                        : kToolbarHeight + 65.h,
               ),
               child: Container(
                 // color: Colors.red,
-                height:
-                    ResponsiveHeightContext.isMobile(context) ? 590.h : 590.h,
+                height: 590.h,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 3.w,
@@ -142,13 +146,18 @@ class _SaleHomeState extends State<SaleHome> {
                           ],
                         )
                       : GridView.builder(
-                          itemCount:
-                              getsaleHomeController.saleHome.data!.length,
+                          // padding: const EdgeInsets.all(17.0),
+
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.62,
+                            mainAxisSpacing: 0.0,
+                            crossAxisSpacing: 2.9,
+                            childAspectRatio: 0.82,
                           ),
+                          itemCount:
+                              getsaleHomeController.saleHome.data!.length,
+
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
@@ -169,8 +178,14 @@ class _SaleHomeState extends State<SaleHome> {
                                                   .isMobileSmall(context)
                                               ? MyConstant.setMediaQueryHeight(
                                                   context, 140)
-                                              : MyConstant.setMediaQueryHeight(
-                                                  context, 120),
+                                              : ResponsiveWidthContext.isTablet(
+                                                      context)
+                                                  ? MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 160)
+                                                  : MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 140),
                                           child: Image.network(
                                             '$imageUrl/public/img_all/${getsaleHomeController.saleHome.data![index].imgAll![0]}',
                                             fit: BoxFit.cover,
@@ -196,7 +211,7 @@ class _SaleHomeState extends State<SaleHome> {
                                                       Text(
                                                         'รหัสทรัพย์ ${getsaleHomeController.saleHome.data![index].numberHome}',
                                                         style: TextStyle(
-                                                          fontSize: 14.sp,
+                                                          fontSize: 15.sp,
                                                           color: Colors
                                                               .grey.shade600,
                                                         ),
@@ -221,7 +236,9 @@ class _SaleHomeState extends State<SaleHome> {
                                                         Icons.location_on,
                                                         color: Colors
                                                             .teal.shade800,
-                                                        size: 20,
+                                                        size: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 30),
                                                       ),
                                                       SizedBox(
                                                         width: 5.w,
@@ -229,7 +246,9 @@ class _SaleHomeState extends State<SaleHome> {
                                                       Text(
                                                         '${getsaleHomeController.saleHome.data![index].province}',
                                                         style: TextStyle(
-                                                          fontSize: 15.sp,
+                                                          fontSize: MyConstant
+                                                              .setMediaQueryWidth(
+                                                                  context, 22),
                                                         ),
                                                       ),
                                                     ],
@@ -243,17 +262,15 @@ class _SaleHomeState extends State<SaleHome> {
                                                   endIndent: 10,
                                                 ),
                                                 Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
-                                                          .spaceAround,
+                                                          .spaceBetween,
                                                   children: [
                                                     Container(
                                                       width: 35.w,
-                                                      // margin: EdgeInsets.only(
-                                                      //   right: 35.w,
-                                                      // ),
+                                                      margin: EdgeInsets.only(
+                                                        left: 3.w,
+                                                      ),
                                                       decoration: BoxDecoration(
                                                         color: Colors.red,
                                                         borderRadius:
@@ -264,7 +281,10 @@ class _SaleHomeState extends State<SaleHome> {
                                                         child: Text(
                                                           'Sale',
                                                           style: TextStyle(
-                                                            fontSize: 15.sp,
+                                                            fontSize: MyConstant
+                                                                .setMediaQueryWidth(
+                                                                    context,
+                                                                    22),
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -272,18 +292,25 @@ class _SaleHomeState extends State<SaleHome> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      ' ${getsaleHomeController.saleHome.data![index].priceHome} บาท',
-                                                      style: TextStyle(
-                                                        fontSize: 16.sp,
-                                                        // color: Colors.red,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                        right: 7.w,
                                                       ),
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
+                                                      child: Text(
+                                                        ' ${getsaleHomeController.saleHome.data![index].priceHome} บาท',
+                                                        style: TextStyle(
+                                                          fontSize: MyConstant
+                                                              .setMediaQueryWidth(
+                                                                  context, 22),
+                                                          // color: Colors.red,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                               ],

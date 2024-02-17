@@ -5,6 +5,7 @@ import 'package:mobile_chaseapp/screen/contract_page/contract.dart';
 import 'package:mobile_chaseapp/screen/homepage/homepage.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/profile/profile.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Bottombar extends StatefulWidget {
@@ -47,8 +48,9 @@ class _BottombarState extends State<Bottombar> {
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             elevation: 10,
-            selectedFontSize: 16.sp,
-            iconSize: 30,
+            selectedFontSize:
+                ResponsiveHeightContext.isTablet(context) ? 14.sp : 16.sp,
+            iconSize: ResponsiveHeightContext.isTablet(context) ? 45 : 30,
             selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
             selectedItemColor: const Color(0xFF103533),
             unselectedItemColor: Colors.grey.shade400,
@@ -100,8 +102,12 @@ class _BottombarState extends State<Bottombar> {
                       )
                     : Image.asset(
                         'assets/image/iconacc_none.png',
-                        width: 30.w,
-                        height: 30.w,
+                        width: ResponsiveHeightContext.isTablet(context)
+                            ? 25.w
+                            : 30.h,
+                        height: ResponsiveHeightContext.isTablet(context)
+                            ? 25.w
+                            : 30.h,
                       ),
                 label: 'Account',
               ),
@@ -116,8 +122,12 @@ class _BottombarState extends State<Bottombar> {
                     : Image.asset(
                         'assets/image/iconaddress_none.png',
                         // 'assets/image/iconprofile_none.png',
-                        width: 28.w,
-                        height: 28.h,
+                        width: ResponsiveHeightContext.isTablet(context)
+                            ? 22.w
+                            : 28.h,
+                        height: ResponsiveHeightContext.isTablet(context)
+                            ? 22.w
+                            : 28.h,
                       ),
                 label: 'Contact',
               ),
@@ -125,10 +135,12 @@ class _BottombarState extends State<Bottombar> {
                 icon: pageIndex == 3
                     ? const Icon(
                         Icons.menu,
+                        size: 45,
                         color: Color(0xFFF103533),
                       )
                     : const Icon(
                         Icons.menu,
+                        size: 45,
                         color: Color(0xFFF9badad),
                       ),
                 label: 'Profile',
@@ -157,7 +169,7 @@ class _BottombarState extends State<Bottombar> {
                 Navigator.of(context).pop(false);
               },
               child: Container(
-                width: 40.w,
+                width: 60.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xFF103533),
@@ -169,9 +181,9 @@ class _BottombarState extends State<Bottombar> {
                   ),
                   child: Center(
                     child: Text(
-                      'No',
+                      'ยกเลิก',
                       style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.normal,
                           color: Colors.white),
                     ),
@@ -184,7 +196,7 @@ class _BottombarState extends State<Bottombar> {
                 Navigator.of(context).pop(true);
               },
               child: Container(
-                width: 45.w,
+                width: 60.w,
                 decoration: BoxDecoration(
                   color: Color(0xFF103533),
                   borderRadius: BorderRadius.circular(10),
@@ -196,9 +208,9 @@ class _BottombarState extends State<Bottombar> {
                   ),
                   child: Center(
                     child: Text(
-                      'Yes',
+                      'ตกลง',
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
                       ),

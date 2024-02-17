@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/login_page/register_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/app_info.dart';
 
@@ -125,7 +127,11 @@ class _Accept_ruleState extends State<Accept_rule> {
         ),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('ข้อกำหนดและเงื่อนไข'),
+            title: Text(
+              'ข้อกำหนดและเงื่อนไข',
+              style: TextStyle(
+                  fontSize: MyConstant.setMediaQueryWidth(context, 20)),
+            ),
             backgroundColor: Color(0xFF103533),
             foregroundColor: Colors.white,
           ),
@@ -325,7 +331,7 @@ class _Accept_ruleState extends State<Accept_rule> {
           Text(
             'ความยินยอม',
             style: TextStyle(
-              fontSize: 20.sp,
+              fontSize: MyConstant.setMediaQueryWidth(context, 30),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -341,7 +347,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   'ข้าพเจ้าขอแสดงเจตนายินยอมให้บริษัท เชฎฐ์ เอเชีย จำกัด(มหาชน) และ บริษัทในเครือ ซึ่งประกอบด้วยบริษัท รีโซลูชั่นเวย์ จำกัด บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด และบริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด (รวมเรียกว่า “บริษัทฯ”) ในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้า เพื่อวัตถุประสงค์ดังนี้',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
                   textAlign: TextAlign.start,
                 ),
@@ -351,9 +357,9 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   '1. เพื่อแจ้งข้อมูลสิทธิพิเศษ ให้ท่านได้รับสิทธิประโยชน์จากข้อมูลข่าวสารสำคัญ โปรโมชั่น การประชาสัมพันธ์ และการนำเสนอข้อมูลผลิตภัณฑ์หรือบริการ',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Row(
                   children: [
@@ -370,7 +376,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -390,7 +396,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ไม่ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -399,9 +405,9 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   '2. เพื่อใช้สำหรับธุรกิจวิเคราะห์ข้อมูลส่วนบุคคล (Data analytics business)การวิเคราะห์ข้อมูลส่วนบุคคลของท่าน โดยบริษัทฯ เพื่อปรับปรุงและพัฒนาประสิทธิภาพในการให้บริการ',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Row(
                   children: [
@@ -418,7 +424,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -438,7 +444,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ไม่ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -447,9 +453,9 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   '3. เพื่อใช้สำหรับการยืนยันตัวตน กรณีที่เอกสารระบุตัวตนของท่าน เช่น บัตรประชาชน หนังสือเดินทาง หรือเอกสารอื่นใดที่ออกโดยหน่วยงานราชการซึ่งมีข้อมูลส่วนบุคคลที่มีความอ่อนไหว (Sensitive data) เช่น เชื้อชาติ ศาสนา โดยบริษัทฯ จะไม่นำข้อมูลดังกล่าวไปใช้เพื่อวัตถุประสงค์อื่น และคำนึงถึงความปลอดภัยของข้อมูลท่านเป็นสำคัญ',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Row(
                   children: [
@@ -466,7 +472,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -486,7 +492,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ไม่ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -495,9 +501,9 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   '4. เพื่อใช้สำหรับการยอมรับเอกสารอิเล็กทรอนิกส์ กรณีนี้จะถือว่าท่านไม่ประสงค์ในการรับบริการจัดส่งเอกสาร เช่น ใบเสร็จรับเงิน ใบกำกับภาษี หรือเอกสารอื่น ๆ ในรูปแบบต้นฉบับเอกสาร (Hard Copy) โดยบริษัทฯ จะจัดส่งเอกสารให้แก่ท่านผ่านทางอีเมลซึ่งแจ้งไว้ในระบบ',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Row(
                   children: [
@@ -514,7 +520,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -534,7 +540,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ไม่ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -543,9 +549,9 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   '5. เพื่อใช้สำหรับการโอนข้อมูลส่วนบุคลไปต่างประเทศในบางกรณีที่บริษัทฯมีความจำเป็นต้องส่งหรือโอนข้อมูลส่วนบุคคลของท่านไปยังต่างประเทศเพื่อดำเนินการตามวัตถุประสงค์ในการให้บริการแก่ท่าน เช่น เพื่อส่งข้อมูลส่วนบุคคลไปยังระบบคลาวด์ (Cloud) ที่มีแพลตฟอร์มหรือเครื่องแม่ข่าย (Server) อยู่ต่างประเทศ เช่น ประเทศสิงคโปร์ หรือสหรัฐอเมริกา โดยบริษัทฯ ได้ดำเนินการตามหลักเกณฑ์การให้ความคุ้มครองข้อมูลส่วนบุคคลที่ส่งหรือโอนไปยังต่างประเทศที่คณะกรรมการคุ้มครองข้อมูลส่วนบุคคลประกาศกำหนด',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Row(
                   children: [
@@ -562,7 +568,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -582,7 +588,7 @@ class _Accept_ruleState extends State<Accept_rule> {
                     Text(
                       "ไม่ยินยอม",
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 23),
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -594,14 +600,14 @@ class _Accept_ruleState extends State<Accept_rule> {
                 Text(
                   'ข้าพเจ้ายินยอมให้บริษัทฯ เก็บ รวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าตามวัตถุประสงค์ข้างต้น',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 Text(
                   'ข้าพเจ้าได้อ่านและเข้าใจในรายละเอียดเกี่ยวกับการเก็บ รวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของบริษัทฯตามที่ระบุในนโยบายคุ้มครองข้อมูลส่วนบุคคลรวมถึงประกาศความเป็นส่วนตัวที่เกี่ยวข้องแล้ว รายละเอียดตามที่ปรากฏในเว็บไซต์',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -623,19 +629,26 @@ class _Accept_ruleState extends State<Accept_rule> {
                       );
                     }
                   },
-                  child: Text(
-                    'https://www.chase.co.th/th/corporate-governance/privacy-notice',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.blue.shade800,
-                      decoration: TextDecoration.underline,
-                    ),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'https://www.chase.co.th/th/corporate-governance/privacy-notice',
+                          style: TextStyle(
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 23),
+                            color: Colors.blue.shade800,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
                   'ทั้งนี้ข้าพเจ้ารับทราบว่าข้าพเจ้ามีสิทธิในการเพิกถอนความยินยอมดังกล่าวได้ตลอดเวลา',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -675,7 +688,8 @@ class _Accept_ruleState extends State<Accept_rule> {
                           child: Text(
                             'ถัดไป',
                             style: TextStyle(
-                              fontSize: 20.sp,
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 23),
                               fontWeight: FontWeight.w400,
                               color: Colors.white,
                             ),

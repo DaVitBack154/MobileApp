@@ -9,6 +9,8 @@ import 'package:mobile_chaseapp/controller/register_controller.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/screen/login_page/pin_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../component/debouncer.dart';
@@ -194,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
           builder: (context) {
             return AlertDialog(
               content: SizedBox(
-                height: 190.h,
+                height: 200.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -297,22 +299,25 @@ class _RegisterPageState extends State<RegisterPage> {
               automaticallyImplyLeading: false,
               leading: currentIndex == 0
                   ? null
-                  : IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 25,
+                  : Container(
+                      margin: EdgeInsets.only(top: 3.w, left: 10.w),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: MyConstant.setMediaQueryWidth(context, 25),
+                        ),
+                        onPressed: () {
+                          if (currentIndex > 0) {
+                            setState(() {
+                              currentIndex--;
+                              //  profileColor =  Colors.white;
+                              //  line1Color = const Color(0x33F2F2F2);
+                              //  profileImg = 'assets/image/user.png';
+                            });
+                          }
+                        },
                       ),
-                      onPressed: () {
-                        if (currentIndex > 0) {
-                          setState(() {
-                            currentIndex--;
-                            //  profileColor =  Colors.white;
-                            //  line1Color = const Color(0x33F2F2F2);
-                            //  profileImg = 'assets/image/user.png';
-                          });
-                        }
-                      },
                     ),
             ),
             // resizeToAvoidBottomInset: false,
@@ -338,14 +343,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
                       Text(
                         'ลงทะเบียน',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 30),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -536,7 +538,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              fixedSize: Size(width * 0.8, 50),
+                              fixedSize: Size(width * 0.8, 60),
                               backgroundColor: const Color(0xFF103533),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -545,9 +547,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Text(
                               'ถัดไป',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 22.sp),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: MyConstant.setMediaQueryWidth(
+                                  context,
+                                  25,
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -580,7 +586,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'คำนำหน้า',
               style: TextStyle(
                 color: Color(0xFF5C5C5C),
-                fontSize: 19.sp,
+                fontSize: MyConstant.setMediaQueryWidth(context, 23),
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -596,19 +602,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 value: _registerController.gentnameController.text.isNotEmpty
                     ? _registerController.gentnameController.text
                     : null, // ใช้ค่าว่างหากไม่มีค่าในตอนแรก
-                icon: const Icon(
+                icon: Icon(
                   Icons.keyboard_arrow_down_outlined,
-                  size: 25,
+                  size: MyConstant.setMediaQueryWidth(context, 30),
                 ),
-                hint: const Text('กรุณาเลือกคำนำหน้า'),
+                hint: Text(
+                  'กรุณาเลือกคำนำหน้า',
+                  style: TextStyle(fontSize: 9.sp),
+                ),
                 style: TextStyle(
-                  fontSize: 13.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 20),
                   fontWeight: FontWeight.w500,
                   color: Colors.grey.shade600,
                 ),
+
                 isExpanded: true,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.w,
+                  vertical: 2.h,
                 ),
                 onChanged: (value) {
                   //print(value);
@@ -667,7 +678,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     'กรุณาเลือกคำนำหน้า',
                     style: TextStyle(
                       color: Colors.red,
-                      fontSize: 17.sp,
+                      fontSize: MyConstant.setMediaQueryWidth(context, 23),
                     ),
                   ),
                 ),
@@ -683,7 +694,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'ชื่อ',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 19.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -693,8 +704,15 @@ class _RegisterPageState extends State<RegisterPage> {
             width: width,
             autoFocus: false,
             padding: const EdgeInsets.only(top: 3, bottom: 24),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
             errorText: errorTextName,
+            hintStyle: TextStyle(
+              fontSize: MyConstant.setMediaQueryWidth(
+                context,
+                25,
+              ),
+            ),
+            fontSize: 16.sp,
             inputFormatter: [
               FilteringTextInputFormatter.deny(
                   RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
@@ -712,7 +730,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'นามสกุล',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 19.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 23),
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -722,8 +740,14 @@ class _RegisterPageState extends State<RegisterPage> {
             width: width,
             autoFocus: false,
             padding: const EdgeInsets.only(top: 3, bottom: 24),
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
             errorText: errorTextSurName,
+            hintStyle: TextStyle(
+                fontSize: MyConstant.setMediaQueryWidth(
+              context,
+              25,
+            )),
+            fontSize: 16.sp,
             inputFormatter: [
               FilteringTextInputFormatter.deny(
                   RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
@@ -741,7 +765,10 @@ class _RegisterPageState extends State<RegisterPage> {
               'หมายเลขบัตรประชาชน',
               style: TextStyle(
                   color: Color(0xFF5C5C5C),
-                  fontSize: 19.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(
+                    context,
+                    23,
+                  ),
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -754,6 +781,13 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.only(top: 3, bottom: 24),
             contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
             errorText: errorTextIdCard,
+            hintStyle: TextStyle(
+              fontSize: MyConstant.setMediaQueryWidth(
+                context,
+                25,
+              ),
+            ),
+            fontSize: 16.sp,
             onChanged: (value) {
               value.isEmpty
                   ? errorTextIdCard = 'กรุณากรอกหมายเลขบัตรประชาชน'
@@ -789,7 +823,7 @@ class _RegisterPageState extends State<RegisterPage> {
             'อีเมล',
             style: TextStyle(
                 color: Color(0xFF5C5C5C),
-                fontSize: 20.sp,
+                fontSize: MyConstant.setMediaQueryWidth(context, 23),
                 fontWeight: FontWeight.w400),
           ),
         ),
@@ -801,6 +835,10 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.only(top: 3, bottom: 24),
           contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
           errorText: errorTextEmail,
+          hintStyle: TextStyle(
+            fontSize: MyConstant.setMediaQueryWidth(context, 25),
+          ),
+          fontSize: 16.sp,
           onChanged: (value) {
             setState(() {
               if (value.isEmpty) {
@@ -819,7 +857,7 @@ class _RegisterPageState extends State<RegisterPage> {
             'หมายเลขโทรศัพท์',
             style: TextStyle(
                 color: Color(0xFF5C5C5C),
-                fontSize: 20.sp,
+                fontSize: MyConstant.setMediaQueryWidth(context, 23),
                 fontWeight: FontWeight.w400),
           ),
         ),
@@ -831,6 +869,10 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.only(top: 3, bottom: 24),
           contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
           errorText: errorTextPhone,
+          hintStyle: TextStyle(
+            fontSize: MyConstant.setMediaQueryWidth(context, 25),
+          ),
+          fontSize: 16.sp,
           onChanged: (value) {
             value.isEmpty || value.length != 10
                 ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง'
@@ -860,7 +902,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _otp() {
     // double width = MediaQuery.of(context).size.width;
     final defaulPinTheme = PinTheme(
-      width: 50.w,
+      width: 45.w,
       height: 50.h,
       textStyle: TextStyle(fontSize: 22.sp, color: Colors.black),
       decoration: BoxDecoration(
@@ -1002,21 +1044,21 @@ class _RegisterPageState extends State<RegisterPage> {
       children: [
         assetImage != null
             ? Container(
-                width: 50.w,
-                height: 50.w,
+                width: MyConstant.setMediaQueryWidth(context, 60),
+                height: MyConstant.setMediaQueryWidth(context, 60),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: color,
                 ),
                 child: Image.asset(
                   assetImage,
-                  scale: 1.5,
+                  scale: MyConstant.setMediaQueryWidth(context, 0.6),
                   color: Color(0xFF103533),
                 ),
               )
             : Container(
-                width: 50.w,
-                height: 50.h,
+                width: MyConstant.setMediaQueryWidth(context, 60),
+                height: MyConstant.setMediaQueryWidth(context, 60),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: color,
@@ -1030,14 +1072,14 @@ class _RegisterPageState extends State<RegisterPage> {
         Text(
           title,
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: MyConstant.setMediaQueryWidth(context, 23),
             color: Colors.grey.shade400,
           ),
         ),
         Text(
           detail,
           style: TextStyle(
-            fontSize: 17.sp,
+            fontSize: MyConstant.setMediaQueryWidth(context, 27),
             color: Colors.white,
           ),
         ),
@@ -1047,7 +1089,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _line(Color color) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 30).h,
+      padding: EdgeInsets.only(
+        bottom: MyConstant.setMediaQueryWidth(context, 40),
+      ).h,
       child: Container(
         height: 5.h,
         width: 55.w,

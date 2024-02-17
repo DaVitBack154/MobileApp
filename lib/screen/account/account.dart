@@ -70,7 +70,7 @@ class _AccountState extends State<Account> {
                       child: Text(
                         'ACCOUNT',
                         style: TextStyle(
-                          fontSize: 30.sp,
+                          fontSize: 28.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

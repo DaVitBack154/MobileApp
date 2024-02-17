@@ -18,6 +18,8 @@ class MyConstant {
       MediaQuery.of(context).size.width;
   static double setMediaQueryHeightFull(BuildContext context) =>
       MediaQuery.of(context).size.height;
+
+  //set ความยาวทุกขนาดจอ
   static double setMediaQueryWidth(BuildContext context, double setint) {
     if (ResponsiveWidthContext.isMobileFoldVertical(context)) {
       return ((setint / MediaQuery.of(context).size.width) *
@@ -28,6 +30,21 @@ class MyConstant {
       return ((setint / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width) -
           ((((setint * 15) / 100) / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width);
+    } else if (ResponsiveWidthContext.isTablet(context)) {
+      return ((setint / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width) +
+          ((((setint * 55) / 100) / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width);
+    } else if (ResponsiveWidthContext.isTablet11(context)) {
+      return ((setint / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width) +
+          ((((setint * 40) / 100) / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width);
+    } else if (ResponsiveWidthContext.isTabletMini(context)) {
+      return ((setint / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width) +
+          ((((setint * 30) / 100) / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width);
     } else {
       return ((setint / MediaQuery.of(context).size.width) *
@@ -55,37 +72,41 @@ class MyConstant {
     }
   }
 
+  //set ความกว้างทุกขนาดจอ
   static double setMediaQueryHeight(BuildContext context, double setint) {
-    // if (ResponsiveHeightContext.isMobileSmall(context)) {
-    //   return ((setint / MediaQuery.of(context).size.height) *
-    //           MediaQuery.of(context).size.height) -
-    //       ((((setint * 15) / 100) / MediaQuery.of(context).size.height) *
-    //           MediaQuery.of(context).size.height);
-    // } else {
-    return ((setint / MediaQuery.of(context).size.height) *
-        MediaQuery.of(context).size.height);
-    // }
+    if (ResponsiveWidthContext.isMobileFoldVertical(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) +
+          ((((setint * 15) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else if (ResponsiveWidthContext.isMobileSmall(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) -
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else if (ResponsiveWidthContext.isMobile(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) +
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else if (ResponsiveWidthContext.isTabletMini(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) -
+          ((((setint * 15) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else if (ResponsiveWidthContext.isTablet11(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) -
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else if (ResponsiveWidthContext.isTablet(context)) {
+      return ((setint / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height) +
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.height) *
+              MediaQuery.of(context).size.height);
+    } else {
+      return ((setint / MediaQuery.of(context).size.height) *
+          MediaQuery.of(context).size.height);
+    }
   }
-
-  TextStyle stylePrimary() => TextStyle(
-      // color: primary,
-      // fontWeight: fontweight,
-      // fontFamily: fontfamily,
-      );
-
-  // TextStyle h0_5StyleBown1Thin(BoxConstraints constraints) => TextStyle(
-  //   fontSize: setConstraintsMaxWidth(constraints, h0_5),
-  //   color: bown1,
-  //   fontFamily: fontfamily,
-  //   fontWeight: fontnormal,
-  // );
-
-  //  ButtonStyle myButtonStyleWhile25(BoxConstraints constraints) =>
-  // ElevatedButton.styleFrom(
-  //   shadowColor: grey,
-  //   backgroundColor: white,
-  //   shape: RoundedRectangleBorder(
-  //     borderRadius: borderRadiusCircularSet25(constraints),
-  //   ),
-  // );
 }

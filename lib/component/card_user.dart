@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/model/respon_accuser.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class CardUser extends StatelessWidget {
   final Datum data;
@@ -45,7 +47,8 @@ class CardUser extends StatelessWidget {
                               Text(
                                 'Resolution Way Co., Ltd.',
                                 style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 22),
                                   fontWeight: FontWeight.normal,
                                   height: 0.06,
                                   color: Color(0xFF5C5C5C),
@@ -58,7 +61,8 @@ class CardUser extends StatelessWidget {
                               Text(
                                 'บริษัท รีโซลูชั่น เวย์ จำกัด',
                                 style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 22),
                                   fontWeight: FontWeight.normal,
                                   color: Color(0xFF5C5C5C),
                                 ),
@@ -72,7 +76,8 @@ class CardUser extends StatelessWidget {
                                   Text(
                                     'CF Asia Asset Management Co., Ltd.',
                                     style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 22),
                                       fontWeight: FontWeight.normal,
                                       height: 0.06,
                                       color: Color(0xFF5C5C5C),
@@ -85,7 +90,8 @@ class CardUser extends StatelessWidget {
                                   Text(
                                     'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
                                     style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 22),
                                       fontWeight: FontWeight.normal,
                                       color: Color(0xFF5C5C5C),
                                     ),
@@ -98,7 +104,8 @@ class CardUser extends StatelessWidget {
                                   Text(
                                     'Courts Megastore (Thailand) Co., Ltd.',
                                     style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 22),
                                       fontWeight: FontWeight.normal,
                                       height: 0.06,
                                       color: Color(0xFF5C5C5C),
@@ -111,7 +118,8 @@ class CardUser extends StatelessWidget {
                                   Text(
                                     'บริษัท คอร์ทส์ เม็กก้าสโตร์ (ประเทศไทย) จำกัด',
                                     style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 22),
                                       fontWeight: FontWeight.normal,
                                       color: Color(0xFF5C5C5C),
                                     ),
@@ -122,7 +130,7 @@ class CardUser extends StatelessWidget {
                       children: [
                         Image.asset(
                           'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
-                          height: 17,
+                          height: MyConstant.setMediaQueryWidth(context, 18),
                           fit: BoxFit.cover,
                         ),
                         SizedBox(
@@ -143,7 +151,7 @@ class CardUser extends StatelessWidget {
                     'ภาระหนี้คงเหลือ (บาท)',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 18.sp,
+                      fontSize: MyConstant.setMediaQueryWidth(context, 25),
                       height: 1.2,
                       color: Colors.black,
                     ),
@@ -151,7 +159,7 @@ class CardUser extends StatelessWidget {
                   Text(
                     thaiBahtFormat.format(data.osBalance),
                     style: TextStyle(
-                      fontSize: 28.sp,
+                      fontSize: MyConstant.setMediaQueryWidth(context, 30),
                       fontWeight: FontWeight.bold,
                       height: 1.2,
                       color: const Color(0xFF103533),
@@ -190,7 +198,7 @@ class CardUser extends StatelessWidget {
                 'Name :',
                 style: TextStyle(
                   color: const Color(0xFF8A8A8A),
-                  fontSize: 18.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
                   height: 1.2,
                   fontWeight: FontWeight.normal,
                 ),
@@ -199,14 +207,14 @@ class CardUser extends StatelessWidget {
                 '${data.tCustomerName} ${data.tCustomerSurname}',
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  fontSize: 17.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 22),
                 ),
               ),
               Text(
                 '${data.customerId}',
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  fontSize: 18.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 22),
                   height: 1.1,
                 ),
               ),

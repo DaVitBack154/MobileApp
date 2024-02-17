@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class HisBar extends StatefulWidget {
@@ -32,9 +33,9 @@ class _HisBarState extends State<HisBar> {
                   color: Colors.black.withOpacity(.1),
                 ),
                 child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back,
-                    size: 25,
+                    size: MyConstant.setMediaQueryWidth(context, 25),
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -48,7 +49,7 @@ class _HisBarState extends State<HisBar> {
               Text(
                 'ประวัติชำระเงิน',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: 21.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),

@@ -13,6 +13,7 @@ import 'package:mobile_chaseapp/screen/homepage/notify.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/key_storage.dart';
 
@@ -64,9 +65,10 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    print(height);
+    // double height = MediaQuery.of(context).size.height;
+    // print(height);
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: ResponsiveHeightContext.isMobileFoldVertical(context)
@@ -75,11 +77,11 @@ class _NavbarState extends State<Navbar> {
                   ? MyConstant.setMediaQueryHeight(context, 40)
                   : ResponsiveHeightContext.isMobile(context)
                       ? MyConstant.setMediaQueryHeight(context, 60)
-                      : MyConstant.setMediaQueryHeight(context, 60),
+                      : 7.h,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
             vertical: 10,
           ),
           alignment: Alignment.bottomCenter,
@@ -98,17 +100,18 @@ class _NavbarState extends State<Navbar> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
+                    padding: EdgeInsets.only(
+                      left: ResponsiveWidthContext.isTablet(context) ? 30 : 20,
                     ),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'สวัสดีคุณ !',
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 22),
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
                           ),
@@ -116,7 +119,8 @@ class _NavbarState extends State<Navbar> {
                         Text(
                           name ?? '',
                           style: TextStyle(
-                              fontSize: 28.sp,
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 30),
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -130,16 +134,16 @@ class _NavbarState extends State<Navbar> {
                   Row(
                     children: [
                       Container(
-                        width: 50.w,
+                        width: MyConstant.setMediaQueryWidth(context, 60),
                         height: 45.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.black.withOpacity(.1),
                         ),
                         child: IconButton(
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.notifications,
-                            size: 30,
+                            size: MyConstant.setMediaQueryWidth(context, 25),
                             color: Colors.white,
                           ),
                           onPressed: () async {

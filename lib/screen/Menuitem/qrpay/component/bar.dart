@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class Bar extends StatelessWidget {
@@ -14,20 +15,20 @@ class Bar extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           alignment: Alignment.bottomCenter,
-          height: 50.h + kToolbarHeight.h,
+          height: MyConstant.setMediaQueryWidth(context, 110),
           child: Row(
             children: [
               Container(
-                width: 40.w,
+                width: 35.w,
                 height: 35.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.black.withOpacity(.1),
                 ),
                 child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back,
-                    size: 25,
+                    size: MyConstant.setMediaQueryWidth(context, 25),
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -41,7 +42,7 @@ class Bar extends StatelessWidget {
               Text(
                 'ยอดชำระ',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 30),
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),

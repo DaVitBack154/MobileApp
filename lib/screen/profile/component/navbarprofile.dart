@@ -67,7 +67,7 @@ class _NavbarProfileState extends State<NavbarProfile> {
                 Text(
                   _profileController.userModel.user?.name ?? '',
                   style: TextStyle(
-                    fontSize: 30.sp,
+                    fontSize: 28.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
@@ -78,7 +78,7 @@ class _NavbarProfileState extends State<NavbarProfile> {
                 Text(
                   _profileController.userModel.user?.surname ?? '',
                   style: TextStyle(
-                    fontSize: 30.sp,
+                    fontSize: 28.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),

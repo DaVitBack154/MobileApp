@@ -6,6 +6,7 @@ import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/qr.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../../../controller/getacc_controller.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -101,7 +102,7 @@ class _SlideFromState extends State<SlideFrom> {
                         .toList(),
                     carouselController: carouselController,
                     options: CarouselOptions(
-                        viewportFraction: 0.95,
+                        viewportFraction: 0.93,
                         height: 200.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
@@ -125,8 +126,10 @@ class _SlideFromState extends State<SlideFrom> {
                           onTap: () =>
                               carouselController.animateToPage(entry.key),
                           child: Container(
-                            width: _currentIndex == entry.key ? 20 : 7,
-                            height: 7.0,
+                            width: _currentIndex == entry.key
+                                ? MyConstant.setMediaQueryWidth(context, 20)
+                                : 7,
+                            height: 8.0,
                             margin: const EdgeInsets.symmetric(
                               horizontal: 3.0,
                             ),
@@ -159,7 +162,8 @@ class _SlideFromState extends State<SlideFrom> {
                             Text(
                               'รูปแบบการจ่าย',
                               style: TextStyle(
-                                fontSize: 21.sp,
+                                fontSize:
+                                    MyConstant.setMediaQueryWidth(context, 30),
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -184,7 +188,9 @@ class _SlideFromState extends State<SlideFrom> {
                                         'ประวัติการชำระเงิน',
                                         style: TextStyle(
                                           color: Colors.grey.shade500,
-                                          fontSize: 17.sp,
+                                          fontSize:
+                                              MyConstant.setMediaQueryWidth(
+                                                  context, 28),
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
@@ -219,13 +225,16 @@ class _SlideFromState extends State<SlideFrom> {
                                   labelText: "ชำระเงิน",
                                   labelStyle: TextStyle(
                                     color: Colors.grey.shade700,
+                                    fontSize: MyConstant.setMediaQueryWidth(
+                                        context, 20),
                                   ),
                                   suffixText: 'บาท',
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.always,
                                   hintText: 'ยอดชำระ',
                                   hintStyle: TextStyle(
-                                    fontSize: 20.sp,
+                                    fontSize: MyConstant.setMediaQueryWidth(
+                                        context, 30),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   enabledBorder: const UnderlineInputBorder(
@@ -290,7 +299,7 @@ class _SlideFromState extends State<SlideFrom> {
                               },
                               style: ButtonStyle(
                                 fixedSize: MaterialStateProperty.all<Size>(
-                                  Size(250, 40),
+                                  Size(250, 60),
                                 ),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
@@ -307,7 +316,8 @@ class _SlideFromState extends State<SlideFrom> {
                               child: Text(
                                 'ชำระเงิน',
                                 style: TextStyle(
-                                  fontSize: 22.sp,
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 25),
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white,
                                 ),

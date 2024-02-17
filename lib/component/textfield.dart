@@ -25,6 +25,7 @@ class textField extends StatelessWidget {
   final TextEditingController? controller;
   final String? errorText;
   final TextStyle? hintStyle;
+  final double? fontSize;
 
   const textField(
     this.value, {
@@ -51,6 +52,7 @@ class textField extends StatelessWidget {
     this.controller,
     this.errorText,
     this.hintStyle,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -95,7 +97,7 @@ class textField extends StatelessWidget {
               errorText: errorText,
               errorStyle: const TextStyle(color: Colors.red, fontSize: 18)),
           style: TextStyle(
-            fontSize: 19,
+            fontSize: fontSize ?? 19,
             color: textColor,
             fontWeight: FontWeight.w400,
           ),

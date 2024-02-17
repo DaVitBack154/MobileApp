@@ -5,6 +5,8 @@ import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/screen/login_page/accept_rule.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../component/textfield.dart';
 import '../../controller/login_controller.dart';
 
@@ -78,9 +80,10 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     width: 30,
                                     child: IconButton(
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.arrow_back,
-                                        size: 25,
+                                        size: MyConstant.setMediaQueryWidth(
+                                            context, 30),
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
@@ -94,10 +97,11 @@ class _LoginState extends State<Login> {
                                       },
                                     ),
                                   ),
-                                  const Text(
+                                  Text(
                                     'ยินดีต้อนรับ',
                                     style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 35),
                                       fontWeight: FontWeight.w700,
                                       color: Colors.white,
                                     ),
@@ -111,10 +115,11 @@ class _LoginState extends State<Login> {
                             const SizedBox(
                               height: 15,
                             ),
-                            const Text(
+                            Text(
                               'ลงชื่อเข้าใช้บัญชีของคุณ',
                               style: TextStyle(
-                                fontSize: 25,
+                                fontSize:
+                                    MyConstant.setMediaQueryWidth(context, 20),
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                               ),
@@ -138,7 +143,8 @@ class _LoginState extends State<Login> {
                               child: textField(
                                 'หมายเลขบัตรประชาชน',
                                 hintStyle: TextStyle(
-                                  fontSize: 20.sp,
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 25),
                                   //color: hintColor,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -146,13 +152,15 @@ class _LoginState extends State<Login> {
                                 width: width,
                                 autoFocus: false,
                                 maxLength: 13,
+                                fontSize: 25,
                                 prefixIcon: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.w,
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.credit_card_outlined,
-                                    size: 25,
+                                    size: MyConstant.setMediaQueryWidth(
+                                        context, 30),
                                     color: Color(0xFF395D5D),
                                   ),
                                 ),
@@ -206,7 +214,9 @@ class _LoginState extends State<Login> {
                                         builder: (context) {
                                           return AlertDialog(
                                             content: SizedBox(
-                                              height: 200.h,
+                                              height:
+                                                  MyConstant.setMediaQueryWidth(
+                                                      context, 300),
                                               child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -306,7 +316,8 @@ class _LoginState extends State<Login> {
                                   child: Text(
                                     'เข้าสู่ระบบ',
                                     style: TextStyle(
-                                      fontSize: 23.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 30),
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
@@ -377,7 +388,8 @@ class _LoginState extends State<Login> {
                                   child: Text(
                                     'ลงทะเบียน',
                                     style: TextStyle(
-                                      fontSize: 23.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 30),
                                       fontWeight: FontWeight.w500,
                                       color: const Color(0xFF103533),
                                     ),

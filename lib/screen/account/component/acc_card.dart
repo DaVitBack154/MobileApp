@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../../controller/getacc_controller.dart';
 import '../../../model/respon_accuser.dart';
@@ -167,12 +168,16 @@ class _AccCardState extends State<AccCard> {
                                             data.companyId == 'CFAA'
                                         ? Image.asset(
                                             'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
-                                            height: 17,
+                                            height:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 20),
                                             fit: BoxFit.cover,
                                           )
                                         : Image.asset(
                                             'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
-                                            height: 14,
+                                            height:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 17),
                                             fit: BoxFit.cover,
                                           ),
                                     SizedBox(

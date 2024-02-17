@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 
 class NavbarEdit extends StatefulWidget {
   const NavbarEdit({super.key});
@@ -34,9 +35,9 @@ class _NavbarEditState extends State<NavbarEdit> {
                 color: Colors.black.withOpacity(.1),
               ),
               child: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios_new_outlined,
-                  size: 25,
+                  size: MyConstant.setMediaQueryWidth(context, 25),
                   color: Colors.white,
                 ),
                 onPressed: () {

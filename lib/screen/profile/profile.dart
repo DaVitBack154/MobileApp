@@ -7,6 +7,8 @@ import 'package:mobile_chaseapp/screen/profile/component/navbarprofile.dart';
 import 'package:mobile_chaseapp/screen/profile/edit_profile.dart';
 import 'package:mobile_chaseapp/utils/app_navigator.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -91,9 +93,10 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.edit_document,
-                                      size: 30,
+                                      size: MyConstant.setMediaQueryWidth(
+                                          context, 40),
                                       color: Color(0xFF103533),
                                     ),
                                     SizedBox(
@@ -102,7 +105,8 @@ class _ProfileState extends State<Profile> {
                                     Text(
                                       'ตั้งค่าโปรไฟล์',
                                       style: TextStyle(
-                                        fontSize: 23.sp,
+                                        fontSize: MyConstant.setMediaQueryWidth(
+                                            context, 28),
                                         fontWeight: FontWeight.w600,
                                         color: const Color(0xFF103533),
                                       ),
@@ -162,7 +166,7 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         'ออกจากระบบ',
                         style: TextStyle(
-                          fontSize: 22.sp,
+                          fontSize: MyConstant.setMediaQueryWidth(context, 28),
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
                         ),

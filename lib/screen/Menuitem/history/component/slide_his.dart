@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import '../../../../controller/getacc_controller.dart';
 import '../../../../controller/getpayment_controller.dart';
 import '../../../../model/respon_payment.dart';
@@ -79,7 +80,7 @@ class _SlideHisState extends State<SlideHis> {
                       .toList(),
                   carouselController: carouselController,
                   options: CarouselOptions(
-                      viewportFraction: 0.95,
+                      viewportFraction: 0.93,
                       height: 210.h,
                       autoPlay: false,
                       enableInfiniteScroll: false,
@@ -100,7 +101,9 @@ class _SlideHisState extends State<SlideHis> {
                         onTap: () =>
                             carouselController.animateToPage(entry.key),
                         child: Container(
-                          width: _currentIndex == entry.key ? 20 : 7,
+                          width: _currentIndex == entry.key
+                              ? MyConstant.setMediaQueryWidth(context, 20)
+                              : 7,
                           height: 7.0,
                           margin: const EdgeInsets.symmetric(
                             horizontal: 3.0,
@@ -206,7 +209,7 @@ class _SlideHisState extends State<SlideHis> {
                                             children: [
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                  horizontal: 15.w,
+                                                  horizontal: 10.w,
                                                   vertical: 5.h,
                                                 ),
                                                 child: Row(
@@ -219,7 +222,9 @@ class _SlideHisState extends State<SlideHis> {
                                                       style: TextStyle(
                                                         color: Colors
                                                             .grey.shade600,
-                                                        fontSize: 18.sp,
+                                                        fontSize: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 25),
                                                       ),
                                                     ),
                                                     Text(
@@ -228,7 +233,9 @@ class _SlideHisState extends State<SlideHis> {
                                                       style: TextStyle(
                                                         color: Colors
                                                             .grey.shade600,
-                                                        fontSize: 18.sp,
+                                                        fontSize: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 25),
                                                       ),
                                                     ),
                                                   ],
@@ -250,10 +257,9 @@ class _SlideHisState extends State<SlideHis> {
 
                                               // แสดงรายการ payAmount เฉพาะในรายการที่ payDate เหมือนกันแรก
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
+                                                padding: EdgeInsets.symmetric(
                                                   vertical: 10,
-                                                  horizontal: 15,
+                                                  horizontal: 10.w,
                                                 ),
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -265,7 +271,9 @@ class _SlideHisState extends State<SlideHis> {
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        fontSize: 18.sp,
+                                                        fontSize: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 25),
                                                       ),
                                                     ),
                                                     Row(
@@ -277,7 +285,10 @@ class _SlideHisState extends State<SlideHis> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: 18.sp,
+                                                            fontSize: MyConstant
+                                                                .setMediaQueryWidth(
+                                                                    context,
+                                                                    25),
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -288,12 +299,13 @@ class _SlideHisState extends State<SlideHis> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: 18.sp,
+                                                            fontSize: MyConstant
+                                                                .setMediaQueryWidth(
+                                                                    context,
+                                                                    25),
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: 5.w,
-                                                        ),
+
                                                         // Text(
                                                         //   payment.receiveDate
                                                         //               .toString() ==

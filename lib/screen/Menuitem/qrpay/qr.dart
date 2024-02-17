@@ -1,10 +1,15 @@
+import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/permission/permission_handler.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -69,7 +74,7 @@ class _QRPaymentState extends State<QRPayment> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 55.h,
+                      top: 50.h,
                       left: 30.w,
                     ),
                     child: bar(),
@@ -78,8 +83,8 @@ class _QRPaymentState extends State<QRPayment> {
                     height: 30.h,
                   ),
                   Container(
-                    width: 210.w,
-                    height: 190.h,
+                    width: MyConstant.setMediaQueryWidth(context, 210),
+                    height: MyConstant.setMediaQueryWidth(context, 210),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -111,87 +116,214 @@ class _QRPaymentState extends State<QRPayment> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      final isGranted =
-                          await PermissionHandler.requestStoragePermission();
-                      if (isGranted) {
-                        final isSave = await _captureAndSaveScreen();
+                      // final isGranted =
+                      //     await PermissionHandler.requestStoragePermission();
+                      screenshotController
+                          .capture(
+                        delay: const Duration(milliseconds: 200),
+                      )
+                          .then(
+                        (capturedImage) async {
+                          if (mounted) {
+                            if (capturedImage != null) {
+                              final tempdir = await getTemporaryDirectory();
 
-                        if (isSave) {
-                          // ignore: use_build_context_synchronously
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: SizedBox(
-                                  height: 210.h,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/image/success.png',
-                                        height: 50.h,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Text(
-                                        "สำเร็จ",
-                                        style: TextStyle(
-                                          fontSize: 30.sp,
-                                          color: Color(0xFF103533),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Text(
-                                        "บันทึกรูปภาพสำเร็จ",
-                                        style: TextStyle(
-                                          fontSize: 19.sp,
-                                          color: Colors.grey.shade500,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Center(
-                                        child: TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFF103533),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8),
-                                              child: Icon(
-                                                Icons.close,
-                                                size: 20.h,
-                                                color: Colors.white,
+                              final subdirectory =
+                                  Directory('${tempdir.path}/ARMA/picture');
+
+                              if (!(await subdirectory.exists())) {
+                                await subdirectory.create(recursive: true);
+                              }
+                              final filePath =
+                                  '${subdirectory.path}/qrcode_${Random().nextInt(100000)}_${DateTime.now()}.png';
+                              final imageFile = File(filePath);
+                              await imageFile.writeAsBytes(capturedImage);
+                              File file1 = imageFile;
+                              final result1 =
+                                  await ImageGallerySaver.saveFile(file1.path);
+                              if (result1['isSuccess']) {
+                                if (kDebugMode) {
+                                  // ignore: use_build_context_synchronously
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: SizedBox(
+                                          height: MyConstant.setMediaQueryWidth(
+                                              context, 340),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                'assets/image/success.png',
+                                                height: 50.h,
+                                                fit: BoxFit.cover,
                                               ),
-                                            ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Text(
+                                                "สำเร็จ",
+                                                style: TextStyle(
+                                                  fontSize: 30.sp,
+                                                  color: Color(0xFF103533),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                              Text(
+                                                "บันทึกรูปภาพสำเร็จ",
+                                                style: TextStyle(
+                                                  fontSize: 19.sp,
+                                                  color: Colors.grey.shade500,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Center(
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF103533),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8),
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        size: 20.h,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // actions: [
-                                //   Navigator.of(context).pop();
-                                // ],
+                                        // actions: [
+                                        //   Navigator.of(context).pop();
+                                        // ],
+                                      );
+                                    },
+                                  );
+                                }
+                              } else {
+                                if (kDebugMode) {
+                                  print('Failed to save image to gallery.');
+                                }
+                              }
+                            }
+                            if (mounted) {
+                              setState(
+                                () {},
                               );
-                            },
-                          );
-                        } else {
-                          // ignore: use_build_context_synchronously
-                        }
-                      }
+                            }
+                          }
+                        },
+                      ).catchError(
+                        (error) {
+                          if (kDebugMode) {
+                            print(
+                              'error ===>> $error',
+                            );
+                          }
+                        },
+                      );
+                      // if (isGranted) {
+                      //   final isSave = await _captureAndSaveScreen();
+
+                      //   if (isSave) {
+                      //     // ignore: use_build_context_synchronously
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (context) {
+                      //         return AlertDialog(
+                      //           content: SizedBox(
+                      //             height:
+                      //                 ResponsiveHeightContext.isTablet(context)
+                      //                     ? 250.h
+                      //                     : 210.h,
+                      //             child: Column(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               children: [
+                      //                 Image.asset(
+                      //                   'assets/image/success.png',
+                      //                   height: 50.h,
+                      //                   fit: BoxFit.cover,
+                      //                 ),
+                      //                 SizedBox(
+                      //                   height: 20.h,
+                      //                 ),
+                      //                 Text(
+                      //                   "สำเร็จ",
+                      //                   style: TextStyle(
+                      //                     fontSize: 30.sp,
+                      //                     color: Color(0xFF103533),
+                      //                     fontWeight: FontWeight.bold,
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(
+                      //                   height: 10.h,
+                      //                 ),
+                      //                 Text(
+                      //                   "บันทึกรูปภาพสำเร็จ",
+                      //                   style: TextStyle(
+                      //                     fontSize: 19.sp,
+                      //                     color: Colors.grey.shade500,
+                      //                     fontWeight: FontWeight.normal,
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(
+                      //                   height: 20.h,
+                      //                 ),
+                      //                 Center(
+                      //                   child: TextButton(
+                      //                     onPressed: () {
+                      //                       Navigator.of(context).pop();
+                      //                     },
+                      //                     child: Container(
+                      //                       decoration: BoxDecoration(
+                      //                         color: Color(0xFF103533),
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(5),
+                      //                       ),
+                      //                       child: Padding(
+                      //                         padding: const EdgeInsets.all(8),
+                      //                         child: Icon(
+                      //                           Icons.close,
+                      //                           size: 20.h,
+                      //                           color: Colors.white,
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //           // actions: [
+                      //           //   Navigator.of(context).pop();
+                      //           // ],
+                      //         );
+                      //       },
+                      //     );
+                      //   } else {
+                      //     // ignore: use_build_context_synchronously
+                      //   }
+                      // }
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(220.w, 30.h),
@@ -272,7 +404,7 @@ class _QRPaymentState extends State<QRPayment> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(width * 0.8, 40),
+                  fixedSize: Size(width * 0.8, 60),
                   backgroundColor: const Color(0xFF103533),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -281,9 +413,10 @@ class _QRPaymentState extends State<QRPayment> {
                 child: Text(
                   'กลับสู่หน้าหลัก',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20.sp),
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 25),
+                  ),
                 ),
               ),
             ),
@@ -295,63 +428,65 @@ class _QRPaymentState extends State<QRPayment> {
 
   Widget bar() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: 45.w,
-          height: 40.h,
+          width: 35.w,
+          height: 35.h,
           decoration: const BoxDecoration(
             color: Color(0x0DFFFFFF),
             borderRadius: BorderRadius.all(
-              Radius.circular(10),
+              Radius.circular(15),
             ),
           ),
           child: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_ios_new,
+              size: MyConstant.setMediaQueryWidth(context, 23),
               color: Colors.white,
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: Text(
-            'QR Code ชำระเงิน',
-            style: TextStyle(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-            ),
+        Text(
+          'QR Code ชำระเงิน',
+          style: TextStyle(
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
           ),
         ),
+        SizedBox(
+          width: 60.w,
+        )
       ],
     );
   }
 
-  Future<bool> _captureAndSaveScreen() async {
-    final capturedImage = await screenshotController.capture();
+  // Future<bool> _captureAndSaveScreen() async {
+  //   final capturedImage = await screenshotController.capture();
 
-    if (capturedImage != null) {
-      final isSave = await _saveImageToGallery(capturedImage);
-      return isSave;
-      // _showNotification();
-    } else {
-      print('Failed to capture image.');
-      return false;
-    }
-  }
+  //   if (capturedImage != null) {
+  //     final isSave = await _saveImageToGallery(capturedImage);
+  //     return isSave;
+  //     // _showNotification();
+  //   } else {
+  //     print('Failed to capture image.');
+  //     return false;
+  //   }
+  // }
 
-  Future<bool> _saveImageToGallery(Uint8List imageBytes) async {
-    final result = await ImageGallerySaver.saveImage(imageBytes);
+  // Future<bool> _saveImageToGallery(Uint8List imageBytes) async {
+  //   final result = await ImageGallerySaver.saveImage(imageBytes);
 
-    if (result['isSuccess']) {
-      print('Image saved to gallery.');
-      return true;
-    } else {
-      return false;
-      print('Failed to save image: ${result['error']}');
-    }
-  }
+  //   if (result['isSuccess']) {
+  //     print('Image saved to gallery.');
+  //     return true;
+  //   } else {
+  //     return false;
+  //     print('Failed to save image: ${result['error']}');
+  //   }
+  // }
 }

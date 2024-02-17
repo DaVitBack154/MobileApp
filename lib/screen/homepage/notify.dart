@@ -6,6 +6,7 @@ import 'package:mobile_chaseapp/controller/getnotify.dart';
 import 'package:mobile_chaseapp/controller/getnotifypromotion.dart';
 import 'package:mobile_chaseapp/controller/update_paynoti.dart';
 import 'package:mobile_chaseapp/controller/updatenotipromotion.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Notify extends StatefulWidget {
@@ -105,9 +106,10 @@ class _NotifyState extends State<Notify> {
                               color: Colors.black.withOpacity(.1),
                             ),
                             child: IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.arrow_back_ios_new_outlined,
-                                size: 25,
+                                size:
+                                    MyConstant.setMediaQueryWidth(context, 25),
                                 color: Colors.white,
                               ),
                               onPressed: () {
@@ -130,7 +132,7 @@ class _NotifyState extends State<Notify> {
                           Text(
                             'การแจ้งเตือน',
                             style: TextStyle(
-                              fontSize: 25.sp,
+                              fontSize: 23.sp,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
@@ -164,7 +166,7 @@ class _NotifyState extends State<Notify> {
                           Container(
                             margin: EdgeInsets.only(bottom: 80.h),
                             width: 40.w,
-                            height: 35.h,
+                            height: 40.h,
                             child: CircularProgressIndicator(
                               color: Colors.teal.shade800,
                             ),

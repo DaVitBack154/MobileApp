@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_chaseapp/controller/getcompanyname.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contract extends StatefulWidget {
@@ -84,8 +86,8 @@ class _ContractState extends State<Contract> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final query = MediaQuery.of(context);
-    print('object----');
-    print(width);
+    // print('object----');
+    // print(width);
     return MediaQuery(
       data: query.copyWith(
         // ignore: deprecated_member_use
@@ -118,8 +120,10 @@ class _ContractState extends State<Contract> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 70.h,
-                                ),
+                                    vertical: MyConstant.setMediaQueryWidth(
+                                  context,
+                                  50,
+                                )),
                                 child: Text(
                                   'CONTACT ',
                                   style: TextStyle(
@@ -136,7 +140,7 @@ class _ContractState extends State<Contract> {
                     ),
                     Container(
                       width: width,
-                      margin: const EdgeInsets.only(top: kToolbarHeight + 50).h,
+                      margin: const EdgeInsets.only(top: kToolbarHeight + 40).h,
                       // decoration: BoxDecoration(color: Colors.amber),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -164,15 +168,18 @@ class _ContractState extends State<Contract> {
                                     switch (e.companyId) {
                                       case 'CFAA':
                                         path = 'assets/image/cfam.png';
-                                        size = 16;
+                                        size = MyConstant.setMediaQueryWidth(
+                                            context, 20);
                                         break;
                                       case 'RWAY':
                                         path = 'assets/image/rway.png';
-                                        size = 16;
+                                        size = MyConstant.setMediaQueryWidth(
+                                            context, 20);
                                         break;
                                       case 'CORT':
                                         path = 'assets/image/courts.png';
-                                        size = 14;
+                                        size = MyConstant.setMediaQueryWidth(
+                                            context, 17);
                                         break;
                                       default:
                                     }
@@ -228,7 +235,7 @@ class _ContractState extends State<Contract> {
         Text(
           nameen,
           style: TextStyle(
-            fontSize: 19.sp,
+            fontSize: MyConstant.setMediaQueryWidth(context, 28),
             fontWeight: FontWeight.w600,
             color: const Color(0xFFF103533),
           ),
@@ -239,13 +246,13 @@ class _ContractState extends State<Contract> {
         Text(
           nameth,
           style: TextStyle(
-            fontSize: 19.sp,
+            fontSize: MyConstant.setMediaQueryWidth(context, 28),
             fontWeight: FontWeight.w500,
             color: const Color(0xFFF103533),
           ),
         ),
         SizedBox(
-          height: 15.h,
+          height: 10.h,
         ),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -254,7 +261,7 @@ class _ContractState extends State<Contract> {
           child: Text(
             address,
             style: TextStyle(
-              fontSize: 17.sp,
+              fontSize: MyConstant.setMediaQueryWidth(context, 23),
               color: Colors.grey.shade600,
             ),
           ),
@@ -282,7 +289,7 @@ class _ContractState extends State<Contract> {
                 Text(
                   'Line : ',
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 28),
                     fontWeight: FontWeight.normal,
                     color: Colors.grey.shade500,
                   ),
@@ -293,7 +300,7 @@ class _ContractState extends State<Contract> {
                 Text(
                   line,
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 28),
                     color: Color(0xFFF103533),
                     fontWeight: FontWeight.w600,
                   ),
@@ -308,7 +315,7 @@ class _ContractState extends State<Contract> {
                 Text(
                   'Phone : ',
                   style: TextStyle(
-                    fontSize: 19.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 28),
                     fontWeight: FontWeight.normal,
                     color: Colors.grey.shade500,
                   ),
@@ -319,7 +326,7 @@ class _ContractState extends State<Contract> {
                 Text(
                   phone,
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 28),
                     color: Color(0xFFF103533),
                     fontWeight: FontWeight.w600,
                   ),

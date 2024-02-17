@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/config/app_info.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 // import 'package:mobile_chaseapp/screen/profile/edit_profile.dart';
 // import 'package:mobile_chaseapp/utils/key_storage.dart';
@@ -101,7 +103,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               return Text(
                 'เบอร์โทรศัพท์',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -111,7 +113,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               return Text(
                 'อีเมล',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -120,7 +122,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               return Text(
                 'ที่อยู่',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -153,7 +155,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         // labelText: "เบอร์โทรศัพท์",
                         hintText: widget.phone,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Icon(
+                            Icons.phone,
+                            size: MyConstant.setMediaQueryWidth(context, 25),
+                          ),
+                        ),
                         labelStyle: TextStyle(
                           fontSize: 30.sp,
                         ),
@@ -178,7 +186,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             : errorTextPhone = null;
                         setState(() {});
                       },
-                      style: TextStyle(fontSize: 25.sp),
+                      style: TextStyle(fontSize: 23.sp),
                     ),
                   ),
                 ),
@@ -199,10 +207,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       decoration: InputDecoration(
                         border: const UnderlineInputBorder(),
                         // labelText: "อีเมล",
-                        prefixIcon: Icon(
-                          Icons.email,
-                          size: 25,
-                          color: Colors.grey.shade400,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Icon(
+                            Icons.email,
+                            size: MyConstant.setMediaQueryWidth(context, 25),
+                            color: Colors.grey.shade400,
+                          ),
                         ),
                         hintText: widget.email,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -227,7 +238,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             : errorTextEmail = null;
                         setState(() {});
                       },
-                      style: TextStyle(fontSize: 28.sp),
+                      style: TextStyle(fontSize: 23.sp),
                     ),
                   ),
                 ),
@@ -249,10 +260,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           controller: _updateController.sentAddressuser,
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(),
-                            prefixIcon: Icon(
-                              Icons.location_on,
-                              size: 30,
-                              color: Colors.grey.shade400,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: Icon(
+                                Icons.location_on,
+                                size:
+                                    MyConstant.setMediaQueryWidth(context, 25),
+                                color: Colors.grey.shade400,
+                              ),
                             ),
                             hintText: widget.sentAddressuser,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -413,7 +428,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(
-                      Size(width, 40),
+                      Size(width, 60),
                     ),
                     backgroundColor: MaterialStateProperty.all<Color>(
                       Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -428,7 +443,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   child: Text(
                     'บันทึกข้อมูล',
                     style: TextStyle(
-                      fontSize: 22.sp,
+                      fontSize: MyConstant.setMediaQueryWidth(context, 25),
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/component/historybar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/component/slide_his.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/key_storage.dart';
@@ -49,7 +51,11 @@ class _HistoryState extends State<History> {
               // height: 320.h + kToolbarHeight,
               height: ResponsiveHeightContext.isMobile(context)
                   ? 310.h + kToolbarHeight
-                  : 310.h + kToolbarHeight,
+                  : ResponsiveWidthContext.isTablet(context)
+                      ? MyConstant.setMediaQueryWidth(context, 415) +
+                          kToolbarHeight
+                      : MyConstant.setMediaQueryWidth(context, 400) +
+                          kToolbarHeight,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image/bg.png'),

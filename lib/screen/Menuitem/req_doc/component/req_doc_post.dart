@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/controller/user_req_controller.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/req_doc_userfrom.dart';
+import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import '../../../../controller/getacc_controller.dart';
 
 class ReqDocumentFrom extends StatefulWidget {
@@ -131,7 +132,10 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                               'โปรดระบุเอกสารที่ต้องการ',
                               style: TextStyle(
                                 color: const Color(0xFF5C5C5C),
-                                fontSize: 21.sp,
+                                fontSize:
+                                    ResponsiveHeightContext.isTablet(context)
+                                        ? 18.sp
+                                        : 21.sp,
                                 fontWeight: FontWeight.w400,
                                 height: 1.51,
                               ),
@@ -159,7 +163,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     Text(
                                       'ใบเสร็จรับเงิน',
                                       style: TextStyle(
-                                        fontSize: 22.sp,
+                                        fontSize:
+                                            ResponsiveHeightContext.isTablet(
+                                                    context)
+                                                ? 17.sp
+                                                : 22.sp,
                                         fontWeight: FontWeight.w400,
                                         height: 0.71,
                                       ),
@@ -193,7 +201,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                       Text(
                                         'หนังสือปิดบัญชี',
                                         style: TextStyle(
-                                          fontSize: 22.sp,
+                                          fontSize:
+                                              ResponsiveHeightContext.isTablet(
+                                                      context)
+                                                  ? 17.sp
+                                                  : 22.sp,
                                           fontWeight: FontWeight.w400,
                                           height: 0.71,
                                         ),
@@ -226,7 +238,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     Text(
                                       'อื่นๆ',
                                       style: TextStyle(
-                                        fontSize: 22.sp,
+                                        fontSize:
+                                            ResponsiveHeightContext.isTablet(
+                                                    context)
+                                                ? 17.sp
+                                                : 22.sp,
                                         fontWeight: FontWeight.w400,
                                         height: 0.71,
                                       ),
@@ -370,7 +386,9 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         child: Text(
                           'ถัดไป',
                           style: TextStyle(
-                            fontSize: 22.sp,
+                            fontSize: ResponsiveHeightContext.isTablet(context)
+                                ? 18.sp
+                                : 22.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),

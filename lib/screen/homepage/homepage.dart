@@ -12,6 +12,7 @@ import 'package:mobile_chaseapp/screen/homepage/salehome/salehome.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Homepage extends StatefulWidget {
@@ -49,6 +50,8 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    print(width);
     final query = MediaQuery.of(context);
     return MediaQuery(
       data: query.copyWith(
@@ -60,13 +63,20 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(
               width: MyConstant.setMediaQueryWidthFull(context),
-              height: ResponsiveHeightContext.isMobileFoldVertical(context)
-                  ? MyConstant.setMediaQueryHeight(context, 435)
-                  : ResponsiveHeightContext.isMobileSmall(context)
-                      ? MyConstant.setMediaQueryHeight(context, 485)
-                      : ResponsiveHeightContext.isMobile(context)
-                          ? null
-                          : null,
+              height: ResponsiveWidthContext.isMobile(context)
+                  ? MyConstant.setMediaQueryHeight(context, 510)
+                  : ResponsiveWidthContext.isTablet(context)
+                      ? MyConstant.setMediaQueryWidth(context, 565)
+                      : ResponsiveWidthContext.isTablet11(context)
+                          ? MyConstant.setMediaQueryWidth(context, 530)
+                          : MyConstant.setMediaQueryWidth(context, 520),
+              // height: ResponsiveWidthContext.isMobile(context)
+              //     ? MyConstant.setMediaQueryHeight(context, 510)
+              //     : ResponsiveWidthContext.isTablet11(context)
+              //         ? MyConstant.setMediaQueryWidth(context, 600)
+              //         : ResponsiveWidthContext.isTabletMini(context)
+              //             ? MyConstant.setMediaQueryWidth(context, 550)
+              //             : MyConstant.setMediaQueryWidth(context, 825),
               decoration: const BoxDecoration(
                 color: Colors.black,
                 image: DecorationImage(
@@ -83,7 +93,6 @@ class _HomepageState extends State<Homepage> {
                   const Navbar(),
                   const Slide(),
                   const Menu(),
-                  SizedBox(height: 5.h),
                 ],
               ),
             ),
@@ -106,18 +115,23 @@ class _HomepageState extends State<Homepage> {
     return Column(
       children: [
         SizedBox(
-          height: 10.h,
+          height: 5.h,
         ),
         Row(
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 15.w,
+                horizontal: 10.w,
               ),
               child: Text(
                 'บ้านและที่ดิน',
                 style: TextStyle(
-                  fontSize: 19.sp,
+                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
+                  // fontSize: ResponsiveWidthContext.isTablet(context)
+                  //     ? MyConstant.setMediaQueryWidth(context, 45)
+                  //     : ResponsiveWidthContext.isTabletMini(context)
+                  //         ? MyConstant.setMediaQueryWidth(context, 25)
+                  //         : 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -142,7 +156,7 @@ class _HomepageState extends State<Homepage> {
                   children: [
                     Image.asset(
                       'assets/image/salehome01.png',
-                      width: 180.w,
+                      width: MyConstant.setMediaQueryWidth(context, 240),
                       fit: BoxFit.cover,
                     ),
                     Expanded(
@@ -157,20 +171,25 @@ class _HomepageState extends State<Homepage> {
                             Text(
                               'ประกาศขาย',
                               style: TextStyle(
-                                  fontSize: 18.sp,
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 22),
                                   fontWeight: FontWeight.bold,
                                   color: const Color(0xfff395d5d)),
                             ),
                             Text(
                               'บ้านเดี่ยว ทาวน์เฮ้าส์ และที่ดิน',
                               style: TextStyle(
-                                fontSize: 15.sp,
+                                fontSize:
+                                    MyConstant.setMediaQueryWidth(context, 22),
                               ),
                             ),
                             Text(
                               'ทั่วประเทศไทย',
                               style: TextStyle(
-                                fontSize: 15.sp,
+                                fontSize:
+                                    ResponsiveWidthContext.isTablet(context)
+                                        ? 14.sp
+                                        : 14.sp,
                               ),
                             ),
                           ],

@@ -8,6 +8,7 @@ import 'package:mobile_chaseapp/controller/getsalehome_controll.dart';
 import 'package:mobile_chaseapp/model/respon_salehome.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/salehome/slishowfull.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class DetailHome extends StatefulWidget {
@@ -62,7 +63,7 @@ class _DetailHomeState extends State<DetailHome> {
           title: Text(
             'รายละเอียด',
             style: TextStyle(
-              fontSize: 20.sp,
+              fontSize: MyConstant.setMediaQueryWidth(context, 30),
             ),
           ),
           foregroundColor: Colors.white,
@@ -150,8 +151,10 @@ class _DetailHomeState extends State<DetailHome> {
                     return GestureDetector(
                       onTap: () => carouselController.animateToPage(entry.key),
                       child: Container(
-                        width: currentIndex == entry.key ? 20 : 7,
-                        height: 7.0,
+                        width: currentIndex == entry.key
+                            ? MyConstant.setMediaQueryWidth(context, 20)
+                            : 7,
+                        height: 8.0,
                         margin: const EdgeInsets.symmetric(
                           horizontal: 3.0,
                         ),
@@ -180,20 +183,20 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       'รายละเอียด',
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 30),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '${data!.nameHome}',
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 28),
                       ),
                     ),
                     Text(
                       '${data!.detailHome}',
                       style: TextStyle(
-                        fontSize: 15.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,
@@ -201,10 +204,10 @@ class _DetailHomeState extends State<DetailHome> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    const Text(
+                    Text(
                       'นัดเข้าชมโครงการ',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -234,7 +237,7 @@ class _DetailHomeState extends State<DetailHome> {
                       children: [
                         Icon(
                           Icons.location_on,
-                          size: 25,
+                          size: MyConstant.setMediaQueryWidth(context, 30),
                           color: Colors.red,
                         ),
                         SizedBox(
@@ -243,7 +246,8 @@ class _DetailHomeState extends State<DetailHome> {
                         Text(
                           'ที่ตั้งและทำเล',
                           style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 25),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -252,11 +256,14 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       '${data!.locationHome}',
                       style: TextStyle(
-                        fontSize: 15.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,
                     ),
+                    SizedBox(
+                      height: 10.h,
+                    )
                   ],
                 ),
               ),

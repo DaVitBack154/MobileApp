@@ -9,6 +9,7 @@ import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/promotion/knowledge_content_bon.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class Slide extends StatefulWidget {
   const Slide({super.key});
@@ -53,108 +54,139 @@ class _SlideState extends State<Slide> {
         ? const SizedBox()
         : Column(
             children: [
-              CarouselSlider(
-                items: userPromotion!.data! // กรองรายการที่มีข้อมูลเท่านั้น
-                    .map(
-                      (item) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        width: double.infinity,
-                        child: Center(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PromotionBon(
-                                    item: item,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) =>
-                                    LoadingAnimationWidget.threeArchedCircle(
-                                  color: Colors.teal.shade700,
-                                  size: 35.w,
-                                ),
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    '$imageUrl/public/image/${item.image ?? ''}',
-                                // errorWidget: (context, url, error) => Padding(
-                                //   padding: const EdgeInsets.all(25.0),
-                                //   child: Image.asset(
-                                //     MyConstant.error1,
-                                //     fit: BoxFit.cover,
-                                //   ),
-                                // ),
-                                imageBuilder: (context, imageProvider) {
-                                  return Image(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: ResponsiveHeightContext
-                                            .isMobileFoldVertical(context)
-                                        ? MyConstant.setMediaQueryHeight(
-                                            context, 180)
-                                        : ResponsiveHeightContext.isMobileSmall(
-                                                context)
-                                            ? MyConstant.setMediaQueryHeight(
-                                                context, 190)
-                                            : ResponsiveHeightContext.isMobile(
-                                                    context)
-                                                ? MyConstant
-                                                    .setMediaQueryHeight(
-                                                        context, 200)
-                                                : MyConstant
-                                                    .setMediaQueryHeight(
-                                                        context, 210),
+              Container(
+                child: Stack(children: [
+                  CarouselSlider(
+                    items: userPromotion!.data! // กรองรายการที่มีข้อมูลเท่านั้น
+                        .map(
+                          (item) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            width: double.infinity,
+                            child: Center(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PromotionBon(
+                                        item: item,
+                                      ),
+                                    ),
                                   );
                                 },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) =>
+                                        LoadingAnimationWidget
+                                            .threeArchedCircle(
+                                      color: Colors.teal.shade700,
+                                      size: 35.w,
+                                    ),
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                        '$imageUrl/public/image/${item.image ?? ''}',
+                                    // errorWidget: (context, url, error) => Padding(
+                                    //   padding: const EdgeInsets.all(25.0),
+                                    //   child: Image.asset(
+                                    //     MyConstant.error1,
+                                    //     fit: BoxFit.cover,
+                                    //   ),
+                                    // ),
+                                    imageBuilder: (context, imageProvider) {
+                                      return Image(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        // height: ResponsiveWidthContext.isMobile(
+                                        //         context)
+                                        //     ? MyConstant.setMediaQueryHeight(
+                                        //         context, 200)
+                                        //     : null,
+                                        height: ResponsiveWidthContext
+                                                .isMobileFoldVertical(context)
+                                            ? MyConstant.setMediaQueryHeight(
+                                                context, 180)
+                                            : ResponsiveWidthContext
+                                                    .isMobileSmall(context)
+                                                ? MyConstant
+                                                    .setMediaQueryHeight(
+                                                        context, 220)
+                                                : ResponsiveWidthContext
+                                                        .isMobile(context)
+                                                    ? MyConstant
+                                                        .setMediaQueryHeight(
+                                                            context, 210)
+                                                    : ResponsiveWidthContext
+                                                            .isTablet(context)
+                                                        ? MyConstant
+                                                            .setMediaQueryHeight(
+                                                                context, 420)
+                                                        : null,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        )
+                        .toList(),
+                    carouselController: carouselController,
+                    options: CarouselOptions(
+                      viewportFraction: 0.92,
+                      autoPlay: false,
+                      enableInfiniteScroll: false,
+                      initialPage: currentIndex,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          currentIndex = index;
+                        });
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    bottom: ResponsiveWidthContext.isTablet(context)
+                        ? 40
+                        : ResponsiveWidthContext.isMobile(context)
+                            ? 0
+                            : 20, // กำหนดตำแหน่ง bottom
+                    left: 0, // กำหนดตำแหน่ง left
+                    right: 0, // กำหนดตำแหน่ง right
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: promotionController.userpromotion.data!
+                            .asMap()
+                            .entries
+                            .map(
+                          (entry) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  carouselController.animateToPage(entry.key),
+                              child: Container(
+                                width: currentIndex == entry.key ? 30 : 7,
+                                height: ResponsiveWidthContext.isTablet(context)
+                                    ? 8.0
+                                    : 7.0,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 3.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: currentIndex == entry.key
+                                      ? Colors.white
+                                      : Colors.grey.shade400,
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
                       ),
-                    )
-                    .toList(),
-                carouselController: carouselController,
-                options: CarouselOptions(
-                  viewportFraction: 0.9,
-                  autoPlay: false,
-                  enableInfiniteScroll: false,
-                  initialPage: currentIndex,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:
-                    promotionController.userpromotion.data!.asMap().entries.map(
-                  (entry) {
-                    return GestureDetector(
-                      onTap: () => carouselController.animateToPage(entry.key),
-                      child: Container(
-                        width: currentIndex == entry.key ? 20 : 7,
-                        height: 7.0,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 3.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: currentIndex == entry.key
-                              ? Colors.white
-                              : Colors.grey.shade400,
-                        ),
-                      ),
-                    );
-                  },
-                ).toList(),
+                    ),
+                  ),
+                ]),
               ),
               SizedBox(
                 height: ResponsiveHeightContext.isMobileFoldVertical(context)
@@ -163,7 +195,7 @@ class _SlideState extends State<Slide> {
                         ? MyConstant.setMediaQueryHeight(context, 12)
                         : ResponsiveHeightContext.isMobile(context)
                             ? MyConstant.setMediaQueryHeight(context, 25)
-                            : MyConstant.setMediaQueryHeight(context, 25),
+                            : null,
               ),
             ],
           );

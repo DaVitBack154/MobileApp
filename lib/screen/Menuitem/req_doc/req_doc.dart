@@ -49,7 +49,9 @@ class _ReqDocumentState extends State<ReqDocument> {
                   width: width,
                   height: ResponsiveHeightContext.isMobile(context)
                       ? 300.h + kToolbarHeight
-                      : 290.h + kToolbarHeight,
+                      : ResponsiveHeightContext.isTablet(context)
+                          ? 310.h + kToolbarHeight
+                          : 290.h + kToolbarHeight,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),

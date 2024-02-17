@@ -170,7 +170,7 @@ class _Phone_pageState extends State<Phone_page> {
                           Text(
                             'OTP จะถูกส่งไปยังหมายเลข',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w400,
                               color: Colors.grey.shade500,
                             ),

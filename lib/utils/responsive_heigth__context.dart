@@ -6,6 +6,7 @@ class ResponsiveHeightContext extends StatelessWidget {
   final Widget mobilesmall;
   final Widget mobile;
   final Widget tablet;
+  final Widget tabletsmall;
   final Widget desktop;
 
   const ResponsiveHeightContext({
@@ -14,6 +15,7 @@ class ResponsiveHeightContext extends StatelessWidget {
     required this.mobilesmall,
     required this.mobile,
     required this.tablet,
+    required this.tabletsmall,
     required this.desktop,
   }) : super(key: key);
 
@@ -32,6 +34,10 @@ class ResponsiveHeightContext extends StatelessWidget {
       MediaQuery.of(context).size.height < 1300 &&
       MediaQuery.of(context).size.height >= 1000;
 
+  static bool isTabletSmall(BuildContext context) =>
+      MediaQuery.of(context).size.height < 750 &&
+      MediaQuery.of(context).size.height >= 700;
+
   static bool isDesktop(BuildContext context) =>
       MediaQuery.of(context).size.height >= 1300;
 
@@ -42,6 +48,8 @@ class ResponsiveHeightContext extends StatelessWidget {
       return desktop;
     } else if (size.height >= 1000) {
       return tablet;
+    } else if (size.height >= 700) {
+      return tabletsmall;
     } else if (size.height >= 800) {
       return mobile;
     } else if (size.height >= 700) {

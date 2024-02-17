@@ -5,6 +5,7 @@ import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_accform.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class PayFrom extends StatefulWidget {
   final int currentIndex;
@@ -42,7 +43,11 @@ class _PayFromState extends State<PayFrom> {
                     width: double.infinity,
                     height: ResponsiveHeightContext.isMobile(context)
                         ? 270.h + kToolbarHeight
-                        : 265.h + kToolbarHeight,
+                        : ResponsiveWidthContext.isTablet(context)
+                            ? MyConstant.setMediaQueryWidth(context, 370) +
+                                kToolbarHeight
+                            : MyConstant.setMediaQueryWidth(context, 355) +
+                                kToolbarHeight,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/image/bg.png'),
@@ -59,7 +64,7 @@ class _PayFromState extends State<PayFrom> {
               ),
               Container(
                 // height: MyConstant.setMediaQueryHeightFull(context),
-                margin: const EdgeInsets.only(top: kToolbarHeight + 40).h,
+                margin: EdgeInsets.only(top: kToolbarHeight + 40).h,
                 width: width,
                 child: SlideFrom(currentIndex: widget.currentIndex),
               ),

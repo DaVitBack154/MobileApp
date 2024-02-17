@@ -6,6 +6,7 @@ import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 
 import '../../component/debouncer.dart';
 
@@ -72,9 +73,10 @@ class _Forget_phoneState extends State<Forget_phone> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.arrow_back,
-                                size: 25,
+                                size:
+                                    MyConstant.setMediaQueryWidth(context, 30),
                                 color: Colors.white,
                               ),
                               onPressed: () {
@@ -134,13 +136,18 @@ class _Forget_phoneState extends State<Forget_phone> {
                         controller: authController.phoneController,
                         style: TextStyle(fontSize: 20.sp),
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.phone,
-                            size: 25,
-                            color: Color.fromARGB(255, 20, 99, 95),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Icon(
+                              Icons.phone,
+                              size: MyConstant.setMediaQueryWidth(context, 30),
+                              color: Color.fromARGB(255, 20, 99, 95),
+                            ),
                           ),
                           labelText: 'กรุณากรอกเบอร์โทรศัพท์เดิม',
                           labelStyle: TextStyle(
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 23),
                             color: Colors.grey.shade700,
                           ),
                           hintText: 'กรุณากรอกเบอร์โทรศัพท์เดิม',
@@ -199,13 +206,18 @@ class _Forget_phoneState extends State<Forget_phone> {
                         controller: authController.phoneNewController,
                         style: TextStyle(fontSize: 20.sp),
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.phone,
-                            size: 25,
-                            color: Color.fromARGB(255, 20, 99, 95),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Icon(
+                              Icons.phone,
+                              size: MyConstant.setMediaQueryWidth(context, 30),
+                              color: Color.fromARGB(255, 20, 99, 95),
+                            ),
                           ),
                           labelText: 'กรุณากรอกเบอร์โทรศัพท์ใหม่',
                           labelStyle: TextStyle(
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 23),
                             color: Colors.grey.shade700,
                           ),
                           hintText: 'กรุณากรอกเบอร์โทรศัพท์ใหม่',
@@ -285,7 +297,7 @@ class _Forget_phoneState extends State<Forget_phone> {
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
-                            Size(width, 50),
+                            Size(width, 60),
                           ),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -301,7 +313,8 @@ class _Forget_phoneState extends State<Forget_phone> {
                         child: Text(
                           'บันทึกข้อมูล',
                           style: TextStyle(
-                            fontSize: 24.sp,
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 28),
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
