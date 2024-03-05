@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class Bar extends StatelessWidget {
   const Bar({super.key});
@@ -13,9 +14,14 @@ class Bar extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           alignment: Alignment.bottomCenter,
-          height: MyConstant.setMediaQueryWidth(context, 110),
+          height: ResponsiveWidthContext.isMobileFoldVertical(context)
+              ? MyConstant.setMediaQueryWidth(context, 135)
+              : ResponsiveWidthContext.isMobile(context) ||
+                      ResponsiveWidthContext.isMobileSmall(context)
+                  ? MyConstant.setMediaQueryWidth(context, 130)
+                  : MyConstant.setMediaQueryWidth(context, 110),
           child: Row(
             children: [
               Container(
@@ -42,7 +48,7 @@ class Bar extends StatelessWidget {
               Text(
                 'ยอดชำระ',
                 style: TextStyle(
-                  fontSize: MyConstant.setMediaQueryWidth(context, 30),
+                  fontSize: MyConstant.setMediaQueryWidth(context, 28),
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),

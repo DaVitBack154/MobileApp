@@ -63,20 +63,15 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(
               width: MyConstant.setMediaQueryWidthFull(context),
-              height: ResponsiveWidthContext.isMobile(context)
-                  ? MyConstant.setMediaQueryHeight(context, 510)
-                  : ResponsiveWidthContext.isTablet(context)
-                      ? MyConstant.setMediaQueryWidth(context, 565)
-                      : ResponsiveWidthContext.isTablet11(context)
-                          ? MyConstant.setMediaQueryWidth(context, 530)
-                          : MyConstant.setMediaQueryWidth(context, 520),
-              // height: ResponsiveWidthContext.isMobile(context)
-              //     ? MyConstant.setMediaQueryHeight(context, 510)
-              //     : ResponsiveWidthContext.isTablet11(context)
-              //         ? MyConstant.setMediaQueryWidth(context, 600)
-              //         : ResponsiveWidthContext.isTabletMini(context)
-              //             ? MyConstant.setMediaQueryWidth(context, 550)
-              //             : MyConstant.setMediaQueryWidth(context, 825),
+              height: ResponsiveWidthContext.isTablet(context)
+                  ? MyConstant.setMediaQueryWidth(context, 565)
+                  : ResponsiveWidthContext.isTablet11(context)
+                      ? MyConstant.setMediaQueryWidth(context, 530)
+                      : ResponsiveWidthContext.isMobile(context)
+                          ? MyConstant.setMediaQueryWidth(context, 510)
+                          : ResponsiveWidthContext.isMobileFoldVertical(context)
+                              ? MyConstant.setMediaQueryWidth(context, 520)
+                              : MyConstant.setMediaQueryWidth(context, 520),
               decoration: const BoxDecoration(
                 color: Colors.black,
                 image: DecorationImage(
@@ -115,7 +110,7 @@ class _HomepageState extends State<Homepage> {
     return Column(
       children: [
         SizedBox(
-          height: 5.h,
+          height: ResponsiveWidthContext.isMobile(context) ? 10.h : 5.h,
         ),
         Row(
           children: [
@@ -127,11 +122,6 @@ class _HomepageState extends State<Homepage> {
                 'บ้านและที่ดิน',
                 style: TextStyle(
                   fontSize: MyConstant.setMediaQueryWidth(context, 25),
-                  // fontSize: ResponsiveWidthContext.isTablet(context)
-                  //     ? MyConstant.setMediaQueryWidth(context, 45)
-                  //     : ResponsiveWidthContext.isTabletMini(context)
-                  //         ? MyConstant.setMediaQueryWidth(context, 25)
-                  //         : 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -156,7 +146,13 @@ class _HomepageState extends State<Homepage> {
                   children: [
                     Image.asset(
                       'assets/image/salehome01.png',
-                      width: MyConstant.setMediaQueryWidth(context, 240),
+                      width: ResponsiveWidthContext.isMobileFoldVertical(
+                              context)
+                          ? MyConstant.setMediaQueryWidth(context, 210)
+                          : ResponsiveWidthContext.isMobile(context) ||
+                                  ResponsiveWidthContext.isMobileSmall(context)
+                              ? MyConstant.setMediaQueryWidth(context, 205)
+                              : MyConstant.setMediaQueryWidth(context, 240),
                       fit: BoxFit.cover,
                     ),
                     Expanded(
@@ -177,21 +173,35 @@ class _HomepageState extends State<Homepage> {
                                   color: const Color(0xfff395d5d)),
                             ),
                             Text(
-                              'บ้านเดี่ยว ทาวน์เฮ้าส์ และที่ดิน',
+                              'บ้านเดี่ยว ทาวน์เฮ้าส์ และที่ดิน ทั่วประเทศไทย',
                               style: TextStyle(
-                                fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 22),
+                                fontSize: ResponsiveWidthContext.isMobile(
+                                            context) ||
+                                        ResponsiveWidthContext.isMobileSmall(
+                                            context)
+                                    ? MyConstant.setMediaQueryWidth(context, 18)
+                                    : ResponsiveWidthContext.isTablet11(
+                                                context) ||
+                                            ResponsiveWidthContext.isTabletMini(
+                                                context)
+                                        ? MyConstant.setMediaQueryWidth(
+                                            context, 20)
+                                        : MyConstant.setMediaQueryWidth(
+                                            context, 21),
                               ),
                             ),
-                            Text(
-                              'ทั่วประเทศไทย',
-                              style: TextStyle(
-                                fontSize:
-                                    ResponsiveWidthContext.isTablet(context)
-                                        ? 14.sp
-                                        : 14.sp,
-                              ),
-                            ),
+                            // Text(
+                            //   'ทั่วประเทศไทย',
+                            //   style: TextStyle(
+                            //     fontSize: ResponsiveWidthContext.isMobile(
+                            //                 context) ||
+                            //             ResponsiveWidthContext.isMobileSmall(
+                            //                 context)
+                            //         ? MyConstant.setMediaQueryWidth(context, 18)
+                            //         : MyConstant.setMediaQueryWidth(
+                            //             context, 22),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

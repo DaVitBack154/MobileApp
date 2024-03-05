@@ -101,6 +101,25 @@ class _LoaddingState extends State<Loadding> {
                   fit: BoxFit.cover,
                   height: height * 0.25.h,
                 ),
+                // SizedBox(
+                //   height: 30.h,
+                // ),
+                // Text(
+                //   'พัฒนาโดย',
+                //   style: TextStyle(
+                //     fontSize: 20.sp,
+                //     color: Colors.white,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
+                // Text(
+                //   'Chase Asia Public Company Limited',
+                //   style: TextStyle(
+                //     fontSize: 20.sp,
+                //     color: Colors.white,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ],
             ),
           ),

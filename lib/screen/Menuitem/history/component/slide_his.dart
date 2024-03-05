@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import '../../../../controller/getacc_controller.dart';
 import '../../../../controller/getpayment_controller.dart';
 import '../../../../model/respon_payment.dart';
@@ -81,7 +82,10 @@ class _SlideHisState extends State<SlideHis> {
                   carouselController: carouselController,
                   options: CarouselOptions(
                       viewportFraction: 0.93,
-                      height: 210.h,
+                      height:
+                          ResponsiveWidthContext.isMobileFoldVertical(context)
+                              ? 210.h
+                              : 200.h,
                       autoPlay: false,
                       enableInfiniteScroll: false,
                       initialPage: _currentIndex,
@@ -120,7 +124,7 @@ class _SlideHisState extends State<SlideHis> {
                   ).toList(),
                 ),
                 // ปุ่มที่ติดกับภาพเลื่อน
-                SizedBox(height: 10.h),
+                SizedBox(height: 15.h),
                 // card ด้านล่างทั้งหมด
                 () {
                   setState(() {
@@ -140,7 +144,8 @@ class _SlideHisState extends State<SlideHis> {
                             Text(
                               'ไม่พบรายการชำระ 6 เดือนย้อนหลัง',
                               style: TextStyle(
-                                fontSize: 20.sp,
+                                fontSize:
+                                    MyConstant.setMediaQueryWidth(context, 25),
                                 fontWeight: FontWeight.normal,
                                 color: Colors.grey.shade700,
                               ),
@@ -224,7 +229,7 @@ class _SlideHisState extends State<SlideHis> {
                                                             .grey.shade600,
                                                         fontSize: MyConstant
                                                             .setMediaQueryWidth(
-                                                                context, 25),
+                                                                context, 22),
                                                       ),
                                                     ),
                                                     Text(
@@ -235,7 +240,7 @@ class _SlideHisState extends State<SlideHis> {
                                                             .grey.shade600,
                                                         fontSize: MyConstant
                                                             .setMediaQueryWidth(
-                                                                context, 25),
+                                                                context, 22),
                                                       ),
                                                     ),
                                                   ],
@@ -273,7 +278,7 @@ class _SlideHisState extends State<SlideHis> {
                                                             FontWeight.w600,
                                                         fontSize: MyConstant
                                                             .setMediaQueryWidth(
-                                                                context, 25),
+                                                                context, 22),
                                                       ),
                                                     ),
                                                     Row(
@@ -288,7 +293,7 @@ class _SlideHisState extends State<SlideHis> {
                                                             fontSize: MyConstant
                                                                 .setMediaQueryWidth(
                                                                     context,
-                                                                    25),
+                                                                    22),
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -302,7 +307,7 @@ class _SlideHisState extends State<SlideHis> {
                                                             fontSize: MyConstant
                                                                 .setMediaQueryWidth(
                                                                     context,
-                                                                    25),
+                                                                    22),
                                                           ),
                                                         ),
 

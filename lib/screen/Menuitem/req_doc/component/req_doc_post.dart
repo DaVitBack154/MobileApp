@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/controller/user_req_controller.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/req_doc_userfrom.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import '../../../../controller/getacc_controller.dart';
 
 class ReqDocumentFrom extends StatefulWidget {
@@ -71,8 +73,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         .toList(),
                     carouselController: carouselController,
                     options: CarouselOptions(
-                        viewportFraction: 0.95,
-                        height: 210.h,
+                        viewportFraction: 0.93,
+                        height:
+                            ResponsiveWidthContext.isMobileFoldVertical(context)
+                                ? 210.h
+                                : 200.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         initialPage: _currentIndex,
@@ -83,7 +88,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         }),
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 5.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +99,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                           onTap: () =>
                               carouselController.animateToPage(entry.key),
                           child: Container(
-                            width: _currentIndex == entry.key ? 20 : 7,
+                            width: _currentIndex == entry.key ? 25 : 7,
                             height: 7.0,
                             margin: const EdgeInsets.symmetric(
                               horizontal: 3.0,
@@ -126,16 +131,14 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.w,
-                              vertical: 2.h,
+                              vertical: 5.h,
                             ),
                             child: Text(
                               'โปรดระบุเอกสารที่ต้องการ',
                               style: TextStyle(
                                 color: const Color(0xFF5C5C5C),
                                 fontSize:
-                                    ResponsiveHeightContext.isTablet(context)
-                                        ? 18.sp
-                                        : 21.sp,
+                                    MyConstant.setMediaQueryWidth(context, 27),
                                 fontWeight: FontWeight.w400,
                                 height: 1.51,
                               ),
@@ -145,7 +148,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 15.w, vertical: 5.h),
+                            horizontal: 15.w, vertical: 3.h),
                         child: Column(
                           children: [
                             Card(
@@ -163,11 +166,8 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     Text(
                                       'ใบเสร็จรับเงิน',
                                       style: TextStyle(
-                                        fontSize:
-                                            ResponsiveHeightContext.isTablet(
-                                                    context)
-                                                ? 17.sp
-                                                : 22.sp,
+                                        fontSize: MyConstant.setMediaQueryWidth(
+                                            context, 25),
                                         fontWeight: FontWeight.w400,
                                         height: 0.71,
                                       ),
@@ -202,10 +202,8 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                         'หนังสือปิดบัญชี',
                                         style: TextStyle(
                                           fontSize:
-                                              ResponsiveHeightContext.isTablet(
-                                                      context)
-                                                  ? 17.sp
-                                                  : 22.sp,
+                                              MyConstant.setMediaQueryWidth(
+                                                  context, 25),
                                           fontWeight: FontWeight.w400,
                                           height: 0.71,
                                         ),
@@ -238,11 +236,8 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                     Text(
                                       'อื่นๆ',
                                       style: TextStyle(
-                                        fontSize:
-                                            ResponsiveHeightContext.isTablet(
-                                                    context)
-                                                ? 17.sp
-                                                : 22.sp,
+                                        fontSize: MyConstant.setMediaQueryWidth(
+                                            context, 25),
                                         fontWeight: FontWeight.w400,
                                         height: 0.71,
                                       ),
@@ -276,6 +271,9 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                                 'กรุณากรอกข้อความที่ต้องการ',
                                             labelStyle: TextStyle(
                                               color: Colors.black,
+                                              fontSize:
+                                                  MyConstant.setMediaQueryWidth(
+                                                      context, 20),
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -288,6 +286,11 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                                   color: Colors
                                                       .grey), // เส้นขอบเมื่อได้รับการโฟกัส
                                             ),
+                                          ),
+                                          style: TextStyle(
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 20),
                                           ),
                                           cursorColor: Colors.grey.shade400,
                                           textInputAction: TextInputAction.done,
@@ -370,7 +373,10 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         },
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
-                            Size(320.w, 30.h),
+                            Size(
+                              320.w,
+                              MyConstant.setMediaQueryWidth(context, 40),
+                            ),
                           ),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             const Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -386,9 +392,8 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                         child: Text(
                           'ถัดไป',
                           style: TextStyle(
-                            fontSize: ResponsiveHeightContext.isTablet(context)
-                                ? 18.sp
-                                : 22.sp,
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 25),
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),

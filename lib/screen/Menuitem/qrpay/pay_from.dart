@@ -41,13 +41,16 @@ class _PayFromState extends State<PayFrom> {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: ResponsiveHeightContext.isMobile(context)
-                        ? 270.h + kToolbarHeight
-                        : ResponsiveWidthContext.isTablet(context)
-                            ? MyConstant.setMediaQueryWidth(context, 370) +
-                                kToolbarHeight
-                            : MyConstant.setMediaQueryWidth(context, 355) +
-                                kToolbarHeight,
+                    height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                        ? 285.h + kToolbarHeight
+                        : ResponsiveWidthContext.isMobile(context) ||
+                                ResponsiveWidthContext.isMobileSmall(context)
+                            ? 280.h + kToolbarHeight
+                            : ResponsiveWidthContext.isTablet(context)
+                                ? MyConstant.setMediaQueryWidth(context, 370) +
+                                    kToolbarHeight
+                                : MyConstant.setMediaQueryWidth(context, 355) +
+                                    kToolbarHeight,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/image/bg.png'),

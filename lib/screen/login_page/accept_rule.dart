@@ -130,7 +130,7 @@ class _Accept_ruleState extends State<Accept_rule> {
             title: Text(
               'ข้อกำหนดและเงื่อนไข',
               style: TextStyle(
-                  fontSize: MyConstant.setMediaQueryWidth(context, 20)),
+                  fontSize: MyConstant.setMediaQueryWidth(context, 23)),
             ),
             backgroundColor: Color(0xFF103533),
             foregroundColor: Colors.white,
@@ -332,6 +332,15 @@ class _Accept_ruleState extends State<Accept_rule> {
             'ความยินยอม',
             style: TextStyle(
               fontSize: MyConstant.setMediaQueryWidth(context, 30),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            Localizations.localeOf(context).languageCode == 'th'
+                ? 'บริษัท เชฎฐ์ เอเชีย จำกัด (มหาชน)'
+                : 'Chase Asia PCL',
+            style: TextStyle(
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/component/req_bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/component/req_doc_post.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReqDocument extends StatefulWidget {
@@ -47,11 +49,17 @@ class _ReqDocumentState extends State<ReqDocument> {
               children: [
                 Container(
                   width: width,
-                  height: ResponsiveHeightContext.isMobile(context)
-                      ? 300.h + kToolbarHeight
-                      : ResponsiveHeightContext.isTablet(context)
-                          ? 310.h + kToolbarHeight
-                          : 290.h + kToolbarHeight,
+                  height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                      ? 290.h + kToolbarHeight
+                      : ResponsiveWidthContext.isMobile(context) ||
+                              ResponsiveWidthContext.isMobileSmall(context)
+                          ? 290.h + kToolbarHeight
+                          : ResponsiveWidthContext.isTablet(context)
+                              ? MyConstant.setMediaQueryWidth(context, 390) +
+                                  kToolbarHeight
+                              : MyConstant.setMediaQueryWidth(context, 380) +
+                                  kToolbarHeight,
+
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),
@@ -74,7 +82,7 @@ class _ReqDocumentState extends State<ReqDocument> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(top: kToolbarHeight + 50).h,
+              margin: const EdgeInsets.only(top: kToolbarHeight + 48).h,
               width: double.infinity,
               child: typeCustomer == 'Y' && ciType == 'T'
                   ? const ReqDocumentFrom()

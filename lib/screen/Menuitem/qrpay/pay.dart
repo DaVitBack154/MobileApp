@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_acc.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/key_storage.dart';
 
@@ -48,9 +50,16 @@ class _PaymentState extends State<Payment> {
               children: [
                 Container(
                   width: width,
-                  height: ResponsiveHeightContext.isMobile(context)
-                      ? 300.h + kToolbarHeight
-                      : 295.h + kToolbarHeight,
+                  height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                      ? 285.h + kToolbarHeight
+                      : ResponsiveWidthContext.isMobileSmall(context)
+                          ? 280.h + kToolbarHeight
+                          : ResponsiveWidthContext.isMobile(context)
+                              ? 285.h + kToolbarHeight
+                              : ResponsiveWidthContext.isTablet11(context) ||
+                                      ResponsiveWidthContext.isTablet(context)
+                                  ? 310.h + kToolbarHeight
+                                  : 300.h + kToolbarHeight,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/image/bg.png'),
@@ -70,7 +79,7 @@ class _PaymentState extends State<Payment> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(top: kToolbarHeight + 53).h,
+              margin: const EdgeInsets.only(top: kToolbarHeight + 50).h,
               width: double.infinity,
               // decoration: BoxDecoration(color: Colors.green),
               child: typeCustomer == 'Y' && ciType == 'T'

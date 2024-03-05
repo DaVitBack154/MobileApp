@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 
 class ReqDocBar extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ReqDocBarState extends State<ReqDocBar> {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15.w),
             alignment: Alignment.center,
             height: ResponsiveHeightContext.isMobile(context)
                 ? 100.h + kToolbarHeight
@@ -30,9 +31,10 @@ class _ReqDocBarState extends State<ReqDocBar> {
                     color: Colors.black.withOpacity(.1),
                   ),
                   child: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
+                      size: MyConstant.setMediaQueryWidth(context, 25),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -47,9 +49,7 @@ class _ReqDocBarState extends State<ReqDocBar> {
                   'ขอเอกสาร',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: ResponsiveHeightContext.isTablet(context)
-                        ? 20.sp
-                        : 25.sp,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 30),
                     fontWeight: FontWeight.normal,
                   ),
                 ),

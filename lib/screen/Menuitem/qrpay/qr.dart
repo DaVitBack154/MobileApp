@@ -12,6 +12,7 @@ import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
+// import 'package:permission_handler/permission_handler.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class QRPayment extends StatefulWidget {
@@ -62,7 +63,7 @@ class _QRPaymentState extends State<QRPayment> {
         child: Column(
           children: [
             Container(
-              height: 390.h + kToolbarHeight,
+              height: 380.h + kToolbarHeight,
               decoration: const BoxDecoration(
                 color: Color(0xFF395D5D),
                 borderRadius: BorderRadius.only(
@@ -116,217 +117,94 @@ class _QRPaymentState extends State<QRPayment> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      // final isGranted =
-                      //     await PermissionHandler.requestStoragePermission();
-                      screenshotController
-                          .capture(
-                        delay: const Duration(milliseconds: 200),
-                      )
-                          .then(
-                        (capturedImage) async {
-                          if (mounted) {
-                            if (capturedImage != null) {
-                              final tempdir = await getTemporaryDirectory();
+                      // await Permission.photos.request();
+                      final isGranted =
+                          await PermissionHandler.requestStoragePermission();
 
-                              final subdirectory =
-                                  Directory('${tempdir.path}/ARMA/picture');
+                      if (isGranted) {
+                        final isSave = await _captureAndSaveScreen();
 
-                              if (!(await subdirectory.exists())) {
-                                await subdirectory.create(recursive: true);
-                              }
-                              final filePath =
-                                  '${subdirectory.path}/qrcode_${Random().nextInt(100000)}_${DateTime.now()}.png';
-                              final imageFile = File(filePath);
-                              await imageFile.writeAsBytes(capturedImage);
-                              File file1 = imageFile;
-                              final result1 =
-                                  await ImageGallerySaver.saveFile(file1.path);
-                              if (result1['isSuccess']) {
-                                if (kDebugMode) {
-                                  // ignore: use_build_context_synchronously
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: SizedBox(
-                                          height: MyConstant.setMediaQueryWidth(
-                                              context, 340),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                'assets/image/success.png',
-                                                height: 50.h,
-                                                fit: BoxFit.cover,
+                        if (isSave) {
+                          // ignore: use_build_context_synchronously
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: SizedBox(
+                                  height: MyConstant.setMediaQueryWidth(
+                                      context, 340),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/success.png',
+                                        height: 50.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(
+                                        "สำเร็จ",
+                                        style: TextStyle(
+                                          fontSize: 30.sp,
+                                          color: Color(0xFF103533),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                      Text(
+                                        "บันทึกรูปภาพสำเร็จ",
+                                        style: TextStyle(
+                                          fontSize: 19.sp,
+                                          color: Colors.grey.shade500,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Center(
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF103533),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8),
+                                              child: Icon(
+                                                Icons.close,
+                                                size: 20.h,
+                                                color: Colors.white,
                                               ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Text(
-                                                "สำเร็จ",
-                                                style: TextStyle(
-                                                  fontSize: 30.sp,
-                                                  color: Color(0xFF103533),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                "บันทึกรูปภาพสำเร็จ",
-                                                style: TextStyle(
-                                                  fontSize: 19.sp,
-                                                  color: Colors.grey.shade500,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Center(
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFF103533),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        size: 20.h,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                        // actions: [
-                                        //   Navigator.of(context).pop();
-                                        // ],
-                                      );
-                                    },
-                                  );
-                                }
-                              } else {
-                                if (kDebugMode) {
-                                  print('Failed to save image to gallery.');
-                                }
-                              }
-                            }
-                            if (mounted) {
-                              setState(
-                                () {},
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // actions: [
+                                //   Navigator.of(context).pop();
+                                // ],
                               );
-                            }
-                          }
-                        },
-                      ).catchError(
-                        (error) {
-                          if (kDebugMode) {
-                            print(
-                              'error ===>> $error',
-                            );
-                          }
-                        },
-                      );
-                      // if (isGranted) {
-                      //   final isSave = await _captureAndSaveScreen();
-
-                      //   if (isSave) {
-                      //     // ignore: use_build_context_synchronously
-                      //     showDialog(
-                      //       context: context,
-                      //       builder: (context) {
-                      //         return AlertDialog(
-                      //           content: SizedBox(
-                      //             height:
-                      //                 ResponsiveHeightContext.isTablet(context)
-                      //                     ? 250.h
-                      //                     : 210.h,
-                      //             child: Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               children: [
-                      //                 Image.asset(
-                      //                   'assets/image/success.png',
-                      //                   height: 50.h,
-                      //                   fit: BoxFit.cover,
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: 20.h,
-                      //                 ),
-                      //                 Text(
-                      //                   "สำเร็จ",
-                      //                   style: TextStyle(
-                      //                     fontSize: 30.sp,
-                      //                     color: Color(0xFF103533),
-                      //                     fontWeight: FontWeight.bold,
-                      //                   ),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: 10.h,
-                      //                 ),
-                      //                 Text(
-                      //                   "บันทึกรูปภาพสำเร็จ",
-                      //                   style: TextStyle(
-                      //                     fontSize: 19.sp,
-                      //                     color: Colors.grey.shade500,
-                      //                     fontWeight: FontWeight.normal,
-                      //                   ),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: 20.h,
-                      //                 ),
-                      //                 Center(
-                      //                   child: TextButton(
-                      //                     onPressed: () {
-                      //                       Navigator.of(context).pop();
-                      //                     },
-                      //                     child: Container(
-                      //                       decoration: BoxDecoration(
-                      //                         color: Color(0xFF103533),
-                      //                         borderRadius:
-                      //                             BorderRadius.circular(5),
-                      //                       ),
-                      //                       child: Padding(
-                      //                         padding: const EdgeInsets.all(8),
-                      //                         child: Icon(
-                      //                           Icons.close,
-                      //                           size: 20.h,
-                      //                           color: Colors.white,
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           // actions: [
-                      //           //   Navigator.of(context).pop();
-                      //           // ],
-                      //         );
-                      //       },
-                      //     );
-                      //   } else {
-                      //     // ignore: use_build_context_synchronously
-                      //   }
-                      // }
+                            },
+                          );
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(220.w, 30.h),
+                      fixedSize: Size(
+                        220.w,
+                        MyConstant.setMediaQueryWidth(context, 40),
+                      ),
                       backgroundColor: Color.fromARGB(13, 255, 255, 255),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -335,7 +213,7 @@ class _QRPaymentState extends State<QRPayment> {
                     child: Text(
                       'บันทึกคิวอาร์โค้ด',
                       style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 19.sp,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
@@ -347,7 +225,7 @@ class _QRPaymentState extends State<QRPayment> {
                     'ยอดชำระจะมีผลภายใน 2 วันทำการ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 19.sp,
+                      fontSize: 20.sp,
                     ),
                   ),
                 ],
@@ -359,28 +237,35 @@ class _QRPaymentState extends State<QRPayment> {
                   SizedBox(
                     height: 15.h,
                   ),
+                  Text(
+                    'ขั้นตอนการชำระเงิน',
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   SizedBox(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'ขั้นตอนการชำระเงิน',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                          ),
-                        ),
                         Text(
                           '• กดปุ่มบันทึก QR Code',
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize: 19.sp,
                             color: Colors.grey,
                           ),
                         ),
                         Text(
-                          '• นำ QR Code ที่บันทึกชำระเงินที่แอพธนาคาร',
+                          '• QR Code จะถูกบันทึกที่คลังรูปภาพ',
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize: 19.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          '• นำ QR Code แสกนจ่ายได้ทุกแอพธนาคาร',
+                          style: TextStyle(
+                            fontSize: 19.sp,
                             color: Colors.grey,
                           ),
                         ),
@@ -404,7 +289,10 @@ class _QRPaymentState extends State<QRPayment> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(width * 0.8, 60),
+                  fixedSize: Size(
+                    width * 0.8,
+                    MyConstant.setMediaQueryWidth(context, 40),
+                  ),
                   backgroundColor: const Color(0xFF103533),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -431,7 +319,7 @@ class _QRPaymentState extends State<QRPayment> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: 35.w,
+          width: 38.w,
           height: 35.h,
           decoration: const BoxDecoration(
             color: Color(0x0DFFFFFF),
@@ -459,34 +347,34 @@ class _QRPaymentState extends State<QRPayment> {
           ),
         ),
         SizedBox(
-          width: 60.w,
+          width: 80.w,
         )
       ],
     );
   }
 
-  // Future<bool> _captureAndSaveScreen() async {
-  //   final capturedImage = await screenshotController.capture();
+  Future<bool> _captureAndSaveScreen() async {
+    final capturedImage = await screenshotController.capture();
 
-  //   if (capturedImage != null) {
-  //     final isSave = await _saveImageToGallery(capturedImage);
-  //     return isSave;
-  //     // _showNotification();
-  //   } else {
-  //     print('Failed to capture image.');
-  //     return false;
-  //   }
-  // }
+    if (capturedImage != null) {
+      final isSave = await _saveImageToGallery(capturedImage);
+      return isSave;
+      // _showNotification();
+    } else {
+      print('Failed to capture image.');
+      return false;
+    }
+  }
 
-  // Future<bool> _saveImageToGallery(Uint8List imageBytes) async {
-  //   final result = await ImageGallerySaver.saveImage(imageBytes);
+  Future<bool> _saveImageToGallery(Uint8List imageBytes) async {
+    final result = await ImageGallerySaver.saveImage(imageBytes);
 
-  //   if (result['isSuccess']) {
-  //     print('Image saved to gallery.');
-  //     return true;
-  //   } else {
-  //     return false;
-  //     print('Failed to save image: ${result['error']}');
-  //   }
-  // }
+    if (result['isSuccess']) {
+      print('Image saved to gallery.');
+      return true;
+    } else {
+      return false;
+      print('Failed to save image: ${result['error']}');
+    }
+  }
 }

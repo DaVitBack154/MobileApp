@@ -62,7 +62,7 @@ class _MenuState extends State<Menu> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: EdgeInsets.all(MyConstant.setMediaQueryWidth(context, 10)
+              padding: EdgeInsets.all(MyConstant.setMediaQueryWidth(context, 13)
                   // ResponsiveWidthContext.isTablet(context)
                   //     ? 15
                   //     : ResponsiveWidthContext.isTablet11(context)

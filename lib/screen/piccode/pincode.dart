@@ -37,25 +37,32 @@ class _PinCodeState extends State<PinCode> {
       String pin = prefs.getString(KeyStorage.pin) ?? '';
 
       if (pin == number) {
-        if (widget.args!.isGotoNotif) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Notify(
-                isFromFCM: true,
-              ),
-            ),
-          );
-        } else {
-          print('pin ถูก');
-          // ignore: use_build_context_synchronously
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Bottombar(),
-            ),
-          );
-        }
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Bottombar(),
+          ),
+        );
+        // if (widget.args!.isGotoNotif) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const Notify(
+        //         isFromFCM: true,
+        //       ),
+        //     ),
+        //   );
+        // } else {
+        //   print('pin ถูก');
+        //   // ignore: use_build_context_synchronously
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const Bottombar(),
+        //     ),
+        //   );
+        // }
       } else {
         //print('pin ผิด');
         // ignore: use_build_context_synchronously

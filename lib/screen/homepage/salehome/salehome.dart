@@ -149,11 +149,18 @@ class _SaleHomeState extends State<SaleHome> {
                           // padding: const EdgeInsets.all(17.0),
 
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 0.0,
                             crossAxisSpacing: 2.9,
-                            childAspectRatio: 0.82,
+                            childAspectRatio: ResponsiveWidthContext
+                                    .isMobileFoldVertical(context)
+                                ? 0.61
+                                : ResponsiveWidthContext.isMobile(context) ||
+                                        ResponsiveWidthContext.isMobileSmall(
+                                            context)
+                                    ? 0.56
+                                    : 0.82,
                           ),
                           itemCount:
                               getsaleHomeController.saleHome.data!.length,
@@ -174,10 +181,10 @@ class _SaleHomeState extends State<SaleHome> {
                                       children: [
                                         SizedBox(
                                           width: width,
-                                          height: ResponsiveHeightContext
-                                                  .isMobileSmall(context)
-                                              ? MyConstant.setMediaQueryHeight(
-                                                  context, 140)
+                                          height: ResponsiveWidthContext
+                                                  .isMobileFoldVertical(context)
+                                              ? MyConstant.setMediaQueryWidth(
+                                                  context, 150)
                                               : ResponsiveWidthContext.isTablet(
                                                       context)
                                                   ? MyConstant
@@ -211,7 +218,11 @@ class _SaleHomeState extends State<SaleHome> {
                                                       Text(
                                                         'รหัสทรัพย์ ${getsaleHomeController.saleHome.data![index].numberHome}',
                                                         style: TextStyle(
-                                                          fontSize: 15.sp,
+                                                          fontSize: ResponsiveWidthContext
+                                                                  .isMobileFoldVertical(
+                                                                      context)
+                                                              ? 13.sp
+                                                              : 14.sp,
                                                           color: Colors
                                                               .grey.shade600,
                                                         ),
@@ -238,7 +249,7 @@ class _SaleHomeState extends State<SaleHome> {
                                                             .teal.shade800,
                                                         size: MyConstant
                                                             .setMediaQueryWidth(
-                                                                context, 30),
+                                                                context, 25),
                                                       ),
                                                       SizedBox(
                                                         width: 5.w,
@@ -269,7 +280,7 @@ class _SaleHomeState extends State<SaleHome> {
                                                     Container(
                                                       width: 35.w,
                                                       margin: EdgeInsets.only(
-                                                        left: 3.w,
+                                                        left: 5.w,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         color: Colors.red,
@@ -284,7 +295,7 @@ class _SaleHomeState extends State<SaleHome> {
                                                             fontSize: MyConstant
                                                                 .setMediaQueryWidth(
                                                                     context,
-                                                                    22),
+                                                                    21),
                                                             color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -299,9 +310,17 @@ class _SaleHomeState extends State<SaleHome> {
                                                       child: Text(
                                                         ' ${getsaleHomeController.saleHome.data![index].priceHome} บาท',
                                                         style: TextStyle(
-                                                          fontSize: MyConstant
-                                                              .setMediaQueryWidth(
-                                                                  context, 22),
+                                                          fontSize: ResponsiveWidthContext
+                                                                  .isMobileFoldVertical(
+                                                                      context)
+                                                              ? MyConstant
+                                                                  .setMediaQueryWidth(
+                                                                      context,
+                                                                      21)
+                                                              : MyConstant
+                                                                  .setMediaQueryWidth(
+                                                                      context,
+                                                                      21),
                                                           // color: Colors.red,
                                                           fontWeight:
                                                               FontWeight.bold,

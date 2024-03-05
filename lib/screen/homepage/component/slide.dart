@@ -105,24 +105,20 @@ class _SlideState extends State<Slide> {
                                         //     : null,
                                         height: ResponsiveWidthContext
                                                 .isMobileFoldVertical(context)
-                                            ? MyConstant.setMediaQueryHeight(
-                                                context, 180)
-                                            : ResponsiveWidthContext
-                                                    .isMobileSmall(context)
-                                                ? MyConstant
-                                                    .setMediaQueryHeight(
-                                                        context, 220)
+                                            ? MyConstant.setMediaQueryWidth(
+                                                context, 210)
+                                            : ResponsiveWidthContext.isMobile(
+                                                        context) ||
+                                                    ResponsiveWidthContext
+                                                        .isMobileSmall(context)
+                                                ? MyConstant.setMediaQueryWidth(
+                                                    context, 200)
                                                 : ResponsiveWidthContext
-                                                        .isMobile(context)
+                                                        .isTablet(context)
                                                     ? MyConstant
-                                                        .setMediaQueryHeight(
-                                                            context, 210)
-                                                    : ResponsiveWidthContext
-                                                            .isTablet(context)
-                                                        ? MyConstant
-                                                            .setMediaQueryHeight(
-                                                                context, 420)
-                                                        : null,
+                                                        .setMediaQueryWidth(
+                                                            context, 290)
+                                                    : null,
                                       );
                                     },
                                   ),
@@ -134,7 +130,7 @@ class _SlideState extends State<Slide> {
                         .toList(),
                     carouselController: carouselController,
                     options: CarouselOptions(
-                      viewportFraction: 0.92,
+                      viewportFraction: 0.93,
                       autoPlay: false,
                       enableInfiniteScroll: false,
                       initialPage: currentIndex,
@@ -148,7 +144,8 @@ class _SlideState extends State<Slide> {
                   Positioned(
                     bottom: ResponsiveWidthContext.isTablet(context)
                         ? 40
-                        : ResponsiveWidthContext.isMobile(context)
+                        : ResponsiveWidthContext.isMobileSmall(context) ||
+                                ResponsiveWidthContext.isMobile(context)
                             ? 0
                             : 20, // กำหนดตำแหน่ง bottom
                     left: 0, // กำหนดตำแหน่ง left
@@ -166,10 +163,12 @@ class _SlideState extends State<Slide> {
                               onTap: () =>
                                   carouselController.animateToPage(entry.key),
                               child: Container(
-                                width: currentIndex == entry.key ? 30 : 7,
+                                width: currentIndex == entry.key
+                                    ? MyConstant.setMediaQueryWidth(context, 25)
+                                    : 7,
                                 height: ResponsiveWidthContext.isTablet(context)
                                     ? 8.0
-                                    : 7.0,
+                                    : 6.0,
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 3.0,
                                 ),
@@ -189,13 +188,12 @@ class _SlideState extends State<Slide> {
                 ]),
               ),
               SizedBox(
-                height: ResponsiveHeightContext.isMobileFoldVertical(context)
-                    ? MyConstant.setMediaQueryHeight(context, 10)
-                    : ResponsiveHeightContext.isMobileSmall(context)
-                        ? MyConstant.setMediaQueryHeight(context, 12)
-                        : ResponsiveHeightContext.isMobile(context)
-                            ? MyConstant.setMediaQueryHeight(context, 25)
-                            : null,
+                height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                    ? MyConstant.setMediaQueryWidth(context, 17)
+                    : ResponsiveWidthContext.isMobileSmall(context) ||
+                            ResponsiveWidthContext.isMobile(context)
+                        ? MyConstant.setMediaQueryWidth(context, 25)
+                        : null,
               ),
             ],
           );

@@ -71,12 +71,12 @@ class _PromotionBonState extends State<PromotionBon> {
           children: [
             Container(
               width: width,
-              height: 200.h,
+              height: 180.h,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
                       '$imageUrl/public/image/${widget.item.image ?? ''}'),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   // ให้รูปภาพปรับขนาดให้เต็ม Container
                 ),
               ),

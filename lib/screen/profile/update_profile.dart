@@ -46,6 +46,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   String? errorsubdistrict;
   String? errorprovin;
   String? errorpostcode;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -256,44 +257,48 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ).w,
                     child: Column(
                       children: [
-                        TextField(
-                          controller: _updateController.sentAddressuser,
-                          decoration: InputDecoration(
-                            border: const UnderlineInputBorder(),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              child: Icon(
-                                Icons.location_on,
-                                size:
-                                    MyConstant.setMediaQueryWidth(context, 25),
-                                color: Colors.grey.shade400,
+                        Form(
+                          key: _formKey,
+                          child: TextField(
+                            controller: _updateController.sentAddressuser,
+                            decoration: InputDecoration(
+                              border: const UnderlineInputBorder(),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Icon(
+                                  Icons.location_on,
+                                  size: MyConstant.setMediaQueryWidth(
+                                      context, 25),
+                                  color: Colors.grey.shade400,
+                                ),
                               ),
+                              hintText: widget.sentAddressuser,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              labelStyle: TextStyle(
+                                fontSize: 30.sp,
+                              ),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey), // สีเมื่อไม่ Focus
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF103533),
+                                ), // สีเมื่อ Focus
+                              ),
+                              errorText: errorsentAddressuser,
                             ),
-                            hintText: widget.sentAddressuser,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelStyle: TextStyle(
-                              fontSize: 30.sp,
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey), // สีเมื่อไม่ Focus
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF103533),
-                              ), // สีเมื่อ Focus
-                            ),
-                            errorText: errorsentAddressuser,
+                            cursorColor: Colors.grey.shade400,
+                            onChanged: (value) {
+                              value.isEmpty || value.length < 5
+                                  ? errorsentAddressuser =
+                                      'กรุณากรอกที่อยู่ให้ครบถ้วน'
+                                  : errorsentAddressuser = null;
+                              setState(() {});
+                            },
+                            style: TextStyle(fontSize: 25.sp),
                           ),
-                          cursorColor: Colors.grey.shade400,
-                          onChanged: (value) {
-                            value.isEmpty || value.length < 5
-                                ? errorsentAddressuser =
-                                    'กรุณากรอกที่อยู่ให้ครบถ้วน'
-                                : errorsentAddressuser = null;
-                            setState(() {});
-                          },
-                          style: TextStyle(fontSize: 25.sp),
                         ),
                         SizedBox(
                           height: 20.h,
@@ -371,24 +376,39 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       }
                     } else {
                       if (_updateController.sentAddressuser.text.isNotEmpty) {
-                        await _updateController.fetchUpdateProfile(
-                            sentAddressuser:
-                                _updateController.sentAddressuser.text,
-                            provin: nameProvin ?? widget.provin.toString(),
-                            district:
-                                nameDistrict ?? widget.district.toString(),
-                            subdistrict: nameSubdistrict ??
-                                widget.subdistrict.toString(),
-                            postcode:
-                                namePostcode ?? widget.postcode.toString());
+                        if (_formKey.currentState!.validate()) {
+                          if (_updateController.sentAddressuser.text.length <
+                              3) {
+                            setState(() {
+                              errorsentAddressuser =
+                                  'กรุณากรอกรูปแบบที่อยู่ให้ถูกต้อง';
+                            });
+                            return;
+                          }
+                          await _updateController.fetchUpdateProfile(
+                              sentAddressuser:
+                                  _updateController.sentAddressuser.text,
+                              provin: nameProvin ?? widget.provin.toString(),
+                              district:
+                                  nameDistrict ?? widget.district.toString(),
+                              subdistrict: nameSubdistrict ??
+                                  widget.subdistrict.toString(),
+                              postcode:
+                                  namePostcode ?? widget.postcode.toString());
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Phone_page(),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            errorsentAddressuser =
+                                'กรุณากรอกรูปแบบที่อยู่ให้ถูกต้อง';
+                          });
+                        }
                       }
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Phone_page(),
-                        ),
-                      );
                     }
 
                     // if (_updateController.phoneController.text.isNotEmpty ||
@@ -428,7 +448,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(
-                      Size(width, 60),
+                      Size(width, MyConstant.setMediaQueryWidth(context, 40)),
                     ),
                     backgroundColor: MaterialStateProperty.all<Color>(
                       Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม

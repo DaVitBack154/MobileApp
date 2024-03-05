@@ -21,16 +21,25 @@ class MyConstant {
 
   //set ความยาวทุกขนาดจอ
   static double setMediaQueryWidth(BuildContext context, double setint) {
+    //ส่วน Mobile ทั้งหมด=========================================//
     if (ResponsiveWidthContext.isMobileFoldVertical(context)) {
-      return ((setint / MediaQuery.of(context).size.width) *
-              MediaQuery.of(context).size.width) -
-          ((((setint * 25) / 100) / MediaQuery.of(context).size.width) *
-              MediaQuery.of(context).size.width);
-    } else if (ResponsiveWidthContext.isMobileSmall(context)) {
       return ((setint / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width) -
           ((((setint * 15) / 100) / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width);
+    } else if (ResponsiveWidthContext.isMobileSmall(context)) {
+      return ((setint / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width) -
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width);
+    } else if (ResponsiveWidthContext.isMobile(context)) {
+      return ((setint / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width) +
+          ((((setint * 5) / 100) / MediaQuery.of(context).size.width) *
+              MediaQuery.of(context).size.width);
+      //ส่วน Mobile ทั้งหมด=========================================//
+      //======================กั้น=================================//
+      //ส่วน Tablet ทั้งหมด=========================================//
     } else if (ResponsiveWidthContext.isTablet(context)) {
       return ((setint / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width) +
@@ -46,6 +55,7 @@ class MyConstant {
               MediaQuery.of(context).size.width) +
           ((((setint * 30) / 100) / MediaQuery.of(context).size.width) *
               MediaQuery.of(context).size.width);
+      //ส่วน Tablet ทั้งหมด=========================================//
     } else {
       return ((setint / MediaQuery.of(context).size.width) *
           MediaQuery.of(context).size.width);

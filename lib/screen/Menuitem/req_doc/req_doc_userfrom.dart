@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/component/textfield.dart';
 import 'package:mobile_chaseapp/config/app_info.dart';
 import 'package:mobile_chaseapp/controller/getdate_server.dart';
 import 'package:mobile_chaseapp/controller/getpayment_controller.dart';
 import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
+import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/controller/user_req_controller.dart';
 import 'package:mobile_chaseapp/model/respon_payment.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/component/req_format.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -38,6 +42,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
   final UserReqController userReqController = UserReqController();
   final DateServerController dateController = DateServerController();
   final ProfileController profileController = ProfileController();
+  final _updateController = UpdateController();
 
   bool loading = true;
   var dateServer = '';
@@ -53,6 +58,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
   //ในส่วนรูปแบบการส่ง
   final _formKey = GlobalKey<FormState>();
   String? errorTextaddress;
+  String? errorTextEmail;
   String? chosesentRadio = 'ส่งแบบอีเมล';
   List provin = PROVINCE;
   List district = [];
@@ -183,9 +189,10 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                 color: Colors.black.withOpacity(.1),
                               ),
                               child: IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.arrow_back_ios_new_outlined,
-                                  size: 25,
+                                  size: MyConstant.setMediaQueryWidth(
+                                      context, 25),
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
@@ -200,9 +207,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                               'รายการขอเอกสาร',
                               style: TextStyle(
                                 fontSize:
-                                    ResponsiveHeightContext.isTablet(context)
-                                        ? 20.sp
-                                        : 25.sp,
+                                    MyConstant.setMediaQueryWidth(context, 30),
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
@@ -247,7 +252,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                   'เลขที่สัญญา : ',
                                   style: TextStyle(
                                     color: Colors.grey.shade500,
-                                    fontSize: 19.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w400,
                                     height: 1.51,
                                   ),
@@ -258,7 +263,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                 Text(
                                   '${widget.customerId}',
                                   style: TextStyle(
-                                    fontSize: 20.sp,
+                                    fontSize: 19.sp,
                                     fontWeight: FontWeight.w500,
                                     height: 1.51,
                                   ),
@@ -272,7 +277,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                   'หัวข้อเอกสาร : ',
                                   style: TextStyle(
                                     color: Colors.grey.shade500,
-                                    fontSize: 19.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w400,
                                     height: 1.51,
                                   ),
@@ -283,7 +288,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                 Text(
                                   '${widget.documentChose}',
                                   style: TextStyle(
-                                    fontSize: 20.sp,
+                                    fontSize: 19.sp,
                                     fontWeight: FontWeight.w500,
                                     height: 1.51,
                                   ),
@@ -493,7 +498,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              widget.other ?? 'tdfdf',
+                                              widget.other ?? 'wait',
                                               style: TextStyle(
                                                 fontSize: 20.sp,
                                                 fontWeight: FontWeight.w500,
@@ -577,6 +582,50 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                     activeColor: Colors.teal.shade700,
                                   ),
                                 ),
+                                email == 'ไม่พบอีเมล'
+                                    ? Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 5.h),
+                                            child: Form(
+                                              key: _formKey,
+                                              child: textField(
+                                                'กรุณาระบุอีเมลของท่าน',
+                                                controller: userReqController
+                                                    .sentEmailuserController,
+                                                hintStyle: TextStyle(
+                                                  fontSize: ResponsiveWidthContext
+                                                          .isTablet(context)
+                                                      ? MyConstant
+                                                          .setMediaQueryWidth(
+                                                              context, 23)
+                                                      : null,
+                                                  color: Colors.grey.shade500,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                                fillColor: Colors.white,
+                                                fontSize: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 20),
+                                                autoFocus: false,
+                                                contentPadding:
+                                                    const EdgeInsets.all(10),
+                                                errorText: errorTextEmail,
+                                                onChanged: (value) {
+                                                  value.isEmpty ||
+                                                          value.length < 3
+                                                      ? errorTextEmail =
+                                                          'กรุณากรอกอีเมลให้ถูกต้อง'
+                                                      : errorTextEmail = null;
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : SizedBox(),
                                 Card(
                                   child: RadioListTile(
                                     title: Row(
@@ -740,20 +789,19 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                                 controller: userReqController
                                                     .sentAddressuserController,
                                                 hintStyle: TextStyle(
-                                                  fontSize:
-                                                      ResponsiveHeightContext
-                                                              .isTablet(context)
-                                                          ? 16.sp
-                                                          : 19.sp,
+                                                  fontSize: ResponsiveWidthContext
+                                                          .isTablet(context)
+                                                      ? MyConstant
+                                                          .setMediaQueryWidth(
+                                                              context, 28)
+                                                      : null,
                                                   color: Colors.grey.shade500,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 fillColor: Colors.white,
-                                                fontSize:
-                                                    ResponsiveHeightContext
-                                                            .isTablet(context)
-                                                        ? 14.sp
-                                                        : null,
+                                                fontSize: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 23),
                                                 autoFocus: false,
                                                 contentPadding:
                                                     const EdgeInsets.all(10),
@@ -799,49 +847,92 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         });
 
                                         print(
-                                            'เคสออกมาได้แล้ว: $chosesentRadio');
+                                            'ส่งใบเสร็จรับเงินแบบมีข้อมูลแล้ว: $chosesentRadio');
                                         if (chosesentRadio == 'ส่งแบบอีเมล') {
-                                          String result =
-                                              await userReqController
-                                                  .fetchUserReq(
-                                            name: name.toString(),
-                                            surname: surname.toString(),
-                                            idCard: idCard.toString(),
-                                            noContract: widget.customerId!,
-                                            listReq: widget.documentChose!,
-                                            // other: widget.other ??
-                                            //     userReqController
-                                            //         .otherController.text,
-                                            receiveNo: dataReceiptNo!,
-                                            sentEmailuser: email,
-                                          );
-                                          if (result.isNotEmpty) {
-                                            // ignore: use_build_context_synchronously
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(result),
-                                              ),
+                                          if (email == 'ไม่พบอีเมล') {
+                                            if (userReqController
+                                                .sentEmailuserController
+                                                .text
+                                                .isEmpty) {
+                                              setState(() {
+                                                errorTextEmail =
+                                                    'กรุณากรอกอีเมลให้ถูกต้อง';
+                                              });
+                                              return;
+                                            }
+
+                                            String emailToUpdate =
+                                                userReqController
+                                                    .sentEmailuserController
+                                                    .text;
+
+                                            if (emailToUpdate.isNotEmpty) {
+                                              await _updateController
+                                                  .fetchUpdateProfile(
+                                                email: emailToUpdate,
+                                              );
+                                              final prefs =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                              prefs.setString(KeyStorage.email,
+                                                  emailToUpdate);
+                                            }
+                                            String result =
+                                                await userReqController
+                                                    .fetchUserReq(
+                                              name: name.toString(),
+                                              surname: surname.toString(),
+                                              idCard: idCard.toString(),
+                                              noContract: widget.customerId!,
+                                              listReq: widget.documentChose!,
+                                              receiveNo: dataReceiptNo!,
+                                              sentEmailuser: emailToUpdate,
                                             );
-                                            return;
+                                            if (result.isNotEmpty) {
+                                              // ignore: use_build_context_synchronously
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(result),
+                                                ),
+                                              );
+                                              return;
+                                            }
+                                          } else {
+                                            String result =
+                                                await userReqController
+                                                    .fetchUserReq(
+                                              name: name.toString(),
+                                              surname: surname.toString(),
+                                              idCard: idCard.toString(),
+                                              noContract: widget.customerId!,
+                                              listReq: widget.documentChose!,
+                                              receiveNo: dataReceiptNo!,
+                                              sentEmailuser: email,
+                                            );
+                                            if (result.isNotEmpty) {
+                                              // ignore: use_build_context_synchronously
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(result),
+                                                ),
+                                              );
+                                              return;
+                                            }
                                           }
                                         } else if (chosesentRadio ==
                                             'ส่งแบบที่อยู่อาศัย') {
                                           // _formKey.currentState!.validate();
-                                          print('object-------');
-                                          print(profileController
-                                              .userModel.user?.sentAddressuser);
+                                          print('ในกรณีมีข้อมูลที่อยู่่แล้ว');
                                           if (profileController.userModel.user
                                                   ?.sentAddressuser !=
                                               null) {
-                                            print('Check value 4: $nameProvin');
-
                                             // if (nameProvin == null ||
                                             //     nameProvin!.isEmpty) {
                                             //   print('this condition');
                                             //   return;
                                             // }
-
                                             String result =
                                                 await userReqController
                                                     .fetchUserReq(
@@ -881,6 +972,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                               return;
                                             }
                                           } else {
+                                            print('ในกรณียังไม่มีที่อยู่');
                                             if (userReqController
                                                 .sentAddressuserController
                                                 .text
@@ -937,16 +1029,40 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             }
                                           }
                                         }
+
+                                        //โหลดก่อนจะไปหน้าต่อไป
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: LoadingAnimationWidget
+                                                  .twistingDots(
+                                                leftDotColor: Color.fromARGB(
+                                                    255, 241, 162, 3),
+                                                rightDotColor: Color.fromARGB(
+                                                    255, 227, 11, 11),
+                                                size: 60,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                        await Future.delayed(
+                                            const Duration(seconds: 3));
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                        //โหลดก่อนจะไปหน้าต่อไป
+
                                         // ignore: use_build_context_synchronously
                                         showDialog(
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
                                               content: SizedBox(
-                                                height: ResponsiveHeightContext
-                                                        .isTablet(context)
-                                                    ? 250.h
-                                                    : 210.h,
+                                                height: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 400),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -1036,47 +1152,34 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         });
                                       }
                                     } else {
-                                      print('อันนี้ส่วน เอล: $chosesentRadio');
+                                      print(
+                                          'อันนี้ส่วนไม่ได้เลือกใบเสร็จ: $chosesentRadio');
                                       if (chosesentRadio == 'ส่งแบบอีเมล') {
-                                        String result = await userReqController
-                                            .fetchUserReq(
-                                          name: name.toString(),
-                                          surname: surname.toString(),
-                                          idCard: idCard.toString(),
-                                          noContract: widget.customerId!,
-                                          listReq: widget.documentChose!,
-                                          other: widget.other ?? '',
-                                          receiveNo: dataReceiptNo ?? '',
-                                          sentEmailuser: email,
-                                        );
-                                        if (result.isNotEmpty) {
-                                          // ignore: use_build_context_synchronously
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(result),
-                                            ),
-                                          );
-                                          return;
-                                        }
-                                      } else if (chosesentRadio ==
-                                          'ส่งแบบที่อยู่อาศัย') {
-                                        if (userReqController
-                                            .sentAddressuserController
-                                            .text
-                                            .isEmpty) {
-                                          errorTextaddress =
-                                              'กรุณากรอกที่อยู่ให้ถูกต้อง';
-                                          setState(() {});
-                                        }
-                                        if (profileController.userModel.user
-                                                ?.sentAddressuser !=
-                                            null) {
-                                          print('Check value1: $nameProvin');
-                                          if (nameProvin == null ||
-                                              nameProvin!.isEmpty) {
-                                            print('this conditionccccccccß');
+                                        if (email == 'ไม่พบอีเมล') {
+                                          if (userReqController
+                                              .sentEmailuserController
+                                              .text
+                                              .isEmpty) {
+                                            setState(() {
+                                              errorTextEmail =
+                                                  'กรุณากรอกอีเมลให้ถูกต้อง';
+                                            });
                                             return;
+                                          }
+                                          String emailToUpdate =
+                                              userReqController
+                                                  .sentEmailuserController.text;
+
+                                          if (emailToUpdate.isNotEmpty) {
+                                            await _updateController
+                                                .fetchUpdateProfile(
+                                              email: emailToUpdate,
+                                            );
+                                            final prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.setString(KeyStorage.email,
+                                                emailToUpdate);
                                           }
                                           String result =
                                               await userReqController
@@ -1088,6 +1191,175 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             listReq: widget.documentChose!,
                                             other: widget.other ?? '',
                                             receiveNo: dataReceiptNo ?? '',
+                                            sentEmailuser: emailToUpdate,
+                                          );
+                                          if (result.isNotEmpty) {
+                                            // ignore: use_build_context_synchronously
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(result),
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                        } else {
+                                          String result =
+                                              await userReqController
+                                                  .fetchUserReq(
+                                            name: name.toString(),
+                                            surname: surname.toString(),
+                                            idCard: idCard.toString(),
+                                            noContract: widget.customerId!,
+                                            listReq: widget.documentChose!,
+                                            other: widget.other ?? '',
+                                            receiveNo: dataReceiptNo ?? '',
+                                            sentEmailuser: email,
+                                          );
+                                          if (result.isNotEmpty) {
+                                            // ignore: use_build_context_synchronously
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(result),
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                        }
+                                        //โหลดก่อนจะไปหน้าต่อไป
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: LoadingAnimationWidget
+                                                  .twistingDots(
+                                                leftDotColor: Color.fromARGB(
+                                                    255, 241, 162, 3),
+                                                rightDotColor: Color.fromARGB(
+                                                    255, 227, 11, 11),
+                                                size: 60,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                        await Future.delayed(
+                                            const Duration(seconds: 3));
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                        //โหลดก่อนจะไปหน้าต่อไป
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              content: SizedBox(
+                                                height: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 400),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/image/success.png',
+                                                      height: 50.h,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Text(
+                                                      "สำเร็จ",
+                                                      style: TextStyle(
+                                                        fontSize: 30.sp,
+                                                        color:
+                                                            Color(0xFF103533),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "รายการขอเอกสารสำเร็จ",
+                                                      style: TextStyle(
+                                                        fontSize: 19.sp,
+                                                        color: Colors
+                                                            .grey.shade500,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Center(
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator
+                                                              .pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const Bottombar(),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF103533),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8),
+                                                            child: Icon(
+                                                              Icons.close,
+                                                              size: 20.h,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              // actions: [
+                                              //   Navigator.of(context).pop();
+                                              // ],
+                                            );
+                                          },
+                                        );
+                                      } else if (chosesentRadio ==
+                                          'ส่งแบบที่อยู่อาศัย') {
+                                        if (profileController.userModel.user
+                                                ?.sentAddressuser !=
+                                            null) {
+                                          print('ในกรณีมีที่อยู่แล้ว');
+                                          String result =
+                                              await userReqController
+                                                  .fetchUserReq(
+                                            name: name.toString(),
+                                            surname: surname.toString(),
+                                            idCard: idCard.toString(),
+                                            noContract: widget.customerId!,
+                                            listReq: widget.documentChose!,
+                                            other:
+                                                widget.other ?? 'ไม่พบข้อมูล',
+                                            receiveNo:
+                                                dataReceiptNo ?? 'ไม่พบข้อมูล',
                                             sentAddressuser: profileController
                                                 .userModel
                                                 .user
@@ -1101,7 +1373,6 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             postcode: profileController
                                                 .userModel.user?.postcode,
                                           );
-
                                           if (result.isNotEmpty) {
                                             // ignore: use_build_context_synchronously
                                             ScaffoldMessenger.of(context)
@@ -1112,12 +1383,26 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             );
                                             return;
                                           }
-                                        } else if (_formKey.currentState!
-                                            .validate()) {
-                                          print('Check value: $nameProvin');
+                                        } else {
+                                          print('ในกรณียังไม่มีที่อยู่');
+                                          if (userReqController
+                                              .sentAddressuserController
+                                              .text
+                                              .isEmpty) {
+                                            errorTextaddress =
+                                                'กรุณากรอกที่อยู่ให้ถูกต้อง';
+                                            setState(() {});
+                                            return;
+                                          }
+                                          _formKey.currentState!.validate();
                                           if (nameProvin == null ||
                                               nameProvin!.isEmpty) {
-                                            print('this condition');
+                                            return;
+                                          } else if (nameDistrict == null ||
+                                              nameDistrict!.isEmpty) {
+                                            return;
+                                          } else if (nameSubdistrict == null ||
+                                              nameSubdistrict!.isEmpty) {
                                             return;
                                           }
                                           String result =
@@ -1128,7 +1413,8 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             idCard: idCard.toString(),
                                             noContract: widget.customerId!,
                                             listReq: widget.documentChose!,
-                                            other: widget.other ?? '',
+                                            other:
+                                                widget.other ?? 'ไม่พบข้อมูล',
                                             receiveNo: dataReceiptNo ?? '',
                                             sentAddressuser: profileController
                                                     .userModel
@@ -1154,107 +1440,131 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                             return;
                                           }
                                         }
-                                      }
-                                      // ignore: use_build_context_synchronously
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: SizedBox(
-                                              height: ResponsiveHeightContext
-                                                      .isTablet(context)
-                                                  ? 250.h
-                                                  : 210.h,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/image/success.png',
-                                                    height: 50.h,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.h,
-                                                  ),
-                                                  Text(
-                                                    "สำเร็จ",
-                                                    style: TextStyle(
-                                                      fontSize: 30.sp,
-                                                      color: Color(0xFF103533),
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                        //โหลดก่อนจะไปหน้าต่อไป
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: LoadingAnimationWidget
+                                                  .twistingDots(
+                                                leftDotColor: Color.fromARGB(
+                                                    255, 241, 162, 3),
+                                                rightDotColor: Color.fromARGB(
+                                                    255, 227, 11, 11),
+                                                size: 60,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                        await Future.delayed(
+                                            const Duration(seconds: 3));
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                        //โหลดก่อนจะไปหน้าต่อไป
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              content: SizedBox(
+                                                height: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 400),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/image/success.png',
+                                                      height: 50.h,
+                                                      fit: BoxFit.cover,
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.h,
-                                                  ),
-                                                  Text(
-                                                    "รายการขอเอกสารสำเร็จ",
-                                                    style: TextStyle(
-                                                      fontSize: 19.sp,
-                                                      color:
-                                                          Colors.grey.shade500,
-                                                      fontWeight:
-                                                          FontWeight.normal,
+                                                    SizedBox(
+                                                      height: 20.h,
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.h,
-                                                  ),
-                                                  Center(
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                        Navigator
-                                                            .pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const Bottombar(),
+                                                    Text(
+                                                      "สำเร็จ",
+                                                      style: TextStyle(
+                                                        fontSize: 30.sp,
+                                                        color:
+                                                            Color(0xFF103533),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "รายการขอเอกสารสำเร็จ",
+                                                      style: TextStyle(
+                                                        fontSize: 19.sp,
+                                                        color: Colors
+                                                            .grey.shade500,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Center(
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator
+                                                              .pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const Bottombar(),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF103533),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
                                                           ),
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0xFF103533),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8),
-                                                          child: Icon(
-                                                            Icons.close,
-                                                            size: 20.h,
-                                                            color: Colors.white,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8),
+                                                            child: Icon(
+                                                              Icons.close,
+                                                              size: 20.h,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            // actions: [
-                                            //   Navigator.of(context).pop();
-                                            // ],
-                                          );
-                                        },
-                                      );
+                                              // actions: [
+                                              //   Navigator.of(context).pop();
+                                              // ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     }
                                   },
                                   style: ButtonStyle(
                                     fixedSize: MaterialStateProperty.all<Size>(
                                       Size(
-                                          250,
-                                          ResponsiveHeightContext.isTablet(
-                                                  context)
-                                              ? 60
-                                              : 40),
+                                        250,
+                                        MyConstant.setMediaQueryWidth(
+                                            context, 40),
+                                      ),
                                     ),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
@@ -1272,11 +1582,8 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                   child: Text(
                                     'ส่ง',
                                     style: TextStyle(
-                                      fontSize:
-                                          ResponsiveHeightContext.isTablet(
-                                                  context)
-                                              ? 20.sp
-                                              : 24.sp,
+                                      fontSize: MyConstant.setMediaQueryWidth(
+                                          context, 30),
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white,
                                     ),
@@ -1321,9 +1628,15 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
+        hintFontSize: ResponsiveWidthContext.isTablet(context)
+            ? MyConstant.setMediaQueryWidth(context, 15)
+            : ResponsiveWidthContext.isTablet11(context) ||
+                    ResponsiveWidthContext.isTabletMini(context)
+                ? MyConstant.setMediaQueryWidth(context, 16)
+                : MyConstant.setMediaQueryWidth(context, 20),
         paddingLeft: 0,
         paddingRight: 0,
+        contentPadding: 20,
       );
 
   Widget selectPovinType() => FormHelper.dropDownWidget(
@@ -1365,9 +1678,14 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        paddingLeft: 2,
-        paddingRight: 2,
-        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
+        hintFontSize: ResponsiveWidthContext.isTablet(context)
+            ? MyConstant.setMediaQueryWidth(context, 14)
+            : ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 16)
+                : MyConstant.setMediaQueryWidth(context, 18),
+        paddingLeft: 0,
+        paddingRight: 0,
+        contentPadding: 20,
       );
 
   Widget selectDistrict() => FormHelper.dropDownWidget(
@@ -1400,9 +1718,14 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        paddingLeft: 2,
-        paddingRight: 2,
-        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
+        hintFontSize: ResponsiveWidthContext.isTablet(context)
+            ? MyConstant.setMediaQueryWidth(context, 14)
+            : ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 16)
+                : MyConstant.setMediaQueryWidth(context, 18),
+        paddingLeft: 0,
+        paddingRight: 0,
+        contentPadding: 20,
       );
 
   Widget selectSubdistrict() => FormHelper.dropDownWidget(
@@ -1435,9 +1758,14 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        paddingLeft: 2,
-        paddingRight: 2,
-        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
+        hintFontSize: ResponsiveWidthContext.isTablet(context)
+            ? MyConstant.setMediaQueryWidth(context, 14)
+            : ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 16)
+                : MyConstant.setMediaQueryWidth(context, 18),
+        paddingLeft: 0,
+        paddingRight: 0,
+        contentPadding: 20,
       );
 
   Widget selectPostcode() => FormHelper.dropDownWidget(
@@ -1466,8 +1794,13 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
         borderFocusColor: Colors.grey.shade200,
         borderWidth: 1,
         borderRadius: 10,
-        paddingLeft: 2,
-        paddingRight: 2,
-        hintFontSize: ResponsiveHeightContext.isTablet(context) ? 22 : 18,
+        hintFontSize: ResponsiveWidthContext.isTablet(context)
+            ? MyConstant.setMediaQueryWidth(context, 14)
+            : ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 16)
+                : MyConstant.setMediaQueryWidth(context, 18),
+        paddingLeft: 0,
+        paddingRight: 0,
+        contentPadding: 20,
       );
 }

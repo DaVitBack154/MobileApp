@@ -442,10 +442,6 @@ class _NotifyState extends State<Notify> {
                                                         fontSize: 16.sp,
                                                       ),
                                                     ),
-                                                    Text(notiPromotionData
-                                                            ?.statusRead
-                                                            .toString() ??
-                                                        'fdfd')
                                                   ],
                                                 ),
                                               ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/account/account.dart';
 import 'package:mobile_chaseapp/screen/contract_page/contract.dart';
 import 'package:mobile_chaseapp/screen/homepage/homepage.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/profile/profile.dart';
+import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -133,14 +135,14 @@ class _BottombarState extends State<Bottombar> {
               ),
               BottomNavigationBarItem(
                 icon: pageIndex == 3
-                    ? const Icon(
+                    ? Icon(
                         Icons.menu,
-                        size: 45,
+                        size: MyConstant.setMediaQueryWidth(context, 35),
                         color: Color(0xFFF103533),
                       )
-                    : const Icon(
+                    : Icon(
                         Icons.menu,
-                        size: 45,
+                        size: MyConstant.setMediaQueryWidth(context, 35),
                         color: Color(0xFFF9badad),
                       ),
                 label: 'Profile',
@@ -194,6 +196,7 @@ class _BottombarState extends State<Bottombar> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
+                _exitApp(context);
               },
               child: Container(
                 width: 60.w,
@@ -224,5 +227,9 @@ class _BottombarState extends State<Bottombar> {
       },
     );
     return exitApp ?? false;
+  }
+
+  void _exitApp(BuildContext context) {
+    SystemNavigator.pop();
   }
 }

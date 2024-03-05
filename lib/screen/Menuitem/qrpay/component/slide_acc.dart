@@ -6,6 +6,7 @@ import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/pay_from.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import '../../../../controller/getacc_controller.dart';
 
 class SlideAcc extends StatefulWidget {
@@ -72,8 +73,13 @@ class _SlideAccState extends State<SlideAcc> {
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
-                    viewportFraction: 0.92,
-                    height: MyConstant.setMediaQueryWidth(context, 250),
+                    viewportFraction: 0.93,
+                    height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                        ? 200.h
+                        : ResponsiveWidthContext.isMobile(context) ||
+                                ResponsiveWidthContext.isMobileSmall(context)
+                            ? MyConstant.setMediaQueryWidth(context, 253)
+                            : MyConstant.setMediaQueryWidth(context, 260),
                     autoPlay: false,
                     enableInfiniteScroll: false,
                     initialPage: _currentIndex,
@@ -114,7 +120,7 @@ class _SlideAccState extends State<SlideAcc> {
               ),
 
               SizedBox(
-                height: 10.h,
+                height: 15.h,
               ),
               // card ด้านล่างทั้งหมด
               Padding(
@@ -154,7 +160,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             fontWeight: FontWeight.w600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 22),
+                                                    context, 20),
                                           ),
                                         ),
                                       ],
@@ -170,7 +176,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             color: Colors.grey.shade600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 25),
+                                                    context, 19),
                                           ),
                                         ),
                                         accController
@@ -184,7 +190,7 @@ class _SlideAccState extends State<SlideAcc> {
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: MyConstant
                                                       .setMediaQueryWidth(
-                                                          context, 23),
+                                                          context, 18),
                                                 ),
                                               )
                                             : Text(
@@ -193,7 +199,7 @@ class _SlideAccState extends State<SlideAcc> {
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: MyConstant
                                                       .setMediaQueryWidth(
-                                                          context, 23),
+                                                          context, 19),
                                                 ),
                                               ),
                                       ],
@@ -229,7 +235,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             color: Colors.grey.shade600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 25),
+                                                    context, 20),
                                           ),
                                         ),
                                         Text(
@@ -240,7 +246,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             fontWeight: FontWeight.w600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 23),
+                                                    context, 18),
                                           ),
                                         ),
                                       ],
@@ -258,7 +264,7 @@ class _SlideAccState extends State<SlideAcc> {
                                     style: TextStyle(
                                       color: Colors.grey.shade600,
                                       fontSize: MyConstant.setMediaQueryWidth(
-                                          context, 23),
+                                          context, 20),
                                     ),
                                   ),
                                   accController
@@ -272,7 +278,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             fontWeight: FontWeight.w600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 23),
+                                                    context, 20),
                                           ),
                                         )
                                       : Text(
@@ -287,7 +293,7 @@ class _SlideAccState extends State<SlideAcc> {
                                             fontWeight: FontWeight.w600,
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 23),
+                                                    context, 21),
                                           ),
                                         ),
                                 ],
@@ -304,7 +310,7 @@ class _SlideAccState extends State<SlideAcc> {
                                     style: TextStyle(
                                       color: Colors.grey.shade600,
                                       fontSize: MyConstant.setMediaQueryWidth(
-                                          context, 25),
+                                          context, 20),
                                     ),
                                   ),
                                   Text(
@@ -315,7 +321,7 @@ class _SlideAccState extends State<SlideAcc> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: MyConstant.setMediaQueryWidth(
-                                          context, 23),
+                                          context, 21),
                                     ),
                                   ),
                                 ],
@@ -348,7 +354,10 @@ class _SlideAccState extends State<SlideAcc> {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
-                    Size(270, 60),
+                    Size(
+                      270,
+                      MyConstant.setMediaQueryWidth(context, 40),
+                    ),
                   ),
                   backgroundColor: MaterialStateProperty.all<Color>(
                     const Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
@@ -363,7 +372,7 @@ class _SlideAccState extends State<SlideAcc> {
                 child: Text(
                   'ชำระเงิน',
                   style: TextStyle(
-                    fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                    fontSize: MyConstant.setMediaQueryWidth(context, 25),
                     fontWeight: FontWeight.w400,
                     color: Colors.white,
                   ),

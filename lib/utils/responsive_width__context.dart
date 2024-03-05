@@ -22,7 +22,7 @@ class ResponsiveWidthContext extends StatelessWidget {
   }) : super(key: key);
 
   static bool isMobileFoldVertical(BuildContext context) =>
-      MediaQuery.of(context).size.width < 360;
+      MediaQuery.of(context).size.width < 380;
 
   static bool isMobileSmall(BuildContext context) =>
       MediaQuery.of(context).size.width < 400 &&

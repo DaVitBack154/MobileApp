@@ -7,6 +7,7 @@ import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/qr.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import '../../../../controller/getacc_controller.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -103,7 +104,10 @@ class _SlideFromState extends State<SlideFrom> {
                     carouselController: carouselController,
                     options: CarouselOptions(
                         viewportFraction: 0.93,
-                        height: 200.h,
+                        height:
+                            ResponsiveWidthContext.isMobileFoldVertical(context)
+                                ? 210.h
+                                : 200.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         initialPage: _currentIndex,
@@ -147,36 +151,36 @@ class _SlideFromState extends State<SlideFrom> {
                   // ปุ่มที่ติดกับภาพเลื่อน
 
                   SizedBox(
-                    height: 20.h,
+                    height: ResponsiveWidthContext.isMobile(context) ||
+                            ResponsiveWidthContext.isMobileSmall(context)
+                        ? 32.h
+                        : 20.h,
                   ),
                   //ในส่วน กรอก จำนวนเงิน ด้านล่าง
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15.h,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'รูปแบบการจ่าย',
+                              'แบบฟอร์มชำระเงิน',
                               style: TextStyle(
                                 fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 30),
+                                    MyConstant.setMediaQueryWidth(context, 20),
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
                             InkWell(
                               child: Container(
-                                width: 150.w,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     width: 1,
                                     color: Colors.grey.shade300,
                                   ),
                                   borderRadius: BorderRadius.circular(29),
-                                  color: Colors.grey.shade100,
+                                  color: Colors.grey.shade200,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(6.0),
@@ -188,11 +192,26 @@ class _SlideFromState extends State<SlideFrom> {
                                         'ประวัติการชำระเงิน',
                                         style: TextStyle(
                                           color: Colors.grey.shade500,
-                                          fontSize:
-                                              MyConstant.setMediaQueryWidth(
-                                                  context, 28),
+                                          fontSize: ResponsiveWidthContext
+                                                  .isMobileFoldVertical(context)
+                                              ? MyConstant.setMediaQueryWidth(
+                                                  context, 22)
+                                              : ResponsiveWidthContext.isMobile(
+                                                          context) ||
+                                                      ResponsiveWidthContext
+                                                          .isMobileSmall(
+                                                              context)
+                                                  ? MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 21)
+                                                  : MyConstant
+                                                      .setMediaQueryWidth(
+                                                          context, 25),
                                           fontWeight: FontWeight.w400,
                                         ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
                                       ),
                                       Image.asset(
                                         'assets/image/icon3.png',
@@ -213,121 +232,128 @@ class _SlideFromState extends State<SlideFrom> {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            Form(
-                              key: _formKey,
-                              child: TextFormField(
-                                focusNode: _yourFocusNode,
-                                controller: amountController,
-                                decoration: InputDecoration(
-                                  border: const UnderlineInputBorder(),
-                                  labelText: "ชำระเงิน",
-                                  labelStyle: TextStyle(
-                                    color: Colors.grey.shade700,
-                                    fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 20),
-                                  ),
-                                  suffixText: 'บาท',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  hintText: 'ยอดชำระ',
-                                  hintStyle: TextStyle(
-                                    fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 30),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  enabledBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.grey), // สีเมื่อไม่ Focus
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF103533),
-                                    ), // สีเมื่อ Focus
-                                  ),
-                                ),
-                                cursorColor: Colors.grey.shade400,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'กรุณากรอกจำนวนเงิน';
-                                  } else if (!RegExp(r'^\d+$')
-                                      .hasMatch(value)) {
-                                    return 'กรุณากรอกเฉพาะตัวเลข';
-                                  }
-                                  setState(() {});
-                                  return null;
-                                },
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(fontSize: 20.sp),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      // Form(
+                      //   key: _formKey,
+                      //   child: TextFormField(
+                      //     focusNode: _yourFocusNode,
+                      //     controller: amountController,
+                      //     decoration: InputDecoration(
+                      //       border: const UnderlineInputBorder(),
+                      //       labelText: "ชำระเงิน",
+                      //       labelStyle: TextStyle(
+                      //         color: Colors.grey.shade700,
+                      //         fontSize: ResponsiveWidthContext
+                      //                 .isMobileFoldVertical(context)
+                      //             ? MyConstant.setMediaQueryWidth(
+                      //                 context, 22)
+                      //             : MyConstant.setMediaQueryWidth(
+                      //                 context, 25),
+                      //       ),
+                      //       suffixText: 'บาท',
+                      //       floatingLabelBehavior:
+                      //           FloatingLabelBehavior.always,
+                      //       hintText: 'ยอดชำระ',
+                      //       hintStyle: TextStyle(
+                      //         fontSize: MyConstant.setMediaQueryWidth(
+                      //             context, 25),
+                      //         fontWeight: FontWeight.w500,
+                      //       ),
+                      //       enabledBorder: const UnderlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //             color: Colors.grey), // สีเมื่อไม่ Focus
+                      //       ),
+                      //       focusedBorder: const UnderlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: Color(0xFF103533),
+                      //         ), // สีเมื่อ Focus
+                      //       ),
+                      //     ),
+                      //     cursorColor: Colors.grey.shade400,
+                      //     validator: (value) {
+                      //       if (value == null || value.isEmpty) {
+                      //         return 'กรุณากรอกจำนวนเงิน';
+                      //       } else if (!RegExp(r'^\d+$')
+                      //           .hasMatch(value)) {
+                      //         return 'กรุณากรอกเฉพาะตัวเลข';
+                      //       }
+                      //       setState(() {});
+                      //       return null;
+                      //     },
+                      //     textInputAction: TextInputAction.next,
+                      //     keyboardType: TextInputType.numberWithOptions(
+                      //         decimal: true),
+                      //     style: TextStyle(fontSize: 20.sp),
+                      //   ),
+                      // ),
+
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          String taxid = '';
+                          if (accController.userAccModel.data![_currentIndex]
+                                  .companyId ==
+                              'CFAA') {
+                            taxid = '0135555007263';
+                          } else if (accController.userAccModel
+                                  .data![_currentIndex].companyId ==
+                              'RWAY') {
+                            taxid = '0105546031394';
+                          } else {
+                            taxid = '0105545083871';
+                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QRPayment(
+                                amount: "0",
+                                customerId: accController.userAccModel
+                                    .data![_currentIndex].customerId,
+                                psersonalId: accController.userAccModel
+                                    .data![_currentIndex].personalId,
+                                taxId: taxid,
                               ),
                             ),
-                            SizedBox(
-                              height: 15.h,
+                          );
+
+                          setState(() {});
+                        },
+                        style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all<Size>(
+                            Size(
+                              250,
+                              MyConstant.setMediaQueryWidth(context, 45),
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  String taxid = '';
-                                  if (accController.userAccModel
-                                          .data![_currentIndex].companyId ==
-                                      'CFAA') {
-                                    taxid = '0135555007263';
-                                  } else if (accController.userAccModel
-                                          .data![_currentIndex].companyId ==
-                                      'RWAY') {
-                                    taxid = '0105546031394';
-                                  } else {
-                                    taxid = '0105545083871';
-                                  }
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => QRPayment(
-                                        amount: amountController.text,
-                                        customerId: accController.userAccModel
-                                            .data![_currentIndex].customerId,
-                                        psersonalId: accController.userAccModel
-                                            .data![_currentIndex].personalId,
-                                        taxId: taxid,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                setState(() {});
-                              },
-                              style: ButtonStyle(
-                                fixedSize: MaterialStateProperty.all<Size>(
-                                  Size(250, 60),
-                                ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
-                                ),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        10), // กำหนดรัศมีของเส้นขอบปุ่ม
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                'ชำระเงิน',
-                                style: TextStyle(
-                                  fontSize: MyConstant.setMediaQueryWidth(
-                                      context, 25),
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10), // กำหนดรัศมีของเส้นขอบปุ่ม
                             ),
-                            // SizedBox(height: 200,),
-                          ],
+                          ),
                         ),
-                      ],
-                    ),
+                        child: Text(
+                          'ขอแบบฟอร์มชำระเงิน',
+                          style: TextStyle(
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 25),
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // SizedBox(height: 200,),
+                    ],
                   ),
                 ],
               ),

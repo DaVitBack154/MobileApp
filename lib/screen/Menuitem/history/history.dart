@@ -49,13 +49,16 @@ class _HistoryState extends State<History> {
             Container(
               width: double.infinity,
               // height: 320.h + kToolbarHeight,
-              height: ResponsiveHeightContext.isMobile(context)
+              height: ResponsiveWidthContext.isMobileFoldVertical(context)
                   ? 310.h + kToolbarHeight
-                  : ResponsiveWidthContext.isTablet(context)
-                      ? MyConstant.setMediaQueryWidth(context, 415) +
-                          kToolbarHeight
-                      : MyConstant.setMediaQueryWidth(context, 400) +
-                          kToolbarHeight,
+                  : ResponsiveWidthContext.isMobile(context) ||
+                          ResponsiveWidthContext.isMobileSmall(context)
+                      ? 310.h + kToolbarHeight
+                      : ResponsiveWidthContext.isTablet(context)
+                          ? MyConstant.setMediaQueryWidth(context, 415) +
+                              kToolbarHeight
+                          : MyConstant.setMediaQueryWidth(context, 400) +
+                              kToolbarHeight,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image/bg.png'),

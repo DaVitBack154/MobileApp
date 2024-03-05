@@ -11,6 +11,7 @@ import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/screen/login_page/pin_page.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../component/debouncer.dart';
@@ -100,7 +101,9 @@ class _RegisterPageState extends State<RegisterPage> {
           name: _registerController.nameController.text,
           surname: _registerController.surnameController.text,
           idCard: _registerController.idCardController.text,
-          email: _registerController.emailController.text,
+          email: _registerController.emailController.text == ''
+              ? _registerController.emailController.text = 'ไม่พบอีเมล'
+              : _registerController.emailController.text,
           phone: _registerController.phoneController.text,
           device: firebaseToken,
           yomrub1: widget.yomrub1.toString(),
@@ -118,23 +121,6 @@ class _RegisterPageState extends State<RegisterPage> {
           );
           return;
         }
-        // print('object ------');
-        // print(_registerController.userModel.user.toString());
-        // if (_registerController.userModel.user != null &&
-        //     _registerController.userModel.user?.id != null) {
-        // final prefs = await SharedPreferences.getInstance();
-        // await prefs.setString(
-        //     KeyStorage.uid, _registerController.userModel.user!.id!);
-        // await prefs.setString(
-        //     KeyStorage.token, _registerController.userModel.token!);
-        // ignore: use_build_context_synchronously
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) =>
-        //         const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
-        //   ),
-        // );
 
         // ignore: use_build_context_synchronously
         showDialog(
@@ -160,34 +146,6 @@ class _RegisterPageState extends State<RegisterPage> {
             builder: (context) => const Pin_page(),
           ),
         );
-
-        // } else {
-        //   // ignore: use_build_context_synchronously
-        //   showDialog(
-        //     context: context,
-        //     builder: (context) {
-        //       return AlertDialog(
-        //         title: Text("แจ้งเตือน"),
-        //         content: Text("ขออภัยระบบขัดข้องA1"),
-        //         actions: [
-        //           TextButton(
-        //             onPressed: () {
-        //               Navigator.of(context).pop();
-        //             },
-        //             child: Text("ปิด"),
-        //           ),
-        //         ],
-        //       );
-        //     },
-        //   );
-        // }
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) =>
-        //         const Pin_page(), // แทน HomePage() ด้วยหน้าที่ต้องการไป
-        //   ),
-        // );
       } else {
         _registerController.pinController.clear();
         // ignore: use_build_context_synchronously
@@ -300,7 +258,6 @@ class _RegisterPageState extends State<RegisterPage> {
               leading: currentIndex == 0
                   ? null
                   : Container(
-                      margin: EdgeInsets.only(top: 3.w, left: 10.w),
                       child: IconButton(
                         icon: Icon(
                           Icons.arrow_back,
@@ -343,13 +300,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        'ลงทะเบียน',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MyConstant.setMediaQueryWidth(context, 30),
-                          fontWeight: FontWeight.w700,
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: ResponsiveWidthContext.isMobile(context)
+                              ? MyConstant.setMediaQueryWidth(context, 40)
+                              : ResponsiveWidthContext.isMobileFoldVertical(
+                                      context)
+                                  ? MyConstant.setMediaQueryWidth(context, 10)
+                                  : MyConstant.setMediaQueryWidth(context, 35),
                         ),
+                        child: Text(
+                          'ลงทะเบียน',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize:
+                                MyConstant.setMediaQueryWidth(context, 30),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: MyConstant.setMediaQueryWidth(context, 25),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -475,25 +446,25 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                 case 1:
                                   {
-                                    if (_registerController.emailController.text
-                                        .trim()
-                                        .isEmpty) {
-                                      errorTextEmail = 'กรุณากรอกอีเมลล์';
-                                    } else if (_registerController
-                                            .emailController.text
-                                            .trim()
-                                            .length <=
-                                        2) {
-                                      errorTextEmail =
-                                          'กรุณากรอกอีเมลล์ให้ครบถ้วน';
-                                    } else if (!EmailValidator.validate(
-                                      _registerController.emailController.text
-                                          .trim(),
-                                    )) {
-                                      errorTextEmail = 'รูปแบบอีเมลไม่ถูกต้อง';
-                                    } else {
-                                      errorTextEmail = null;
-                                    }
+                                    // if (_registerController.emailController.text
+                                    //     .trim()
+                                    //     .isEmpty) {
+                                    //   errorTextEmail = 'กรุณากรอกอีเมลล์';
+                                    // } else if (_registerController
+                                    //         .emailController.text
+                                    //         .trim()
+                                    //         .length <=
+                                    //     2) {
+                                    //   errorTextEmail =
+                                    //       'กรุณากรอกอีเมลล์ให้ครบถ้วน';
+                                    // } else if (!EmailValidator.validate(
+                                    //   _registerController.emailController.text
+                                    //       .trim(),
+                                    // )) {
+                                    //   errorTextEmail = 'รูปแบบอีเมลไม่ถูกต้อง';
+                                    // } else {
+                                    //   errorTextEmail = null;
+                                    // }
 
                                     if (_registerController.phoneController.text
                                         .trim()
@@ -538,7 +509,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              fixedSize: Size(width * 0.8, 60),
+                              fixedSize: Size(width * 0.8,
+                                  MyConstant.setMediaQueryWidth(context, 40)),
                               backgroundColor: const Color(0xFF103533),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -608,10 +580,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 hint: Text(
                   'กรุณาเลือกคำนำหน้า',
-                  style: TextStyle(fontSize: 9.sp),
+                  style: ResponsiveWidthContext.isTablet(context) ||
+                          ResponsiveWidthContext.isTablet11(context)
+                      ? TextStyle(fontSize: 9.sp)
+                      : null,
                 ),
                 style: TextStyle(
-                  fontSize: MyConstant.setMediaQueryWidth(context, 20),
+                  fontSize: MyConstant.setMediaQueryWidth(context, 18),
                   fontWeight: FontWeight.w500,
                   color: Colors.grey.shade600,
                 ),
@@ -712,7 +687,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 25,
               ),
             ),
-            fontSize: 16.sp,
+            fontSize: 17.sp,
             inputFormatter: [
               FilteringTextInputFormatter.deny(
                   RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
@@ -747,7 +722,7 @@ class _RegisterPageState extends State<RegisterPage> {
               context,
               25,
             )),
-            fontSize: 16.sp,
+            fontSize: 17.sp,
             inputFormatter: [
               FilteringTextInputFormatter.deny(
                   RegExp(r'[0-9\s]')), // ป้องกันตัวเลขและเว้นวรรค
@@ -787,7 +762,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 25,
               ),
             ),
-            fontSize: 16.sp,
+            fontSize: 17.sp,
             onChanged: (value) {
               value.isEmpty
                   ? errorTextIdCard = 'กรุณากรอกหมายเลขบัตรประชาชน'
@@ -838,18 +813,18 @@ class _RegisterPageState extends State<RegisterPage> {
           hintStyle: TextStyle(
             fontSize: MyConstant.setMediaQueryWidth(context, 25),
           ),
-          fontSize: 16.sp,
-          onChanged: (value) {
-            setState(() {
-              if (value.isEmpty) {
-                errorTextEmail = 'กรุณากรอกอีเมลล์';
-              } else if (!EmailValidator.validate(value.trim())) {
-                errorTextEmail = 'กรุณากรอกรูปแบบ อีเมลให้ถูกต้อง';
-              } else {
-                errorTextEmail = null;
-              }
-            });
-          },
+          fontSize: 17.sp,
+          // onChanged: (value) {
+          //   setState(() {
+          //     if (value.isEmpty) {
+          //       errorTextEmail = 'กรุณากรอกอีเมลล์';
+          //     } else if (!EmailValidator.validate(value.trim())) {
+          //       errorTextEmail = 'กรุณากรอกรูปแบบ อีเมลให้ถูกต้อง';
+          //     } else {
+          //       errorTextEmail = null;
+          //     }
+          //   });
+          // },
         ),
         Align(
           alignment: Alignment.centerLeft,
@@ -872,7 +847,7 @@ class _RegisterPageState extends State<RegisterPage> {
           hintStyle: TextStyle(
             fontSize: MyConstant.setMediaQueryWidth(context, 25),
           ),
-          fontSize: 16.sp,
+          fontSize: 17.sp,
           onChanged: (value) {
             value.isEmpty || value.length != 10
                 ? errorTextPhone = 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง'
@@ -902,8 +877,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _otp() {
     // double width = MediaQuery.of(context).size.width;
     final defaulPinTheme = PinTheme(
-      width: 45.w,
-      height: 50.h,
+      width: 50.w,
+      height: 45.h,
       textStyle: TextStyle(fontSize: 22.sp, color: Colors.black),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
@@ -960,7 +935,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   'ขอ OTP ใหม่อีกครั้ง',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 18.sp,
                     color: Colors.grey.shade500,
                   ),
                 ),
@@ -988,7 +963,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           'กดที่นี่เพื่อขอ OTP ใหม่',
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 17.sp,
                             color: const Color(0xFF103533),
                             decoration: TextDecoration.underline,
                           ),
@@ -1052,7 +1027,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: Image.asset(
                   assetImage,
-                  scale: MyConstant.setMediaQueryWidth(context, 0.6),
+                  scale: ResponsiveWidthContext.isTablet(context) ||
+                          ResponsiveWidthContext.isTablet11(context) ||
+                          ResponsiveWidthContext.isTabletMini(context)
+                      ? MyConstant.setMediaQueryWidth(context, 0.5)
+                      : 1.3,
                   color: Color(0xFF103533),
                 ),
               )
@@ -1072,14 +1051,20 @@ class _RegisterPageState extends State<RegisterPage> {
         Text(
           title,
           style: TextStyle(
-            fontSize: MyConstant.setMediaQueryWidth(context, 23),
+            fontSize: ResponsiveWidthContext.isTablet(context) ||
+                    ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 23)
+                : MyConstant.setMediaQueryWidth(context, 20),
             color: Colors.grey.shade400,
           ),
         ),
         Text(
           detail,
           style: TextStyle(
-            fontSize: MyConstant.setMediaQueryWidth(context, 27),
+            fontSize: ResponsiveWidthContext.isTablet(context) ||
+                    ResponsiveWidthContext.isTablet11(context)
+                ? MyConstant.setMediaQueryWidth(context, 23)
+                : MyConstant.setMediaQueryWidth(context, 20),
             color: Colors.white,
           ),
         ),
@@ -1090,11 +1075,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _line(Color color) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MyConstant.setMediaQueryWidth(context, 40),
-      ).h,
+        bottom: MyConstant.setMediaQueryWidth(context, 55),
+      ),
       child: Container(
         height: 5.h,
-        width: 55.w,
+        width: 50.w,
         margin: EdgeInsets.symmetric(horizontal: 5.w),
         decoration: BoxDecoration(
           color: color,

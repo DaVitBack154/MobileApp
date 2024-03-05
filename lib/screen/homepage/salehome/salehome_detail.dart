@@ -183,20 +183,20 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       'รายละเอียด',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 30),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 28),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '${data!.nameHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 28),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 24),
                       ),
                     ),
                     Text(
                       '${data!.detailHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,
@@ -214,19 +214,19 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       'ติดต่อ : คุณวรรณรัตน์ เกยานนท์',
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                     ),
                     Text(
                       'Line : @cfam',
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                     ),
                     Text(
                       'Call : 081-642-7488',
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                     ),
                     SizedBox(
@@ -256,7 +256,7 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       '${data!.locationHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,

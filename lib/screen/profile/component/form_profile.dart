@@ -138,8 +138,7 @@ class _FormProfileState extends State<FormProfile> {
                               _profileController.userModel.user?.phone!
                                       .replaceAllMapped(
                                           RegExp(r'(\d{3})(\d{3})(\d+)'),
-                                          (Match m) =>
-                                              "${m[1]}-${m[2]}-${m[3]}") ??
+                                          (Match m) => "xxx-xxx-x${m[3]}") ??
                                   '',
                               style: TextStyle(
                                 fontSize: 20.sp,
@@ -164,96 +163,118 @@ class _FormProfileState extends State<FormProfile> {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                  ).w,
-                  child: Text(
-                    'อีเมล',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UpdateProfile(
-                        email: _profileController.userModel.user!.email!,
-                      ),
-                    )).then((_) async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  String token = prefs.getString(KeyStorage.token) ?? '';
-                  await _profileController.fetchProfileData(token);
-                  setState(() {});
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  bottom: 30,
-                ).w,
-                child: Container(
-                  height: 60.h,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(
-                      10,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.email,
-                              size: MyConstant.setMediaQueryWidth(context, 30),
-                              color: Color(0xFF395D5D),
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              _profileController.userModel.user?.email ?? '',
+
+            //รอเชค ว่ามี email ไหม
+            _profileController.userModel.user?.email == 'ไม่พบอีเมล'
+                ? SizedBox()
+                : Column(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                            ).w,
+                            child: Text(
+                              'อีเมล',
                               style: TextStyle(
-                                fontSize: 19.sp,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFF395D5D),
+                                fontSize: 18.sp,
+                                color: Colors.grey.shade600,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UpdateProfile(
+                                  email:
+                                      _profileController.userModel.user!.email!,
+                                ),
+                              )).then((_) async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            String token =
+                                prefs.getString(KeyStorage.token) ?? '';
+                            await _profileController.fetchProfileData(token);
+                            setState(() {});
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: 30,
+                          ).w,
+                          child: Container(
+                            height: 60.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.email,
+                                        size: MyConstant.setMediaQueryWidth(
+                                            context, 30),
+                                        color: Color(0xFF395D5D),
+                                      ),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      Text(
+                                        _profileController.userModel.user?.email
+                                                ?.replaceRange(
+                                                    2,
+                                                    _profileController
+                                                        .userModel.user!.email!
+                                                        .indexOf('@'),
+                                                    'xxxxxxx') ??
+                                            '',
+                                        style: TextStyle(
+                                          fontSize: 19.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: const Color(0xFF395D5D),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.edit_square,
+                                        size: MyConstant.setMediaQueryWidth(
+                                            context, 30),
+                                        color: Color(0xFF395D5D),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.edit_square,
-                              size: MyConstant.setMediaQueryWidth(context, 30),
-                              color: Color(0xFF395D5D),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ),
+            //รอเชค ว่ามี email ไหม
+
             _profileController.userModel.user?.sentAddressuser != null
                 ? Row(
                     children: [

@@ -71,17 +71,17 @@ class _NavbarState extends State<Navbar> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: ResponsiveHeightContext.isMobileFoldVertical(context)
-              ? MyConstant.setMediaQueryHeight(context, 30)
-              : ResponsiveHeightContext.isMobileSmall(context)
-                  ? MyConstant.setMediaQueryHeight(context, 40)
-                  : ResponsiveHeightContext.isMobile(context)
-                      ? MyConstant.setMediaQueryHeight(context, 60)
+          height: ResponsiveWidthContext.isMobileFoldVertical(context)
+              ? 35.h
+              : ResponsiveWidthContext.isMobileSmall(context)
+                  ? 40.h
+                  : ResponsiveWidthContext.isMobile(context)
+                      ? 45.h
                       : 7.h,
         ),
         Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 30,
+            horizontal: 20,
             vertical: 10,
           ),
           alignment: Alignment.bottomCenter,
