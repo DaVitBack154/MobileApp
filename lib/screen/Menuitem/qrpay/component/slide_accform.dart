@@ -107,7 +107,7 @@ class _SlideFromState extends State<SlideFrom> {
                         height:
                             ResponsiveWidthContext.isMobileFoldVertical(context)
                                 ? 210.h
-                                : 200.h,
+                                : 205.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         initialPage: _currentIndex,

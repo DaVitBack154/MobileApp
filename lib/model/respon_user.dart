@@ -45,7 +45,7 @@ class User {
   String? subdistrict;
   String? postcode;
   String? device;
-  String? ciType;
+  // String? ciType;
   String? yomrub1;
   String? yomrub2;
   String? yomrub3;
@@ -73,7 +73,7 @@ class User {
     this.subdistrict,
     this.postcode,
     this.device,
-    this.ciType,
+    // this.ciType,
     this.yomrub1,
     this.yomrub2,
     this.yomrub3,
@@ -102,7 +102,7 @@ class User {
     subdistrict = json["subdistrict"];
     postcode = json["postcode"];
     device = json["device"];
-    ciType = json["CIType"];
+    // ciType = json["CIType"];
     yomrub1 = json["yomrub1"];
     yomrub2 = json["yomrub2"];
     yomrub3 = json["yomrub3"];
@@ -132,7 +132,7 @@ class User {
     _data["subdistrict"] = subdistrict;
     _data["postcode"] = postcode;
     _data["device"] = device;
-    _data["CIType"] = ciType;
+    // _data["CIType"] = ciType;
     _data["yomrub1"] = yomrub1;
     _data["yomrub2"] = yomrub2;
     _data["yomrub3"] = yomrub3;

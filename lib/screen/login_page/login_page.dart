@@ -10,11 +10,11 @@ import 'package:mobile_chaseapp/screen/login_page/pin_page.dart';
 import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../component/textfield.dart';
 import '../../controller/login_controller.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -165,8 +165,12 @@ class _LoginState extends State<Login> {
                         ),
                         child: Column(
                           children: [
-                            const SizedBox(
-                              height: 70,
+                            SizedBox(
+                              height:
+                                  ResponsiveWidthContext.isMobileFoldVertical(
+                                          context)
+                                      ? 40
+                                      : 60,
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(

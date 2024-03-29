@@ -9,5 +9,5 @@ class KeyStorage {
   // static String get cfPin => 'cf_pin';
   static String get typeCustomer => 'typeCustomer';
   static String get statusStar => 'statusStar';
-  static String get ciType => 'ciType';
+  // static String get ciType => 'ciType';
 }

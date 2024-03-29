@@ -74,9 +74,9 @@ class RegisterController {
             KeyStorage.typeCustomer, userModel.user!.typeCustomer!);
         await prefs.setString(
             KeyStorage.statusStar, userModel.user!.statusStar!);
-        if (userModel.user!.ciType != null) {
-          await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
-        }
+        // if (userModel.user!.ciType != null) {
+        //   await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
+        // }
 
         return '';
       } else {

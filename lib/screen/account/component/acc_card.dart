@@ -22,6 +22,12 @@ class _AccCardState extends State<AccCard> {
   @override
   Widget build(BuildContext context) {
     final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
+    final formattedDate = DateFormat("dd-MM-yyyy");
+
+    String formatCurrency(double amount) {
+      final formatter = NumberFormat("#,###.00", "th");
+      return formatter.format(amount);
+    }
 
     return FutureBuilder(
       future: accController.fetchAccData(),
@@ -203,20 +209,146 @@ class _AccCardState extends State<AccCard> {
                                   color: Colors.black,
                                 ),
                               ),
-                              Text(
-                                thaiBahtFormat.format(data.osBalance),
-                                style: TextStyle(
-                                  fontSize: 28.sp,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.2,
-                                  color: const Color(0xFF103533),
-                                ),
-                              ),
+                              data.legalType == 'ยังไม่ได้ฟ้อง' &&
+                                      (data.calType == 'D' ||
+                                          data.calType == 'K')
+                                  ? Column(
+                                      children: [
+                                        Text(
+                                          data.osBalance != null
+                                              ? formatCurrency(data.osBalance)
+                                              : '',
+                                          style: TextStyle(
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 30),
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.2,
+                                            color: const Color(0xFF103533),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                      ],
+                                    )
+                                  : data.calType == '' || data.calType == null
+                                      ? Column(
+                                          children: [
+                                            Text(
+                                              'กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบยอดหนี้คงค้าง',
+                                              style: TextStyle(
+                                                fontSize: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 19),
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.3,
+                                                // color: const Color(0xFF103533),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                          ],
+                                        )
+                                      : data.legalType ==
+                                                  'ฟ้องแล้วยังไม่พิพากษา' ||
+                                              data.legalType ==
+                                                  'พิพากษาแล้วยังไม่ยืนยัน'
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  data.lawsuiteAmount != null
+                                                      ? formatCurrency(
+                                                          data.lawsuiteAmount!)
+                                                      : '',
+                                                  style: TextStyle(
+                                                    fontSize: MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 25),
+                                                    fontWeight: FontWeight.bold,
+                                                    height: 1.2,
+                                                    color:
+                                                        const Color(0xFF103533),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'ยอดหนี้ ณ วันที่ ${formattedDate.format(
+                                                    DateTime.parse(data
+                                                        .lawsuiteDate
+                                                        .toString()),
+                                                  )} ',
+                                                  style: TextStyle(
+                                                    fontSize: MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 17),
+                                                    height: 1.2,
+                                                    color:
+                                                        const Color(0xFF103533),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบยอดหนี้คงค้าง',
+                                                  style: TextStyle(
+                                                    fontSize: MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 17),
+                                                    height: 1.2,
+                                                    color:
+                                                        const Color(0xFF103533),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5.h,
+                                                )
+                                              ],
+                                            )
+                                          : data.legalType ==
+                                                  'ยืนยันคำพิพากษาแล้ว'
+                                              ? Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      data.osBalance != null
+                                                          ? formatCurrency(
+                                                              data.osBalance)
+                                                          : '',
+                                                      style: TextStyle(
+                                                        fontSize: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 25),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        height: 1.2,
+                                                        color: const Color(
+                                                            0xFF103533),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'ยอดหนี้ ณ วันที่ ${formattedDate.format(
+                                                        DateTime.parse(data
+                                                            .reportAsOf
+                                                            .toString()),
+                                                      )} ',
+                                                      style: TextStyle(
+                                                        fontSize: MyConstant
+                                                            .setMediaQueryWidth(
+                                                                context, 17),
+                                                        height: 1.0,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.h,
+                                                    )
+                                                  ],
+                                                )
+                                              : SizedBox.shrink()
                             ],
                           ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
+
                           // Row(
                           //   children: [
                           //     Text(

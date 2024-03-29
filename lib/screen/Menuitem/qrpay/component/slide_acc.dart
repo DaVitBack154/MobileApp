@@ -25,7 +25,7 @@ class _SlideAccState extends State<SlideAcc> {
 
   final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
 
-  final formattedDate = DateFormat("yyyy-MM-dd");
+  final formattedDate = DateFormat("dd-MM-yyyy");
 
   Future<void> fetchAccData() async {
     setState(() {

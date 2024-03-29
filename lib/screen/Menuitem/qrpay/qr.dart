@@ -263,7 +263,7 @@ class _QRPaymentState extends State<QRPayment> {
                           ),
                         ),
                         Text(
-                          '• นำ QR Code แสกนจ่ายได้ทุกแอพธนาคาร',
+                          '• นำ QR Code สแกนจ่ายได้ทุกแอพธนาคาร',
                           style: TextStyle(
                             fontSize: 19.sp,
                             color: Colors.grey,

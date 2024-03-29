@@ -51,7 +51,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    print(width);
+    // print(width);
     final query = MediaQuery.of(context);
     return MediaQuery(
       data: query.copyWith(

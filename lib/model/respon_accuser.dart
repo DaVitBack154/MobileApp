@@ -48,7 +48,12 @@ class Datum {
   final double? portNo;
   final double? portNo2;
   final String refNo3;
-  final DateTime reportAsOf;
+  final DateTime? reportAsOf;
+  //lot new
+  final String? legalType;
+  final String? calType;
+  final DateTime? lawsuiteDate;
+  final double? lawsuiteAmount;
 
   Datum({
     required this.id,
@@ -77,7 +82,12 @@ class Datum {
     required this.portNo,
     required this.portNo2,
     required this.refNo3,
-    required this.reportAsOf,
+    this.reportAsOf,
+    //lot new
+    this.legalType,
+    this.calType,
+    this.lawsuiteDate,
+    this.lawsuiteAmount,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -112,6 +122,13 @@ class Datum {
         portNo2: json["PortNo2"]?.toDouble(),
         refNo3: json["RefNo3"],
         reportAsOf: DateTime.parse(json["ReportAsOf"]),
+        //lot new
+        legalType: json["LegalType"],
+        calType: json["CalType"],
+        lawsuiteDate: json["LawsuiteDate"] == null
+            ? null
+            : DateTime.parse(json["LawsuiteDate"]),
+        lawsuiteAmount: json["LawsuiteAmount"]?.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -141,6 +158,11 @@ class Datum {
         "PortNo": portNo,
         "PortNo2": portNo2,
         "RefNo3": refNo3,
-        "ReportAsOf": reportAsOf.toIso8601String(),
+        "ReportAsOf": reportAsOf?.toIso8601String(),
+        //lot new
+        "LegalType": legalType,
+        "CalType": calType,
+        "LawsuiteDate": lawsuiteDate?.toIso8601String(),
+        "LawsuiteAmount": lawsuiteAmount,
       };
 }

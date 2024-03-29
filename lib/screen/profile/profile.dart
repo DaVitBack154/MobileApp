@@ -136,6 +136,71 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            // border: Border.all(
+                            //   width: 1,
+                            //   color: Colors.grey.shade100,
+                            // ),
+                            borderRadius: BorderRadius.circular(10),
+                            // color: Colors.grey.shade100,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'ติดต่อเรา/แจ้งปัญหาการใช้งาน',
+                                  style: TextStyle(
+                                    fontSize: MyConstant.setMediaQueryWidth(
+                                        context, 24),
+                                    // color: Color(0xFF103533),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/image/phonecall.png',
+                                      fit: BoxFit.fill,
+                                      height: 30.h,
+                                    ),
+                                    SizedBox(
+                                      width: 25.w,
+                                    ),
+                                    Text(
+                                      '02-855-8118',
+                                      style: TextStyle(
+                                        fontSize: MyConstant.setMediaQueryWidth(
+                                            context, 25),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfile(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   const Expanded(
                     child: SizedBox(),
                   ),

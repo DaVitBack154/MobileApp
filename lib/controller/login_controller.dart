@@ -39,7 +39,7 @@ class LoginController {
             KeyStorage.typeCustomer, userModel.user!.typeCustomer!);
         await prefs.setString(
             KeyStorage.statusStar, userModel.user!.statusStar!);
-        await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
+        // await prefs.setString(KeyStorage.ciType, userModel.user!.ciType!);
         print('TOKEN: ${userModel.token}');
         return '';
       } else {

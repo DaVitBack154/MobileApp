@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/controller/getacc_controller.dart';
+import 'package:mobile_chaseapp/model/respon_accuser.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_acc.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
@@ -17,7 +19,9 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   String? typeCustomer;
-  String? ciType;
+  bool loading = true;
+  UserAccModel? accData;
+  AccController accController = AccController();
 
   @override
   void initState() {
@@ -28,7 +32,8 @@ class _PaymentState extends State<Payment> {
   Future<void> getTypeCustomer() async {
     final prefs = await SharedPreferences.getInstance();
     typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
-    ciType = prefs.getString(KeyStorage.ciType) ?? 'T';
+    accData = await accController.fetchAccData();
+    loading = false;
     setState(() {});
   }
 
@@ -82,123 +87,140 @@ class _PaymentState extends State<Payment> {
               margin: const EdgeInsets.only(top: kToolbarHeight + 50).h,
               width: double.infinity,
               // decoration: BoxDecoration(color: Colors.green),
-              child: typeCustomer == 'Y' && ciType == 'T'
-                  ? const SlideAcc()
-                  : ciType == 'F'
-                      ? Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 30.h,
-                                horizontal: 25.w,
-                              ),
-                              child: SizedBox(
-                                width: width,
-                                height: 370.h,
-                                child: Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  elevation: 2,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/image/danger.png',
-                                        height: 60.h,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Text(
-                                        'ไม่พบข้อมูลสมาชิก',
-                                        style: TextStyle(
-                                          fontSize: 30.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 10.h,
-                                          horizontal: 25.w,
-                                        ),
-                                        child: Text(
-                                          'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
-                                          style: TextStyle(
-                                            fontSize: 19.sp,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 30.h,
-                                horizontal: 25.w,
-                              ),
-                              child: SizedBox(
-                                width: width,
-                                height: 370.h,
-                                child: Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  elevation: 2,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/image/danger.png',
-                                        height: 60.h,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Text(
-                                        'ไม่พบข้อมูล',
-                                        style: TextStyle(
-                                          fontSize: 30.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25.h,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 10.h,
-                                          horizontal: 25.w,
-                                        ),
-                                        child: Text(
-                                          'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
-                                          style: TextStyle(
-                                            fontSize: 19.sp,
-                                            color: Colors.grey.shade700,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+              child: loading
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 80.h),
+                          width: 40.w,
+                          height: 40.h,
+                          child: CircularProgressIndicator(
+                            color: Colors.teal.shade800,
+                          ),
                         ),
+                      ],
+                    )
+                  : typeCustomer == 'Y' && accData?.data?[0].ciType == 'T' ||
+                          accData?.data?[0].ciType == ''
+                      ? const SlideAcc()
+                      : accData?.data?[0].ciType == 'F'
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 30.h,
+                                    horizontal: 25.w,
+                                  ),
+                                  child: SizedBox(
+                                    width: width,
+                                    height: 370.h,
+                                    child: Card(
+                                      clipBehavior: Clip.antiAlias,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      elevation: 2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/image/danger.png',
+                                            height: 60.h,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Text(
+                                            'ไม่พบข้อมูลสมาชิก',
+                                            style: TextStyle(
+                                              fontSize: 30.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 25.h,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 10.h,
+                                              horizontal: 25.w,
+                                            ),
+                                            child: Text(
+                                              'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
+                                              style: TextStyle(
+                                                fontSize: 19.sp,
+                                                color: Colors.grey.shade500,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 30.h,
+                                    horizontal: 25.w,
+                                  ),
+                                  child: SizedBox(
+                                    width: width,
+                                    height: 370.h,
+                                    child: Card(
+                                      clipBehavior: Clip.antiAlias,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      elevation: 2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/image/danger.png',
+                                            height: 60.h,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Text(
+                                            'ไม่พบข้อมูล',
+                                            style: TextStyle(
+                                              fontSize: 30.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 25.h,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 10.h,
+                                              horizontal: 25.w,
+                                            ),
+                                            child: Text(
+                                              'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
+                                              style: TextStyle(
+                                                fontSize: 19.sp,
+                                                color: Colors.grey.shade700,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
             ),
           ],
         ),
