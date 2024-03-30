@@ -317,6 +317,12 @@ class _SlideFromState extends State<SlideFrom> {
                                     .data![_currentIndex].customerId,
                                 psersonalId: accController.userAccModel
                                     .data![_currentIndex].personalId,
+                                tCustomerName: accController.userAccModel
+                                    .data![_currentIndex].tCustomerName,
+                                tCustomerSurname: accController.userAccModel
+                                    .data![_currentIndex].tCustomerSurname,
+                                companyId: accController.userAccModel
+                                    .data![_currentIndex].companyId,
                                 taxId: taxid,
                               ),
                             ),

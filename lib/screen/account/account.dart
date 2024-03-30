@@ -33,8 +33,10 @@ class _AccountState extends State<Account> {
     final prefs = await SharedPreferences.getInstance();
     typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
     accData = await accController.fetchAccData();
-    loading = false;
-    setState(() {});
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override

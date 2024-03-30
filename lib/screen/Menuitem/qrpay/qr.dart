@@ -9,6 +9,7 @@ import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/permission/permission_handler.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
@@ -22,12 +23,19 @@ class QRPayment extends StatefulWidget {
     required this.customerId,
     required this.psersonalId,
     required this.taxId,
+    //เพิ่มสาม
+    required this.tCustomerName,
+    required this.tCustomerSurname,
+    required this.companyId,
   });
 
   final String amount;
   final String customerId;
   final String psersonalId;
   final String taxId;
+  final String tCustomerName;
+  final String tCustomerSurname;
+  final String companyId;
 
   @override
   State<QRPayment> createState() => _QRPaymentState();
@@ -63,7 +71,11 @@ class _QRPaymentState extends State<QRPayment> {
         child: Column(
           children: [
             Container(
-              height: 380.h + kToolbarHeight,
+              height: ResponsiveWidthContext.isTablet(context) ||
+                      ResponsiveWidthContext.isTablet11(context) ||
+                      ResponsiveWidthContext.isTabletMini(context)
+                  ? 435.h + kToolbarHeight
+                  : 405.h + kToolbarHeight,
               decoration: const BoxDecoration(
                 color: Color(0xFF395D5D),
                 borderRadius: BorderRadius.only(
@@ -75,45 +87,170 @@ class _QRPaymentState extends State<QRPayment> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 50.h,
+                      top: ResponsiveWidthContext.isTablet(context) ||
+                              ResponsiveWidthContext.isTablet11(context)
+                          ? 20.h
+                          : ResponsiveWidthContext.isMobileFoldVertical(context)
+                              ? 35.h
+                              : 40.h,
                       left: 30.w,
                     ),
                     child: bar(),
                   ),
                   SizedBox(
-                    height: 30.h,
+                    height: 20.h,
                   ),
-                  Container(
-                    width: MyConstant.setMediaQueryWidth(context, 210),
-                    height: MyConstant.setMediaQueryWidth(context, 210),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Screenshot(
-                          controller: screenshotController,
-                          child: Container(
-                            color: Colors.white,
-                            child: QrImageView(
-                              data: data,
-                              version: QrVersions.auto,
-                              dataModuleStyle: const QrDataModuleStyle(
-                                color: Colors.black,
-                                dataModuleShape: QrDataModuleShape.square,
-                              ),
+                  Screenshot(
+                    controller: screenshotController,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromRGBO(
+                                  0, 0, 0, 0.20), // สีของเงา (RGBA)
+                              offset:
+                                  Offset(0, 1), // การเยื้องเงาในแนวแกน X และ Y
+                              blurRadius: 4, // ความคมของเงา
                             ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              widget.companyId == 'CFAA'
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Text(
+                                        'CF Asia Asset Management Co., Ltd.',
+                                        style: TextStyle(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xFF5C5C5C),
+                                        ),
+                                      ),
+                                    )
+                                  : widget.companyId == 'RWAY'
+                                      ? Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: Text(
+                                            'Resolution Way Co., Ltd.',
+                                            style: TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0xFF5C5C5C),
+                                            ),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: Text(
+                                            'Courts Megastore (Thailand) Co., Ltd.',
+                                            style: TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0xFF5C5C5C),
+                                            ),
+                                          ),
+                                        ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 1, // กำหนดความสูงของเส้น
+                                  color: Color.fromARGB(
+                                      255, 246, 165, 3), // กำหนดสีของเส้น
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              SizedBox(
+                                width:
+                                    MyConstant.setMediaQueryWidth(context, 200),
+                                child: QrImageView(
+                                  data: data,
+                                  version: QrVersions.auto,
+                                  dataModuleStyle: const QrDataModuleStyle(
+                                    color: Colors.black,
+                                    dataModuleShape: QrDataModuleShape.square,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'เลขที่สัญญา : ',
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xFF5C5C5C),
+                                      //color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.customerId,
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'ชื่อ-นามสกุล : ',
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+
+                                      color: Color(0xFF5C5C5C),
+                                      //color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.tCustomerName,
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                    widget.tCustomerSurname,
+                                    style: TextStyle(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 30.h,
+                    height: 15.h,
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -218,9 +355,9 @@ class _QRPaymentState extends State<QRPayment> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  // SizedBox(
+                  //   height: 10.h,
+                  // ),
                   Text(
                     'ยอดชำระจะมีผลภายใน 2 วันทำการ',
                     style: TextStyle(
@@ -235,7 +372,7 @@ class _QRPaymentState extends State<QRPayment> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 15.h,
+                    height: 10.h,
                   ),
                   Text(
                     'ขั้นตอนการชำระเงิน',
@@ -276,9 +413,10 @@ class _QRPaymentState extends State<QRPayment> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                bottom: 30,
-              ).h,
+              padding: EdgeInsets.only(
+                  bottom: ResponsiveWidthContext.isMobileFoldVertical(context)
+                      ? 10
+                      : 30),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
