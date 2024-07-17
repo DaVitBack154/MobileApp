@@ -2,8 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mobile_chaseapp/app_router.dart';
-import 'package:mobile_chaseapp/firebase_options.dart';
+// import 'package:mobile_chaseapp/firebase_options.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/local_notification.dart';
 import 'package:mobile_chaseapp/utils/app_navigator.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, child) {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-        return MaterialApp(
+        return GetMaterialApp(
           title: 'Chase Mobile',
           navigatorKey: AppNavigator.navigatorKey,
           initialRoute: AppRouter.initialRouterName,

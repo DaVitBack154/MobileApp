@@ -17,10 +17,12 @@ class RegisterController {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController pinController = TextEditingController();
+  // TextEditingController platformController = TextEditingController();
+
   TextEditingController deviceController = TextEditingController();
-  TextEditingController yomrub1Controller = TextEditingController();
-  TextEditingController yomrub2Controller = TextEditingController();
-  TextEditingController yomrub3Controller = TextEditingController();
+  // TextEditingController yomrub1Controller = TextEditingController();
+  // TextEditingController yomrub2Controller = TextEditingController();
+  // TextEditingController yomrub3Controller = TextEditingController();
 
   Future<String> fetchRegisterUser({
     required String gentname,
@@ -35,6 +37,7 @@ class RegisterController {
     required String yomrub4,
     required String yomrub5,
     String? device,
+    String? platform,
     String? pin,
   }) async {
     final prefs = await SharedPreferences.getInstance();
@@ -50,6 +53,7 @@ class RegisterController {
         phone: phone,
         pin: pin,
         device: device,
+        platform: platform,
         yomrub1: yomrub1,
         yomrub2: yomrub2,
         yomrub3: yomrub3,

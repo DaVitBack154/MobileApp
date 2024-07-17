@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:mobile_chaseapp/component/bottombar.dart';
+import 'package:mobile_chaseapp/controller/userpay_controller.dart';
+import 'package:mobile_chaseapp/model/respon_payuser.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/permission/permission_handler.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
@@ -13,8 +15,6 @@ import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-// import 'package:permission_handler/permission_handler.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class QRPayment extends StatefulWidget {
   const QRPayment({
@@ -42,11 +42,9 @@ class QRPayment extends StatefulWidget {
 }
 
 class _QRPaymentState extends State<QRPayment> {
-  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  //     FlutterLocalNotificationsPlugin();
-
   ScreenshotController screenshotController = ScreenshotController();
   String paymentData = "";
+  UserPayController userPayController = UserPayController();
 
   @override
   void initState() {
@@ -254,7 +252,25 @@ class _QRPaymentState extends State<QRPayment> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      // await Permission.photos.request();
+                      // ตรงส่วนนี้ call api เพื่อส่งไปยังเว็บแอดมิน
+                      Payuser? payuser = await userPayController.createUserPay(
+                        customerId: widget.customerId,
+                        idCard: widget.psersonalId,
+                        name: widget.tCustomerName,
+                        surname: widget.tCustomerSurname,
+                        company: widget.companyId,
+                        status: 'บันทึกคิวอาร์โคด',
+                      );
+
+                      if (payuser != null && payuser.data != null) {
+                        Data data = payuser.data;
+                        // แสดงข้อมูลที่ต้องการจาก data
+                        print(
+                            'บันทึกข้อมูลผู้ใช้สำเร็จ: ${data.name} ${data.surname}');
+                      } else {
+                        print('กรุณากรอกข้อมูลที่อยู่ให้ถูกต้อง');
+                      }
+
                       final isGranted =
                           await PermissionHandler.requestStoragePermission();
 
@@ -355,9 +371,6 @@ class _QRPaymentState extends State<QRPayment> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 10.h,
-                  // ),
                   Text(
                     'ยอดชำระจะมีผลภายใน 2 วันทำการ',
                     style: TextStyle(

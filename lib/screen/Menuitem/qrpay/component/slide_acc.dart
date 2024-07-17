@@ -179,29 +179,43 @@ class _SlideAccState extends State<SlideAcc> {
                                                     context, 19),
                                           ),
                                         ),
-                                        accController
-                                                    .userAccModel
-                                                    .data![_currentIndex]
-                                                    .companyId ==
-                                                'CFAA'
-                                            ? Text(
-                                                'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: MyConstant
-                                                      .setMediaQueryWidth(
-                                                          context, 18),
+                                        Container(
+                                          // color: Colors.red,
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MyConstant.setMediaQueryWidth(
+                                              context,
+                                              260,
+                                            ),
+                                          ),
+                                          child: accController
+                                                      .userAccModel
+                                                      .data![_currentIndex]
+                                                      .companyId ==
+                                                  'CFAA'
+                                              ? Text(
+                                                  'บริษัท บริหารสินทรัพย์ ซีเอฟ เอเชีย จำกัด',
+                                                  style: TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 18),
+                                                  ),
+                                                )
+                                              : Text(
+                                                  'บริษัท รีโซลูชั่น เวย์ จำกัด',
+                                                  style: TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 19),
+                                                  ),
                                                 ),
-                                              )
-                                            : Text(
-                                                'บริษัท รีโซลูชั่น เวย์ จำกัด',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: MyConstant
-                                                      .setMediaQueryWidth(
-                                                          context, 19),
-                                                ),
-                                              ),
+                                        ),
                                       ],
                                     ),
 
@@ -238,15 +252,28 @@ class _SlideAccState extends State<SlideAcc> {
                                                     context, 20),
                                           ),
                                         ),
-                                        Text(
-                                          accController.userAccModel
-                                              .data![_currentIndex].tBuyFromName
-                                              .trim(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
+                                        Container(
+                                          // color: Colors.red,
+                                          constraints: BoxConstraints(
+                                            maxWidth:
                                                 MyConstant.setMediaQueryWidth(
-                                                    context, 18),
+                                              context,
+                                              230,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            accController
+                                                .userAccModel
+                                                .data![_currentIndex]
+                                                .tBuyFromName
+                                                .trim(),
+                                            style: TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                                  MyConstant.setMediaQueryWidth(
+                                                      context, 18),
+                                            ),
                                           ),
                                         ),
                                       ],

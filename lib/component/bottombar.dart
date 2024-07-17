@@ -1,11 +1,19 @@
+import 'package:animations/animations.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_chaseapp/component/rating_widget.dart';
+import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
+import 'package:mobile_chaseapp/controller/updatestarpont_controller.dart';
 import 'package:mobile_chaseapp/screen/account/account.dart';
 import 'package:mobile_chaseapp/screen/contract_page/contract.dart';
 import 'package:mobile_chaseapp/screen/homepage/homepage.dart';
 import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/profile/profile.dart';
+import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,10 +36,78 @@ class _BottombarState extends State<Bottombar> {
     const Contract(),
     const Profile(),
   ];
+  final ProfileController profileController = ProfileController();
+  double rating = 0;
+  String feedbackMessage = '';
+  String comment = '';
+  final commentcontroller = TextEditingController();
+  String maidaiHai = '';
+  String? errorCommentUser;
+  bool checkeatting = false;
 
   @override
   void initState() {
     super.initState();
+    getStarUser();
+  }
+
+  void getStarUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(KeyStorage.token) ?? '';
+    await profileController.fetchProfileData(token);
+    // print('${profileController.userModel.user?.statusStar}+aaaaaa');
+    if (profileController.userModel.user?.statusStar == 'Y') {
+      _showRatingDialog(context);
+    }
+  }
+
+  Future<void> _showRatingDialog(BuildContext context) async {
+    Future<bool> onWillPop() async {
+      return false;
+    }
+
+    final query = MediaQuery.of(context);
+    rating = 0;
+    commentcontroller.clear();
+    maidaiHai = '';
+    checkeatting = false;
+    feedbackMessage = '';
+    await showModal(
+      configuration: const FadeScaleTransitionConfiguration(
+        transitionDuration: Duration(milliseconds: 300),
+        reverseTransitionDuration: Duration(milliseconds: 150),
+        barrierDismissible: false,
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return MediaQuery(
+          data: query.copyWith(
+            textScaleFactor: query.textScaleFactor.clamp(1.0, 1.0),
+          ),
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(
+              FocusNode(),
+            ),
+            behavior: HitTestBehavior.opaque,
+            child: WillPopScope(
+              onWillPop: () {
+                return onWillPop().catchError(
+                  (error) {
+                    if (kDebugMode) {
+                      print(
+                        'error ===>> $error',
+                      );
+                    }
+                    return false;
+                  },
+                );
+              },
+              child: RatingDialogWidget(),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -57,15 +133,35 @@ class _BottombarState extends State<Bottombar> {
             selectedItemColor: const Color(0xFF103533),
             unselectedItemColor: Colors.grey.shade400,
             onTap: (index) async {
+              if (index != pageIndex) {
+                getStarUser();
+              }
               if (index == 1 || index == 3) {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token'); // ดึง Token
 
                 if (token == null) {
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const Login(),
+                  //   ),
+                  // );
+                  // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const Login(),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const Login(),
+                      transitionsBuilder:
+                          (context, animation1, animation2, child) {
+                        final tween = Tween(
+                            begin: const Offset(1.0, 0.0), end: Offset.zero);
+                        return SlideTransition(
+                          position: tween.animate(animation1),
+                          child: child,
+                        );
+                      },
                     ),
                   );
                   return;

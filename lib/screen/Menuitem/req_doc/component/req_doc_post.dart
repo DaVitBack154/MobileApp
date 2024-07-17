@@ -268,7 +268,7 @@ class _ReqDocumentFromState extends State<ReqDocumentFrom> {
                                               userReqController.otherController,
                                           decoration: InputDecoration(
                                             labelText:
-                                                'กรุณากรอกข้อความที่ต้องการ',
+                                                'กรุณาระบุเอกสารที่ต้องการ',
                                             labelStyle: TextStyle(
                                               color: Colors.black,
                                               fontSize:

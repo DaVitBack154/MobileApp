@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,6 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String? errorTextEmail;
   String? errorTextPhone;
   String? getotpstatus;
+  // String? platformname;
 
   String profileImg = 'assets/image/user.png';
   String contractImg = 'assets/image/unread.png';
@@ -87,14 +90,33 @@ class _RegisterPageState extends State<RegisterPage> {
   // รอแก้ไขตรงนี้
   _listener() async {
     final firebaseToken = await FirebaseCloudMessagingProvider.getToken;
-
+    String platformname = 'Unknown';
     if (_registerController.pinController.text.length == 6) {
       String sub = _registerController.phoneController.text;
       sub = '66' + sub.substring(1);
-      // print(_registerController.pinController.text + 'sdssddsdsd');
       getotpstatus = await createotpController.getOTP(
           phone: sub, otp: _registerController.pinController.text);
       print(getotpstatus);
+
+      if (kIsWeb) {
+        platformname = 'Web';
+      } else if (Platform.isAndroid) {
+        platformname = 'Android';
+      } else if (Platform.isIOS) {
+        platformname = 'IOS';
+      } else if (Platform.isFuchsia) {
+        platformname = 'Fuchsia';
+      } else if (Platform.isLinux) {
+        platformname = 'Linux';
+      } else if (Platform.isMacOS) {
+        platformname = 'MacOS';
+      } else if (Platform.isWindows) {
+        platformname = 'Windows';
+      } else {
+        platformname = 'Unknown';
+      }
+      print(platformname.toString() + 'aaaaaaaaaa');
+
       if (getotpstatus == 'true') {
         String result = await _registerController.fetchRegisterUser(
           gentname: _registerController.gentnameController.text,
@@ -106,12 +128,15 @@ class _RegisterPageState extends State<RegisterPage> {
               : _registerController.emailController.text,
           phone: _registerController.phoneController.text,
           device: firebaseToken,
+          platform: platformname.toString(),
           yomrub1: widget.yomrub1.toString(),
           yomrub2: widget.yomrub2.toString(),
           yomrub3: widget.yomrub3.toString(),
           yomrub4: widget.yomrub4.toString(),
           yomrub5: widget.yomrub5.toString(),
         );
+        print(result + 'result');
+        print('objectfffffff');
         if (result.isNotEmpty) {
           // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(

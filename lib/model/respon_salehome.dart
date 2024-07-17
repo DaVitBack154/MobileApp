@@ -31,6 +31,7 @@ class Datum {
   String? nameHome;
   String? province;
   String? locationHome;
+  String? centiMate;
   String? priceHome;
   String? detailHome;
   String? statusHome;
@@ -42,6 +43,7 @@ class Datum {
     this.nameHome,
     this.province,
     this.locationHome,
+    this.centiMate,
     this.priceHome,
     this.detailHome,
     this.statusHome,
@@ -58,6 +60,7 @@ class Datum {
         nameHome: json["name_home"],
         province: json["province"],
         locationHome: json["location_home"],
+        centiMate: json["centimate"],
         priceHome: json["price_home"],
         detailHome: json["detail_home"],
         statusHome: json["status_home"],
@@ -72,6 +75,7 @@ class Datum {
         "name_home": nameHome,
         "province": province,
         "location_home": locationHome,
+        "centimate": centiMate,
         "price_home": priceHome,
         "detail_home": detailHome,
         "status_home": statusHome,

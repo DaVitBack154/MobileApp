@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/controller/logout_controller.dart';
+import 'package:mobile_chaseapp/screen/chat/chat.dart';
 import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/screen/profile/component/navbarprofile.dart';
 import 'package:mobile_chaseapp/screen/profile/edit_profile.dart';
 import 'package:mobile_chaseapp/utils/app_navigator.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -131,6 +130,63 @@ class _ProfileState extends State<Profile> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const EditProfile(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.shade200,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade200,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.edit_document,
+                                      size: MyConstant.setMediaQueryWidth(
+                                          context, 40),
+                                      color: Color(0xFF103533),
+                                    ),
+                                    SizedBox(
+                                      width: 30.w,
+                                    ),
+                                    Text(
+                                      'แชทกับเจ้าหน้าที่',
+                                      style: TextStyle(
+                                        fontSize: MyConstant.setMediaQueryWidth(
+                                            context, 28),
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFF103533),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox()
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatScreen(),
                           ),
                         );
                       },

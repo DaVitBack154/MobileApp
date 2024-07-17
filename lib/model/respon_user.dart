@@ -45,6 +45,7 @@ class User {
   String? subdistrict;
   String? postcode;
   String? device;
+  String? platform;
   // String? ciType;
   String? yomrub1;
   String? yomrub2;
@@ -54,6 +55,7 @@ class User {
   String? statusStar;
   String? comment;
   String? starPoint;
+  String? maidaiHai;
   String? createdAt;
   String? updatedAt;
 
@@ -73,6 +75,7 @@ class User {
     this.subdistrict,
     this.postcode,
     this.device,
+    this.platform,
     // this.ciType,
     this.yomrub1,
     this.yomrub2,
@@ -82,6 +85,7 @@ class User {
     this.statusStar,
     this.comment,
     this.starPoint,
+    this.maidaiHai,
     this.createdAt,
     this.updatedAt,
   });
@@ -102,6 +106,7 @@ class User {
     subdistrict = json["subdistrict"];
     postcode = json["postcode"];
     device = json["device"];
+    platform = json["platform"];
     // ciType = json["CIType"];
     yomrub1 = json["yomrub1"];
     yomrub2 = json["yomrub2"];
@@ -111,6 +116,7 @@ class User {
     statusStar = json["status_star"];
     comment = json["comment"];
     starPoint = json["starpoint"];
+    maidaiHai = json["maihaipoint"];
     createdAt = json["createdAt"];
     updatedAt = json["updatedAt"];
   }
@@ -132,6 +138,7 @@ class User {
     _data["subdistrict"] = subdistrict;
     _data["postcode"] = postcode;
     _data["device"] = device;
+    _data["platform"] = platform;
     // _data["CIType"] = ciType;
     _data["yomrub1"] = yomrub1;
     _data["yomrub2"] = yomrub2;
@@ -141,6 +148,7 @@ class User {
     _data["status_star"] = statusStar;
     _data["comment"] = comment;
     _data["starpoint"] = starPoint;
+    _data["maihaipoint"] = maidaiHai;
     _data["createdAt"] = createdAt;
     _data["updatedAt"] = updatedAt;
     return _data;

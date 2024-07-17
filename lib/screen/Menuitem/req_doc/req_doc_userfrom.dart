@@ -527,7 +527,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                               ],
                             ),
                             Text(
-                              'รายการขอเอกสารจะมีระยะเวลาในวันทำการ 7 วันทำการ',
+                              'รายการขอเอกสารจะมีระยะเวลาจัดส่งภายใน 7 วันทำการ',
                               style: TextStyle(
                                 color: Colors.grey.shade600,
                                 fontSize: 18.sp,
@@ -556,12 +556,22 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         SizedBox(
                                           width: 20.w,
                                         ),
+                                        // เจอแล้วตรงนี้
                                         Text(
-                                          email.toString(),
+                                          profileController
+                                                  .userModel.user?.email ??
+                                              ' ',
                                           style: TextStyle(
-                                            fontSize: 19.sp,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.normal,
                                           ),
                                         ),
+                                        // Text(
+                                        //   email.toString?
+                                        //   style: TextStyle(
+                                        //     fontSize: 19.sp,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                     value: 'ส่งแบบอีเมล',

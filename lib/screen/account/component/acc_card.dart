@@ -33,14 +33,20 @@ class _AccCardState extends State<AccCard> {
       future: accController.fetchAccData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: SizedBox.shrink(),
+            // child: CircularProgressIndicator(
+            //   color: Colors.teal.shade500,
+            // ),
           );
         }
 
         if (snapshot.hasError) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: SizedBox.shrink(),
+            // child: CircularProgressIndicator(
+            //   color: Colors.teal.shade500,
+            // ),
           );
         }
 

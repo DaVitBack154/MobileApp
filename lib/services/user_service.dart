@@ -37,6 +37,7 @@ class UserService extends BaseService {
     required String yomrub5,
     String? pin,
     String? device,
+    String? platform,
   }) async {
     String url = '$domain/register';
 
@@ -54,6 +55,7 @@ class UserService extends BaseService {
         "phone": phone,
         "pin": pin,
         "device": device,
+        "platform": platform,
         "yomrub1": yomrub1,
         "yomrub2": yomrub2,
         "yomrub3": yomrub3,
@@ -117,6 +119,7 @@ class UserService extends BaseService {
     required String? statusStar,
     required String? comment,
     required String? starPoint,
+    required String? maidaiHai,
   }) async {
     String url = '$domain/updatestar/$id';
 
@@ -127,6 +130,7 @@ class UserService extends BaseService {
         "status_star": statusStar,
         "comment": comment,
         "starpoint": starPoint,
+        "maihaipoint": maidaiHai,
       }),
     );
 
@@ -405,6 +409,32 @@ class UserService extends BaseService {
     Response response = await get(
       Uri.parse(url),
     );
+    return response;
+  }
+
+  Future<Response> createPayUser({
+    String? customerId,
+    String? idCard,
+    String? name,
+    String? surname,
+    String? company,
+    String? status,
+  }) async {
+    String url = '$domain/paymentuser';
+
+    Response response = await post(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "customerid": customerId,
+        "id_card": idCard,
+        "name": name,
+        "surname": surname,
+        "company": company,
+        "status": status,
+      }),
+    );
+
     return response;
   }
 }

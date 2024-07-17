@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
+import 'package:mobile_chaseapp/controller/userpay_controller.dart';
+import 'package:mobile_chaseapp/model/respon_payuser.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/qr.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
@@ -22,6 +23,7 @@ class SlideFrom extends StatefulWidget {
 class _SlideFromState extends State<SlideFrom> {
   final CarouselController carouselController = CarouselController();
   AccController accController = AccController();
+  UserPayController userPayController = UserPayController();
   int _currentIndex = 0;
 
   bool loading = true;
@@ -295,7 +297,36 @@ class _SlideFromState extends State<SlideFrom> {
                         height: 30.h,
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          Payuser? payuser =
+                              await userPayController.createUserPay(
+                            customerId: accController
+                                .userAccModel.data![_currentIndex].customerId
+                                .toString(),
+                            idCard: accController
+                                .userAccModel.data![_currentIndex].personalId
+                                .toString(),
+                            name: accController
+                                .userAccModel.data![_currentIndex].tCustomerName
+                                .toString(),
+                            surname: accController.userAccModel
+                                .data![_currentIndex].tCustomerSurname
+                                .toString(),
+                            company: accController
+                                .userAccModel.data![_currentIndex].companyId
+                                .toString(),
+                            status: 'ขอแบบฟอร์มชำระเงิน',
+                          );
+
+                          if (payuser != null && payuser.data != null) {
+                            Data data = payuser.data;
+                            // แสดงข้อมูลที่ต้องการจาก data
+                            print(
+                                'บันทึกข้อมูลผู้ใช้สำเร็จ: ${data.name} ${data.surname}');
+                          } else {
+                            print('กรุณากรอกข้อมูลที่อยู่ให้ถูกต้อง');
+                          }
+
                           String taxid = '';
                           if (accController.userAccModel.data![_currentIndex]
                                   .companyId ==
@@ -308,6 +339,7 @@ class _SlideFromState extends State<SlideFrom> {
                           } else {
                             taxid = '0105545083871';
                           }
+                          // ignore: use_build_context_synchronously
                           Navigator.push(
                             context,
                             MaterialPageRoute(

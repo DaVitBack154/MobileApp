@@ -84,13 +84,40 @@ class _DetailHomeState extends State<DetailHome> {
                       (item) => Center(
                         child: InkWell(
                           onTap: () async {
+                            // currentIndex = await Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     allowSnapshotting: false,
+                            //     builder: (context) => SlishowFull(
+                            //         imgAll: data!.imgAll!,
+                            //         currentIndex: currentIndex),
+                            //   ),
+                            // );
                             currentIndex = await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                allowSnapshotting: false,
-                                builder: (context) => SlishowFull(
-                                    imgAll: data!.imgAll!,
-                                    currentIndex: currentIndex),
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation1, animation2) =>
+                                        SlishowFull(
+                                  imgAll: data!.imgAll!,
+                                  currentIndex: currentIndex,
+                                ),
+                                transitionsBuilder:
+                                    (context, animation1, animation2, child) {
+                                  final tween = Tween(
+                                      begin: Offset(1.0, 0.0),
+                                      end: Offset.zero);
+                                  final curveTween = CurvedAnimation(
+                                    parent: animation1,
+                                    curve:
+                                        Curves.easeIn, // ปรับ Curve ตามต้องการ
+                                  );
+
+                                  return SlideTransition(
+                                    position: tween.animate(curveTween),
+                                    child: child,
+                                  );
+                                },
                               ),
                             );
                             carouselController.jumpToPage(currentIndex);
@@ -183,51 +210,23 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       'รายละเอียด',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 28),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 27),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '${data!.nameHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 24),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
                       ),
                     ),
                     Text(
                       '${data!.detailHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 20),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      'นัดเข้าชมโครงการ',
-                      style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 25),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'ติดต่อ : คุณวรรณรัตน์ เกยานนท์',
-                      style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
-                      ),
-                    ),
-                    Text(
-                      'Line : @cfam',
-                      style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
-                      ),
-                    ),
-                    Text(
-                      'Call : 081-642-7488',
-                      style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
-                      ),
                     ),
                     SizedBox(
                       height: 5.h,
@@ -256,13 +255,49 @@ class _DetailHomeState extends State<DetailHome> {
                     Text(
                       '${data!.locationHome}',
                       style: TextStyle(
-                        fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                        fontSize: MyConstant.setMediaQueryWidth(context, 20),
                       ),
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.visible,
                     ),
-                    SizedBox(
-                      height: 10.h,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 5.h,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'นัดเข้าชมโครงการ',
+                            style: TextStyle(
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 25),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'ติดต่อ : คุณวรรณรัตน์ เกยานนท์',
+                            style: TextStyle(
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 21),
+                            ),
+                          ),
+                          Text(
+                            'Line : @cfam',
+                            style: TextStyle(
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 21),
+                            ),
+                          ),
+                          Text(
+                            'Call : 081-642-7488',
+                            style: TextStyle(
+                              fontSize:
+                                  MyConstant.setMediaQueryWidth(context, 21),
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

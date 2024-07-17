@@ -155,7 +155,7 @@ class _SaleHomeState extends State<SaleHome> {
                             crossAxisSpacing: 2.9,
                             childAspectRatio: ResponsiveWidthContext
                                     .isMobileFoldVertical(context)
-                                ? 0.61
+                                ? 0.58
                                 : ResponsiveWidthContext.isMobile(context) ||
                                         ResponsiveWidthContext.isMobileSmall(
                                             context)
@@ -201,7 +201,7 @@ class _SaleHomeState extends State<SaleHome> {
                                         //รอใส่ paddding
                                         Padding(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 15.h),
+                                              vertical: 10.h),
                                           child: Container(
                                             child: Column(
                                               crossAxisAlignment:
@@ -259,14 +259,43 @@ class _SaleHomeState extends State<SaleHome> {
                                                         style: TextStyle(
                                                           fontSize: MyConstant
                                                               .setMediaQueryWidth(
-                                                                  context, 22),
+                                                                  context, 20),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                //icon ที่ดิน
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(left: 5),
+                                                  child: Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/image/area.png',
+                                                        fit: BoxFit.cover,
+                                                        height: 25,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5.w,
+                                                      ),
+                                                      Text(
+                                                        '${getsaleHomeController.saleHome.data![index].centiMate}',
+                                                        style: TextStyle(
+                                                          fontSize: MyConstant
+                                                              .setMediaQueryWidth(
+                                                            context,
+                                                            16,
+                                                          ),
+                                                          color: Colors
+                                                              .grey.shade700,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 Divider(
-                                                  color: Colors.grey.shade300,
+                                                  color: Colors.grey.shade400,
                                                   thickness: 1,
                                                   height: 20,
                                                   indent: 10,
@@ -278,29 +307,13 @@ class _SaleHomeState extends State<SaleHome> {
                                                           .spaceBetween,
                                                   children: [
                                                     Container(
-                                                      width: 35.w,
                                                       margin: EdgeInsets.only(
-                                                        left: 5.w,
+                                                        left: 7.w,
                                                       ),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Sale',
-                                                          style: TextStyle(
-                                                            fontSize: MyConstant
-                                                                .setMediaQueryWidth(
-                                                                    context,
-                                                                    21),
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
+                                                      child: Image.asset(
+                                                        'assets/image/sale.png',
+                                                        fit: BoxFit.cover,
+                                                        height: 32,
                                                       ),
                                                     ),
                                                     Container(
@@ -316,14 +329,14 @@ class _SaleHomeState extends State<SaleHome> {
                                                               ? MyConstant
                                                                   .setMediaQueryWidth(
                                                                       context,
-                                                                      21)
+                                                                      22)
                                                               : MyConstant
                                                                   .setMediaQueryWidth(
                                                                       context,
-                                                                      21),
+                                                                      22),
                                                           // color: Colors.red,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          // fontWeight:
+                                                          //     FontWeight.bold,
                                                         ),
                                                         maxLines: 2,
                                                         overflow: TextOverflow

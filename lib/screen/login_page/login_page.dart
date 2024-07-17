@@ -35,99 +35,114 @@ class _LoginState extends State<Login> {
   //   sub = '66' + sub.substring(1);
   //   await createotpController.createPhoneOTP(phone: sub);
   // }
-  Future<void> openlaunchUrl(Uri url) async {
-    if (mounted) {
-      if (await canLaunchUrl(url)
-          .timeout(
-        const Duration(seconds: 20),
-      )
-          .catchError(
-        (error) {
-          if (kDebugMode) {
-            print(
-              'error ===>> $error',
-            );
-          }
-          return false;
-        },
-      )) {
-        if (!await launchUrl(url)
-            .timeout(
-          const Duration(seconds: 20),
-        )
-            .catchError(
-          (error) {
-            if (kDebugMode) {
-              print(
-                'error ===>> $error',
-              );
-            }
-            return false;
-          },
-        )) {
-          if (kDebugMode) {
-            print(
-              'Could not launch $url',
-            );
-          }
-        }
+  // Future<void> openlaunchUrl(Uri url) async {
+  //   if (mounted) {
+  //     if (await canLaunchUrl(url)
+  //         .timeout(
+  //       const Duration(seconds: 20),
+  //     )
+  //         .catchError(
+  //       (error) {
+  //         if (kDebugMode) {
+  //           print(
+  //             'error ===>> $error',
+  //           );
+  //         }
+  //         return false;
+  //       },
+  //     )) {
+  //       if (!await launchUrl(url)
+  //           .timeout(
+  //         const Duration(seconds: 20),
+  //       )
+  //           .catchError(
+  //         (error) {
+  //           if (kDebugMode) {
+  //             print(
+  //               'error ===>> $error',
+  //             );
+  //           }
+  //           return false;
+  //         },
+  //       )) {
+  //         if (kDebugMode) {
+  //           print(
+  //             'Could not launch $url',
+  //           );
+  //         }
+  //       }
+  //     } else {
+  //       if (kDebugMode) {
+  //         print(
+  //           'Could not launch $url',
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
+  // ฝฝ
+  Future<void> openlaunchUrl(String url) async {
+    try {
+      bool canLaunchUrlResult = await canLaunch(url);
+      if (canLaunchUrlResult) {
+        await launch(url, forceSafariVC: false, forceWebView: false);
       } else {
-        if (kDebugMode) {
-          print(
-            'Could not launch $url',
-          );
-        }
+        throw 'Could not launch $url';
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('Error launching URL: $error');
       }
     }
   }
 
-  Future<void> openlaunchUrlAppOther(String url) async {
-    if (mounted) {
-      // ignore: deprecated_member_use
-      if (await canLaunch(url)
-          .timeout(
-        const Duration(seconds: 20),
-      )
-          .catchError(
-        (error) {
-          if (kDebugMode) {
-            print(
-              'error ===>> $error',
-            );
-          }
-          return false;
-        },
-      )) {
-        // ignore: deprecated_member_use
-        if (!await launch(url)
-            .timeout(
-          const Duration(seconds: 20),
-        )
-            .catchError(
-          (error) {
-            if (kDebugMode) {
-              print(
-                'error ===>> $error',
-              );
-            }
-            return false;
-          },
-        )) {
-          if (kDebugMode) {
-            print(
-              'Could not launch $url',
-            );
-          }
-        }
-      } else {
-        if (kDebugMode) {
-          print(
-            'Could not launch $url',
-          );
-        }
-      }
-    }
-  }
+  // Future<void> openlaunchUrlAppOther(String url) async {
+  //   if (mounted) {
+  //     // ignore: deprecated_member_use
+  //     if (await canLaunch(url)
+  //         .timeout(
+  //       const Duration(seconds: 20),
+  //     )
+  //         .catchError(
+  //       (error) {
+  //         if (kDebugMode) {
+  //           print(
+  //             'error ===>> $error',
+  //           );
+  //         }
+  //         return false;
+  //       },
+  //     )) {
+  //       // ignore: deprecated_member_use
+  //       if (!await launch(url)
+  //           .timeout(
+  //         const Duration(seconds: 20),
+  //       )
+  //           .catchError(
+  //         (error) {
+  //           if (kDebugMode) {
+  //             print(
+  //               'error ===>> $error',
+  //             );
+  //           }
+  //           return false;
+  //         },
+  //       )) {
+  //         if (kDebugMode) {
+  //           print(
+  //             'Could not launch $url',
+  //           );
+  //         }
+  //       }
+  //     } else {
+  //       if (kDebugMode) {
+  //         print(
+  //           'Could not launch $url',
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -574,21 +589,13 @@ class _LoginState extends State<Login> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (mounted) {
-                            openlaunchUrl(
-                              Uri.parse(
-                                  'https://www.chase.co.th/th/corporate-governance/privacy-notice'),
-                            ).catchError(
-                              (error) {
-                                if (kDebugMode) {
-                                  print(
-                                    'error ===>> $error',
-                                  );
-                                }
-                                return false;
-                              },
-                            );
-                          }
+                          openlaunchUrl(
+                                  'https://www.chase.co.th/en/privacy-policy')
+                              .catchError((error) {
+                            if (kDebugMode) {
+                              print('Error launching URL: $error');
+                            }
+                          });
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 25.w),
@@ -596,10 +603,10 @@ class _LoginState extends State<Login> {
                             children: [
                               Flexible(
                                 child: Text(
-                                  'https://www.chase.co.th/th/corporate-governance/privacy-notice',
+                                  'https://www.chase.co.th/en/privacy-policy',
                                   style: TextStyle(
                                     fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 19),
+                                        context, 20),
                                     color: Colors.blue.shade800,
                                     decoration: TextDecoration.underline,
                                   ),

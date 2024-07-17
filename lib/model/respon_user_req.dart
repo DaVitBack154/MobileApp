@@ -37,7 +37,6 @@ class Datareq {
   String? other;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? v;
 
   Datareq({
     this.id,
@@ -56,7 +55,6 @@ class Datareq {
     this.other,
     this.createdAt,
     this.updatedAt,
-    this.v,
   });
 
   factory Datareq.fromRawJson(String str) => Datareq.fromJson(json.decode(str));
@@ -84,7 +82,6 @@ class Datareq {
         updatedAt: json["updatedAt"] == null
             ? null
             : DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -104,6 +101,5 @@ class Datareq {
         "other": other,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
       };
 }

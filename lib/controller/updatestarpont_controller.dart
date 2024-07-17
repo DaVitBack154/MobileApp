@@ -13,11 +13,13 @@ class UpdateStarController {
   TextEditingController statusStarController = TextEditingController();
   TextEditingController commentController = TextEditingController();
   TextEditingController starPointController = TextEditingController();
+  TextEditingController maidaiHaiController = TextEditingController();
 
   Future<String> fetchUpdateStar(
     String statusStar,
     String comment,
     String starPoint,
+    String maidaiHai,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString(KeyStorage.uid);
@@ -30,6 +32,7 @@ class UpdateStarController {
         statusStar: statusStar,
         comment: comment,
         starPoint: starPoint,
+        maidaiHai: maidaiHai,
       );
       if (response?.statusCode == 200) {
         var json = jsonDecode(response!.body);

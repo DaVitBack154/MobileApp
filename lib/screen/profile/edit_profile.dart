@@ -37,7 +37,6 @@ class _EditProfileState extends State<EditProfile> {
         ),
         Container(
           margin: const EdgeInsets.only(top: kToolbarHeight + 80).h,
-          width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -45,7 +44,11 @@ class _EditProfileState extends State<EditProfile> {
               topRight: Radius.circular(30),
             ),
           ),
-          child: const FormProfile(),
+          child: const Column(
+            children: [
+              FormProfile(),
+            ],
+          ),
         ),
       ],
     ));
