@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/pay_from.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import '../../../../controller/getacc_controller.dart';
 
@@ -131,9 +130,9 @@ class _SlideAccState extends State<SlideAcc> {
                 child: Card(
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  elevation: 2,
+                  elevation: 4,
                   color: Color.fromARGB(255, 250, 250, 250),
                   child: Column(
                     children: [
@@ -201,7 +200,7 @@ class _SlideAccState extends State<SlideAcc> {
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: MyConstant
                                                         .setMediaQueryWidth(
-                                                            context, 18),
+                                                            context, 19),
                                                   ),
                                                 )
                                               : Text(
@@ -272,7 +271,7 @@ class _SlideAccState extends State<SlideAcc> {
                                               fontWeight: FontWeight.w600,
                                               fontSize:
                                                   MyConstant.setMediaQueryWidth(
-                                                      context, 18),
+                                                      context, 19),
                                             ),
                                           ),
                                         ),
@@ -382,7 +381,7 @@ class _SlideAccState extends State<SlideAcc> {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
                     Size(
-                      270,
+                      280,
                       MyConstant.setMediaQueryWidth(context, 40),
                     ),
                   ),

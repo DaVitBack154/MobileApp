@@ -109,7 +109,7 @@ class _SlideFromState extends State<SlideFrom> {
                         height:
                             ResponsiveWidthContext.isMobileFoldVertical(context)
                                 ? 210.h
-                                : 205.h,
+                                : 200.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         initialPage: _currentIndex,
@@ -170,7 +170,7 @@ class _SlideFromState extends State<SlideFrom> {
                               'แบบฟอร์มชำระเงิน',
                               style: TextStyle(
                                 fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 20),
+                                    MyConstant.setMediaQueryWidth(context, 22),
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -217,7 +217,7 @@ class _SlideFromState extends State<SlideFrom> {
                                       ),
                                       Image.asset(
                                         'assets/image/icon3.png',
-                                        height: 30,
+                                        height: 27,
                                       )
                                     ],
                                   ),
@@ -239,60 +239,6 @@ class _SlideFromState extends State<SlideFrom> {
                   ),
                   Column(
                     children: [
-                      // Form(
-                      //   key: _formKey,
-                      //   child: TextFormField(
-                      //     focusNode: _yourFocusNode,
-                      //     controller: amountController,
-                      //     decoration: InputDecoration(
-                      //       border: const UnderlineInputBorder(),
-                      //       labelText: "ชำระเงิน",
-                      //       labelStyle: TextStyle(
-                      //         color: Colors.grey.shade700,
-                      //         fontSize: ResponsiveWidthContext
-                      //                 .isMobileFoldVertical(context)
-                      //             ? MyConstant.setMediaQueryWidth(
-                      //                 context, 22)
-                      //             : MyConstant.setMediaQueryWidth(
-                      //                 context, 25),
-                      //       ),
-                      //       suffixText: 'บาท',
-                      //       floatingLabelBehavior:
-                      //           FloatingLabelBehavior.always,
-                      //       hintText: 'ยอดชำระ',
-                      //       hintStyle: TextStyle(
-                      //         fontSize: MyConstant.setMediaQueryWidth(
-                      //             context, 25),
-                      //         fontWeight: FontWeight.w500,
-                      //       ),
-                      //       enabledBorder: const UnderlineInputBorder(
-                      //         borderSide: BorderSide(
-                      //             color: Colors.grey), // สีเมื่อไม่ Focus
-                      //       ),
-                      //       focusedBorder: const UnderlineInputBorder(
-                      //         borderSide: BorderSide(
-                      //           color: Color(0xFF103533),
-                      //         ), // สีเมื่อ Focus
-                      //       ),
-                      //     ),
-                      //     cursorColor: Colors.grey.shade400,
-                      //     validator: (value) {
-                      //       if (value == null || value.isEmpty) {
-                      //         return 'กรุณากรอกจำนวนเงิน';
-                      //       } else if (!RegExp(r'^\d+$')
-                      //           .hasMatch(value)) {
-                      //         return 'กรุณากรอกเฉพาะตัวเลข';
-                      //       }
-                      //       setState(() {});
-                      //       return null;
-                      //     },
-                      //     textInputAction: TextInputAction.next,
-                      //     keyboardType: TextInputType.numberWithOptions(
-                      //         decimal: true),
-                      //     style: TextStyle(fontSize: 20.sp),
-                      //   ),
-                      // ),
-
                       SizedBox(
                         height: 30.h,
                       ),
@@ -365,7 +311,7 @@ class _SlideFromState extends State<SlideFrom> {
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all<Size>(
                             Size(
-                              250,
+                              270,
                               MyConstant.setMediaQueryWidth(context, 45),
                             ),
                           ),
@@ -384,7 +330,7 @@ class _SlideFromState extends State<SlideFrom> {
                           'ขอแบบฟอร์มชำระเงิน',
                           style: TextStyle(
                             fontSize:
-                                MyConstant.setMediaQueryWidth(context, 25),
+                                MyConstant.setMediaQueryWidth(context, 26),
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),

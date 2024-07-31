@@ -192,7 +192,7 @@ class _SlideState extends State<Slide> {
                     ? MyConstant.setMediaQueryWidth(context, 17)
                     : ResponsiveWidthContext.isMobileSmall(context) ||
                             ResponsiveWidthContext.isMobile(context)
-                        ? MyConstant.setMediaQueryWidth(context, 25)
+                        ? MyConstant.setMediaQueryWidth(context, 30)
                         : null,
               ),
             ],

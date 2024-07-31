@@ -43,334 +43,335 @@ class _SaleHomeState extends State<SaleHome> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
-    final query = MediaQuery.of(context);
-    return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  width: width,
-                  height: 430.h + kToolbarHeight,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/image/bg.png'),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
+
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: width,
+                    height: 430.h + kToolbarHeight,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/image/bg.png'),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 50.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 40.w,
-                              height: 35.h,
-                              margin: EdgeInsets.only(left: 20.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.black.withOpacity(.1),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 50.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 40.w,
+                                height: 35.h,
+                                margin: EdgeInsets.only(left: 20.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.black.withOpacity(.1),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back_ios_new,
+                                    size: MyConstant.setMediaQueryWidth(
+                                        context, 24),
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
                               ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  size: MyConstant.setMediaQueryWidth(
-                                      context, 25),
+                              Text(
+                                'บ้านและที่ดิน',
+                                style: TextStyle(
+                                  fontSize: MyConstant.setMediaQueryWidth(
+                                      context, 30),
+                                  fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
                               ),
-                            ),
-                            Text(
-                              'บ้านและที่ดิน',
-                              style: TextStyle(
-                                fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 30),
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50.w,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: width,
-              margin: EdgeInsets.only(
-                top: ResponsiveHeightContext.isMobile(context)
-                    ? kToolbarHeight + 45.h
-                    : ResponsiveWidthContext.isTablet(context)
-                        ? kToolbarHeight + 70.h
-                        : kToolbarHeight + 65.h,
-              ),
-              child: Container(
-                // color: Colors.red,
-                height: 590.h,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 3.w,
-                  ),
-                  child: loading
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(bottom: 80.h),
-                              width: 40.w,
-                              height: 35.h,
-                              child: CircularProgressIndicator(
-                                color: Colors.teal.shade800,
-                              ),
-                            ),
-                          ],
-                        )
-                      : GridView.builder(
-                          // padding: const EdgeInsets.all(17.0),
-
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 0.0,
-                            crossAxisSpacing: 2.9,
-                            childAspectRatio: ResponsiveWidthContext
-                                    .isMobileFoldVertical(context)
-                                ? 0.58
-                                : ResponsiveWidthContext.isMobile(context) ||
-                                        ResponsiveWidthContext.isMobileSmall(
-                                            context)
-                                    ? 0.56
-                                    : 0.82,
+                              SizedBox(
+                                width: 50.w,
+                              )
+                            ],
                           ),
-                          itemCount:
-                              getsaleHomeController.saleHome.data!.length,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                width: width,
+                margin: EdgeInsets.only(
+                  top: ResponsiveHeightContext.isMobile(context)
+                      ? kToolbarHeight + 45.h
+                      : ResponsiveWidthContext.isTablet(context)
+                          ? kToolbarHeight + 70.h
+                          : kToolbarHeight + 65.h,
+                ),
+                child: Container(
+                  // color: Colors.red,
+                  height: 590.h,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3.w,
+                    ),
+                    child: loading
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 80.h),
+                                width: 40.w,
+                                height: 35.h,
+                                child: CircularProgressIndicator(
+                                  color: Colors.teal.shade800,
+                                ),
+                              ),
+                            ],
+                          )
+                        : GridView.builder(
+                            // padding: const EdgeInsets.all(17.0),
 
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  child: Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    elevation: 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: width,
-                                          height: ResponsiveWidthContext
-                                                  .isMobileFoldVertical(context)
-                                              ? MyConstant.setMediaQueryWidth(
-                                                  context, 150)
-                                              : ResponsiveWidthContext.isTablet(
-                                                      context)
-                                                  ? MyConstant
-                                                      .setMediaQueryWidth(
-                                                          context, 160)
-                                                  : MyConstant
-                                                      .setMediaQueryWidth(
-                                                          context, 140),
-                                          child: Image.network(
-                                            '$imageUrl/public/img_all/${getsaleHomeController.saleHome.data![index].imgAll![0]}',
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        //รอใส่ paddding
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10.h),
-                                          child: Container(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin:
-                                                      EdgeInsets.only(left: 10),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'รหัสทรัพย์ ${getsaleHomeController.saleHome.data![index].numberHome}',
-                                                        style: TextStyle(
-                                                          fontSize: ResponsiveWidthContext
-                                                                  .isMobileFoldVertical(
-                                                                      context)
-                                                              ? 13.sp
-                                                              : 14.sp,
-                                                          color: Colors
-                                                              .grey.shade600,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        '${getsaleHomeController.saleHome.data![index].nameHome}',
-                                                        style: TextStyle(
-                                                          fontSize: 16.sp,
-                                                        ),
-                                                        overflow: TextOverflow
-                                                            .visible,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin:
-                                                      EdgeInsets.only(left: 5),
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.location_on,
-                                                        color: Colors
-                                                            .teal.shade800,
-                                                        size: MyConstant
-                                                            .setMediaQueryWidth(
-                                                                context, 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      Text(
-                                                        '${getsaleHomeController.saleHome.data![index].province}',
-                                                        style: TextStyle(
-                                                          fontSize: MyConstant
-                                                              .setMediaQueryWidth(
-                                                                  context, 20),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                //icon ที่ดิน
-                                                Container(
-                                                  margin:
-                                                      EdgeInsets.only(left: 5),
-                                                  child: Row(
-                                                    children: [
-                                                      Image.asset(
-                                                        'assets/image/area.png',
-                                                        fit: BoxFit.cover,
-                                                        height: 25,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      Text(
-                                                        '${getsaleHomeController.saleHome.data![index].centiMate}',
-                                                        style: TextStyle(
-                                                          fontSize: MyConstant
-                                                              .setMediaQueryWidth(
-                                                            context,
-                                                            16,
-                                                          ),
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  color: Colors.grey.shade400,
-                                                  thickness: 1,
-                                                  height: 20,
-                                                  indent: 10,
-                                                  endIndent: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 7.w,
-                                                      ),
-                                                      child: Image.asset(
-                                                        'assets/image/sale.png',
-                                                        fit: BoxFit.cover,
-                                                        height: 32,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        right: 7.w,
-                                                      ),
-                                                      child: Text(
-                                                        ' ${getsaleHomeController.saleHome.data![index].priceHome} บาท',
-                                                        style: TextStyle(
-                                                          fontSize: ResponsiveWidthContext
-                                                                  .isMobileFoldVertical(
-                                                                      context)
-                                                              ? MyConstant
-                                                                  .setMediaQueryWidth(
-                                                                      context,
-                                                                      22)
-                                                              : MyConstant
-                                                                  .setMediaQueryWidth(
-                                                                      context,
-                                                                      22),
-                                                          // color: Colors.red,
-                                                          // fontWeight:
-                                                          //     FontWeight.bold,
-                                                        ),
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 0.0,
+                              crossAxisSpacing: 2.9,
+                              childAspectRatio: ResponsiveWidthContext
+                                      .isMobileFoldVertical(context)
+                                  ? 0.58
+                                  : ResponsiveWidthContext.isMobile(context) ||
+                                          ResponsiveWidthContext.isMobileSmall(
+                                              context)
+                                      ? 0.56
+                                      : 0.82,
+                            ),
+                            itemCount:
+                                getsaleHomeController.saleHome.data!.length,
+
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  InkWell(
+                                    child: Card(
+                                      clipBehavior: Clip.antiAlias,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      elevation: 3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: width,
+                                            height: ResponsiveWidthContext
+                                                    .isMobileFoldVertical(
+                                                        context)
+                                                ? MyConstant.setMediaQueryWidth(
+                                                    context, 150)
+                                                : ResponsiveWidthContext
+                                                        .isTablet(context)
+                                                    ? MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 160)
+                                                    : MyConstant
+                                                        .setMediaQueryWidth(
+                                                            context, 140),
+                                            child: Image.network(
+                                              '$imageUrl/public/img_all/${getsaleHomeController.saleHome.data![index].imgAll![0]}',
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailHome(
-                                            data: getsaleHomeController
-                                                .saleHome.data![index]),
+                                          //รอใส่ paddding
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10.h),
+                                            child: Container(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 10),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'รหัสทรัพย์ ${getsaleHomeController.saleHome.data![index].numberHome}',
+                                                          style: TextStyle(
+                                                            fontSize: ResponsiveWidthContext
+                                                                    .isMobileFoldVertical(
+                                                                        context)
+                                                                ? 13.sp
+                                                                : 14.sp,
+                                                            color: Colors
+                                                                .grey.shade600,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '${getsaleHomeController.saleHome.data![index].nameHome}',
+                                                          style: TextStyle(
+                                                            fontSize: 16.sp,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .visible,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.location_on,
+                                                          color: Colors
+                                                              .teal.shade800,
+                                                          size: MyConstant
+                                                              .setMediaQueryWidth(
+                                                                  context, 25),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5.w,
+                                                        ),
+                                                        Text(
+                                                          '${getsaleHomeController.saleHome.data![index].province}',
+                                                          style: TextStyle(
+                                                            fontSize: MyConstant
+                                                                .setMediaQueryWidth(
+                                                                    context,
+                                                                    20),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  //icon ที่ดิน
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        Image.asset(
+                                                          'assets/image/area.png',
+                                                          fit: BoxFit.cover,
+                                                          height: 25,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5.w,
+                                                        ),
+                                                        Text(
+                                                          '${getsaleHomeController.saleHome.data![index].centiMate}',
+                                                          style: TextStyle(
+                                                            fontSize: MyConstant
+                                                                .setMediaQueryWidth(
+                                                              context,
+                                                              16,
+                                                            ),
+                                                            color: Colors
+                                                                .grey.shade700,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Divider(
+                                                    color: Colors.grey.shade400,
+                                                    thickness: 1,
+                                                    height: 20,
+                                                    indent: 10,
+                                                    endIndent: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                          left: 7.w,
+                                                        ),
+                                                        child: Image.asset(
+                                                          'assets/image/sale.png',
+                                                          fit: BoxFit.cover,
+                                                          height: 32,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                          right: 7.w,
+                                                        ),
+                                                        child: Text(
+                                                          ' ${getsaleHomeController.saleHome.data![index].priceHome} บาท',
+                                                          style: TextStyle(
+                                                            fontSize: ResponsiveWidthContext.isMobileFoldVertical(
+                                                                    context)
+                                                                ? MyConstant
+                                                                    .setMediaQueryWidth(
+                                                                        context,
+                                                                        22)
+                                                                : MyConstant
+                                                                    .setMediaQueryWidth(
+                                                                        context,
+                                                                        22),
+                                                            // color: Colors.red,
+                                                            // fontWeight:
+                                                            //     FontWeight.bold,
+                                                          ),
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
-                                )
-                              ],
-                            );
-                          },
-                        ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailHome(
+                                              data: getsaleHomeController
+                                                  .saleHome.data![index]),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

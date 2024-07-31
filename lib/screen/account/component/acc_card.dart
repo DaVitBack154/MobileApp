@@ -21,7 +21,7 @@ class _AccCardState extends State<AccCard> {
 
   @override
   Widget build(BuildContext context) {
-    final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
+    // final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
     final formattedDate = DateFormat("dd-MM-yyyy");
 
     String formatCurrency(double amount) {
@@ -61,9 +61,6 @@ class _AccCardState extends State<AccCard> {
                   horizontal: 10.w,
                   vertical: 5.h,
                 ),
-                // child: CardUser(
-                //   data: data,
-                // ),
                 child: Card(
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
@@ -210,7 +207,7 @@ class _AccCardState extends State<AccCard> {
                                 'ภาระหนี้คงเหลือ (บาท)',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 18.sp,
+                                  fontSize: 19.sp,
                                   height: 1.2,
                                   color: Colors.black,
                                 ),
@@ -354,48 +351,31 @@ class _AccCardState extends State<AccCard> {
                                               : SizedBox.shrink()
                             ],
                           ),
-
-                          // Row(
-                          //   children: [
-                          //     Text(
-                          //       'Name :',
-                          //       style: TextStyle(
-                          //         color: Color(0xFF8A8A8A),
-                          //         fontSize: 18.sp,
-                          //         height: 1.2,
-                          //         fontWeight: FontWeight.normal,
-                          //       ),
-                          //     ),
-                          //     SizedBox(
-                          //       width: 5.w,
-                          //     ),
-                          //     Text(
-                          //       '${data.tCustomerName} ${data.tCustomerSurname}',
-                          //       style: TextStyle(
-                          //         fontWeight: FontWeight.normal,
-                          //         fontSize: 18.sp,
-                          //         height: 1.2,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          Text(
-                            'Name :',
-                            style: TextStyle(
-                              color: const Color(0xFF8A8A8A),
-                              fontSize: 18.sp,
-                              height: 1.2,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'Name :',
+                                style: TextStyle(
+                                  color: Color(0xFF8A8A8A),
+                                  fontSize: 18.sp,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Text(
+                                '${data.tCustomerName} ${data.tCustomerSurname}',
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18.sp,
+                                  height: 1.2,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '${data.tCustomerName} ${data.tCustomerSurname}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 17.sp,
-                            ),
-                          ),
-
                           Text(
                             '${data.customerId}',
                             style: TextStyle(
@@ -404,30 +384,6 @@ class _AccCardState extends State<AccCard> {
                               height: 1.2,
                             ),
                           ),
-                          // Row(
-                          //   children: [
-                          //     Text(
-                          //       'No Card : ',
-                          //       style: TextStyle(
-                          //         color: Color(0xFF8A8A8A),
-                          //         fontSize: 18.sp,
-                          //         height: 1.2,
-                          //         fontWeight: FontWeight.normal,
-                          //       ),
-                          //     ),
-                          //     SizedBox(
-                          //       width: 5.w,
-                          //     ),
-                          //     Text(
-                          //       '${data.customerId}',
-                          //       style: TextStyle(
-                          //         fontWeight: FontWeight.normal,
-                          //         fontSize: 18.sp,
-                          //         height: 1.2,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                         ],
                       ),
                     ),

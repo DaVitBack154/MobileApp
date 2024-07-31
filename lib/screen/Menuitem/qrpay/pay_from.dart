@@ -21,18 +21,14 @@ class _PayFromState extends State<PayFrom> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
-    final query = MediaQuery.of(context);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
-        // FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: MediaQuery(
-        data: query.copyWith(
-          // ignore: deprecated_member_use
-          textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-        ),
+      child: MediaQuery.withClampedTextScaling(
+        minScaleFactor: 1,
+        maxScaleFactor: 1,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Stack(
@@ -45,7 +41,7 @@ class _PayFromState extends State<PayFrom> {
                         ? 285.h + kToolbarHeight
                         : ResponsiveWidthContext.isMobile(context) ||
                                 ResponsiveWidthContext.isMobileSmall(context)
-                            ? 280.h + kToolbarHeight
+                            ? 290.h + kToolbarHeight
                             : ResponsiveWidthContext.isTablet(context)
                                 ? MyConstant.setMediaQueryWidth(context, 370) +
                                     kToolbarHeight
@@ -67,7 +63,7 @@ class _PayFromState extends State<PayFrom> {
               ),
               Container(
                 // height: MyConstant.setMediaQueryHeightFull(context),
-                margin: EdgeInsets.only(top: kToolbarHeight + 40).h,
+                margin: EdgeInsets.only(top: kToolbarHeight + 45).h,
                 width: width,
                 child: SlideFrom(currentIndex: widget.currentIndex),
               ),

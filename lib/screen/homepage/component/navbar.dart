@@ -92,11 +92,11 @@ class _NavbarState extends State<Navbar> {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: 25.h,
+                    radius: MyConstant.setMediaQueryWidth(context, 30),
                     child: Image.asset(
                       'assets/image/icon_a.png',
                       fit: BoxFit.cover,
-                      height: 25.h,
+                      height: MyConstant.setMediaQueryWidth(context, 30),
                     ),
                   ),
                   Padding(
@@ -143,7 +143,7 @@ class _NavbarState extends State<Navbar> {
                         child: IconButton(
                           icon: Icon(
                             Icons.notifications,
-                            size: MyConstant.setMediaQueryWidth(context, 25),
+                            size: MyConstant.setMediaQueryWidth(context, 30),
                             color: Colors.white,
                           ),
                           onPressed: () async {

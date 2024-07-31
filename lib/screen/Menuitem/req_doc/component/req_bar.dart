@@ -34,7 +34,7 @@ class _ReqDocBarState extends State<ReqDocBar> {
                     icon: Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: MyConstant.setMediaQueryWidth(context, 25),
+                      size: MyConstant.setMediaQueryWidth(context, 22),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -49,7 +49,7 @@ class _ReqDocBarState extends State<ReqDocBar> {
                   'ขอเอกสาร',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MyConstant.setMediaQueryWidth(context, 30),
+                    fontSize: MyConstant.setMediaQueryWidth(context, 28),
                     fontWeight: FontWeight.normal,
                   ),
                 ),

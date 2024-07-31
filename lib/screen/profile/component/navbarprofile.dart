@@ -51,7 +51,7 @@ class _NavbarProfileState extends State<NavbarProfile> {
           fit: BoxFit.cover,
         ),
       ),
-      height: 300.h + kToolbarHeight,
+      height: 340.h + kToolbarHeight,
       child: Container(
         margin: const EdgeInsets.only(top: kToolbarHeight + 10).h,
         child: Column(
@@ -59,7 +59,7 @@ class _NavbarProfileState extends State<NavbarProfile> {
             Image.asset(
               'assets/image/w_Arma.png',
               fit: BoxFit.cover,
-              height: 80.h,
+              height: 85.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

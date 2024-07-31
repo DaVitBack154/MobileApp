@@ -71,9 +71,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Color line1Color = const Color(0x33F2F2F2);
   Color line2Color = const Color(0x33F2F2F2);
 
-  final _debouncer = Debouncer(
-    delay: const Duration(milliseconds: Duration.millisecondsPerSecond),
-  );
+  // final _debouncer = Debouncer(
+  //   delay: const Duration(milliseconds: Duration.millisecondsPerSecond),
+  // );
 
   @override
   void dispose() {
@@ -268,13 +268,26 @@ class _RegisterPageState extends State<RegisterPage> {
       _otp(),
     ];
 
-    return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
+    Future<bool> onWillPop() async {
+      return false;
+    }
+
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
       child: GestureDetector(
-        child: WillPopScope(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: PopScope(
+          onPopInvoked: (didPop) async => await onWillPop().catchError(
+            (error) {
+              if (kDebugMode) {
+                print(
+                  'error ===>> onWillPop: $error',
+                );
+              }
+              return false;
+            },
+          ),
           child: Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -564,9 +577,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-          onWillPop: () async {
-            return false;
-          },
         ),
       ),
     );
@@ -793,19 +803,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ? errorTextIdCard = 'กรุณากรอกหมายเลขบัตรประชาชน'
                   : errorTextIdCard = null;
               setState(() {});
-
-              // if (value.isNotEmpty && value.length == 13) {
-              //   _debouncer.call(() async {
-              //     var result = await _registerController.fetchGetIdCard(value);
-
-              //     idNotExists = result.status!;
-
-              //     if (result.status!) {
-              //       errorTextIdCard = result.message;
-              //       setState(() {});
-              //     }
-              //   });
-              // }
             },
           ),
         ],
@@ -879,18 +876,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 : errorTextPhone = null;
             setState(() {});
             //TODO รอพี่พาทำ
-            // if (value.isNotEmpty && value.length == 10) {
-            //   _debouncer.call(() async {
-            //     var result = await authController.fetchGetPhone(value);
-            //     isPhone = result;
-            //     if (isPhone) {
-            //       errorTextPhone = 'พบเบอร์โทรศัพในระบบ';
-            //       setState(() {});
-            //     }
-            //   });
-            // } else {
-            //   isPhone = true;
-            // }
           },
           keyboardType: TextInputType.phone,
           maxLength: 10,

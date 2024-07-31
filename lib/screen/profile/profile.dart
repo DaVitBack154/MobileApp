@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(top: kToolbarHeight + 170).h,
+              margin: const EdgeInsets.only(top: kToolbarHeight + 150).h,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -75,7 +75,7 @@ class _ProfileState extends State<Profile> {
                     width: double.infinity,
                     child: InkWell(
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(12),
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     Icon(
                                       Icons.arrow_forward_ios,
-                                      size: 25,
+                                      size: 22,
                                     ),
                                   ],
                                 )
@@ -139,7 +139,7 @@ class _ProfileState extends State<Profile> {
                     width: double.infinity,
                     child: InkWell(
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(12),
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -156,27 +156,39 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.edit_document,
-                                      size: MyConstant.setMediaQueryWidth(
-                                          context, 40),
-                                      color: Color(0xFF103533),
+                                    SizedBox(
+                                      child: Image.asset(
+                                        'assets/image/call.png',
+                                        width: 40.w,
+                                        // height: 50.h,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 30.w,
                                     ),
-                                    Text(
-                                      'แชทกับเจ้าหน้าที่',
-                                      style: TextStyle(
-                                        fontSize: MyConstant.setMediaQueryWidth(
-                                            context, 28),
-                                        fontWeight: FontWeight.w600,
-                                        color: const Color(0xFF103533),
+                                    Container(
+                                      child: Text(
+                                        'แชทกับเจ้าหน้าที่',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MyConstant.setMediaQueryWidth(
+                                                  context, 28),
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF103533),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox()
+                                const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 22,
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -192,71 +204,73 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            // border: Border.all(
-                            //   width: 1,
-                            //   color: Colors.grey.shade100,
-                            // ),
-                            borderRadius: BorderRadius.circular(10),
-                            // color: Colors.grey.shade100,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ติดต่อเรา/แจ้งปัญหาการใช้งาน',
-                                  style: TextStyle(
-                                    fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 24),
-                                    // color: Color(0xFF103533),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/image/phonecall.png',
-                                      fit: BoxFit.fill,
-                                      height: 30.h,
-                                    ),
-                                    SizedBox(
-                                      width: 25.w,
-                                    ),
-                                    Text(
-                                      '02-855-8118',
-                                      style: TextStyle(
-                                        fontSize: MyConstant.setMediaQueryWidth(
-                                            context, 25),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditProfile(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: InkWell(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(15),
+                  //       child: Container(
+                  //         decoration: BoxDecoration(
+                  //           // border: Border.all(
+                  //           //   width: 1,
+                  //           //   color: Colors.grey.shade100,
+                  //           // ),
+                  //           borderRadius: BorderRadius.circular(10),
+                  //           // color: Colors.grey.shade100,
+                  //         ),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(15),
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 'ติดต่อเรา/แจ้งปัญหาการใช้งาน',
+                  //                 style: TextStyle(
+                  //                   fontSize: MyConstant.setMediaQueryWidth(
+                  //                       context, 24),
+                  //                   // color: Color(0xFF103533),
+                  //                 ),
+                  //               ),
+                  //               SizedBox(
+                  //                 height: 10.h,
+                  //               ),
+                  //               Row(
+                  //                 children: [
+                  //                   Image.asset(
+                  //                     'assets/image/phonecall.png',
+                  //                     fit: BoxFit.fill,
+                  //                     height: 30.h,
+                  //                   ),
+                  //                   SizedBox(
+                  //                     width: 25.w,
+                  //                   ),
+                  //                   Text(
+                  //                     '02-855-8118',
+                  //                     style: TextStyle(
+                  //                       fontSize: MyConstant.setMediaQueryWidth(
+                  //                           context, 25),
+                  //                       fontWeight: FontWeight.w600,
+                  //                     ),
+                  //                   )
+                  //                 ],
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => const EditProfile(),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+
                   const Expanded(
                     child: SizedBox(),
                   ),

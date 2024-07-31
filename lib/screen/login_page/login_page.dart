@@ -96,69 +96,30 @@ class _LoginState extends State<Login> {
     }
   }
 
-  // Future<void> openlaunchUrlAppOther(String url) async {
-  //   if (mounted) {
-  //     // ignore: deprecated_member_use
-  //     if (await canLaunch(url)
-  //         .timeout(
-  //       const Duration(seconds: 20),
-  //     )
-  //         .catchError(
-  //       (error) {
-  //         if (kDebugMode) {
-  //           print(
-  //             'error ===>> $error',
-  //           );
-  //         }
-  //         return false;
-  //       },
-  //     )) {
-  //       // ignore: deprecated_member_use
-  //       if (!await launch(url)
-  //           .timeout(
-  //         const Duration(seconds: 20),
-  //       )
-  //           .catchError(
-  //         (error) {
-  //           if (kDebugMode) {
-  //             print(
-  //               'error ===>> $error',
-  //             );
-  //           }
-  //           return false;
-  //         },
-  //       )) {
-  //         if (kDebugMode) {
-  //           print(
-  //             'Could not launch $url',
-  //           );
-  //         }
-  //       }
-  //     } else {
-  //       if (kDebugMode) {
-  //         print(
-  //           'Could not launch $url',
-  //         );
-  //       }
-  //     }
-  //   }
-  // }
+  Future<bool> onWillPop() async {
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    final query = MediaQuery.of(context);
-    return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
+
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
       child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        // ignore: deprecated_member_use
-        child: WillPopScope(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: PopScope(
+          onPopInvoked: (didPop) async => await onWillPop().catchError(
+            (error) {
+              if (kDebugMode) {
+                print(
+                  'error ===>> onWillPop: $error',
+                );
+              }
+              return false;
+            },
+          ),
           child: Scaffold(
             body: Stack(
               children: [
@@ -199,7 +160,7 @@ class _LoginState extends State<Login> {
                                     width: 30,
                                     child: IconButton(
                                       icon: Icon(
-                                        Icons.arrow_back,
+                                        Icons.arrow_back_ios_new,
                                         size: MyConstant.setMediaQueryWidth(
                                             context, 25),
                                         color: Colors.white,
@@ -261,7 +222,7 @@ class _LoginState extends State<Login> {
                                   width: 10.w,
                                 ),
                                 Text(
-                                  'by Chase Asia PCL',
+                                  'Chase Asia PCL',
                                   style: TextStyle(
                                     fontSize: MyConstant.setMediaQueryWidth(
                                         context, 20),
@@ -580,7 +541,7 @@ class _LoginState extends State<Login> {
                                   : 'Conditions and safety',
                               style: TextStyle(
                                 fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 19),
+                                    MyConstant.setMediaQueryWidth(context, 22),
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -606,7 +567,7 @@ class _LoginState extends State<Login> {
                                   'https://www.chase.co.th/en/privacy-policy',
                                   style: TextStyle(
                                     fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 20),
+                                        context, 21),
                                     color: Colors.blue.shade800,
                                     decoration: TextDecoration.underline,
                                   ),
@@ -621,17 +582,17 @@ class _LoginState extends State<Login> {
                         padding: EdgeInsets.symmetric(horizontal: 25.w),
                         child: Row(
                           children: [
-                            Text(
-                              Localizations.localeOf(context).languageCode ==
-                                      'th'
-                                  ? 'พัฒนาโดย : บริษัท เชฎฐ์ เอเชีย จำกัด (มหาชน)'
-                                  : 'Developed by : Chase Asia PCL',
-                              style: TextStyle(
-                                fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 19),
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
+                            // Text(
+                            //   Localizations.localeOf(context).languageCode ==
+                            //           'th'
+                            //       ? 'พัฒนาโดย : บริษัท เชฎฐ์ เอเชีย จำกัด (มหาชน)'
+                            //       : 'Developed by : Chase Asia PCL',
+                            //   style: TextStyle(
+                            //     fontSize:
+                            //         MyConstant.setMediaQueryWidth(context, 19),
+                            //     fontWeight: FontWeight.normal,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -641,9 +602,6 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          onWillPop: () async {
-            return false;
-          },
         ),
       ),
     );

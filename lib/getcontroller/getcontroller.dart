@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_chaseapp/model/chat_model.dart';
@@ -5,34 +6,32 @@ import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ChatController extends GetxController {
   RxList<ChatMessage> messages = <ChatMessage>[].obs;
   late IO.Socket socket;
-  Rx<ScrollController> sadsad = ScrollController().obs;
+  Rx<ScrollController> scoll = ScrollController().obs;
   Rx<TextEditingController> messageController = TextEditingController().obs;
   Rx<String?> name = Rx<String?>(null);
   Rx<String?> idcard = Rx<String?>(null);
+  var WelcomeMessage = true.obs;
+  RxList<File> selectedImages = <File>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    connectSocket();
-    fetchUserProfile();
+    fetchUserProfile().then((_) => connectSocket());
   }
 
   Future<void> fetchUserProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-
       name.value = prefs.getString(KeyStorage.name);
-
       idcard.value = prefs.getString(KeyStorage.idCard);
     } catch (error) {
       print(error);
     }
-
-    return;
   }
 
   void connectSocket() {
@@ -53,10 +52,27 @@ class ChatController extends GetxController {
 
     socket.on('initialMessages', (data) {
       try {
-        // รับข้อมูลเป็น List<dynamic> ตรงๆ
         List<dynamic> messageData = data;
         messages.value =
             messageData.map((json) => ChatMessage.fromJson(json)).toList();
+
+        // เพิ่มข้อความต้อนรับใน messages หากไม่มีข้อความนี้
+        var welcomeMessage = ChatMessage(
+          sender: '',
+          receiver: name.value,
+          message: 'สวัสดีคุณ ${name.value}',
+          type: 'text',
+          statusRead: '',
+          statusConnect: '',
+          idCard: '',
+          role: '',
+          image: [],
+        );
+
+        if (!messages.any((msg) => msg.message == welcomeMessage.message)) {
+          messages.insert(0, welcomeMessage);
+        }
+
         print('Initial messages received: ${messages.length}');
       } catch (e) {
         print('Error decoding initial messages: $e');
@@ -83,6 +99,38 @@ class ChatController extends GetxController {
     });
   }
 
+  Future<void> sendMessageWithImages() async {
+    try {
+      List<String> imageUrls = [];
+
+      // อัพโหลดภาพหากมีภาพที่เลือก
+      if (selectedImages.isNotEmpty) {
+        imageUrls = await uploadImages(selectedImages);
+      }
+
+      // สร้างข้อความ
+      final message = ChatMessage(
+        sender: name.value,
+        message: messageController.value.text,
+        receiver: 'admin',
+        statusRead: 'unread',
+        statusConnect: 'N',
+        idCard: idcard.value,
+        role: 'user',
+        image: imageUrls,
+      );
+
+      // ส่งข้อความ
+      sendMessage(message);
+
+      // เคลียร์ข้อมูล
+      messageController.value.clear();
+      selectedImages.clear();
+    } catch (e) {
+      print('Error sending message with images: $e');
+    }
+  }
+
   void sendMessage(ChatMessage message) {
     try {
       socket.emit('sendMessage', json.encode(message.toJson()));
@@ -90,5 +138,37 @@ class ChatController extends GetxController {
     } catch (e) {
       print('Error sending message: $e');
     }
+  }
+
+  Future<List<String>> uploadImages(List<File> imageFiles) async {
+    final List<String> imageUrls = [];
+
+    try {
+      final request = http.MultipartRequest(
+          'POST', Uri.parse('http://18.140.121.108:4000/upload/img'));
+      for (var imageFile in imageFiles) {
+        request.files
+            .add(await http.MultipartFile.fromPath('image', imageFile.path));
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: $responseBody');
+
+      if (responseData['status'] == true) {
+        print('Upload successful: ${responseData['message']}');
+        imageUrls
+            .addAll(List<String>.from(responseData['data']['selectedImages']));
+      } else {
+        print('Upload failed: ${responseData['message']}');
+      }
+    } catch (e) {
+      print('Error uploading images: $e');
+    }
+
+    return imageUrls;
   }
 }

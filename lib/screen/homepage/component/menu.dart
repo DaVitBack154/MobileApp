@@ -38,39 +38,17 @@ class _MenuState extends State<Menu> {
       child: Column(
         children: [
           Container(
-            width: MyConstant.setMediaQueryWidth(context, 60),
-            // width: ResponsiveWidthContext.isMobileSmall(context)
-            //     ? MyConstant.setMediaQueryWidth(context, 70)
-            //     : ResponsiveWidthContext.isTablet(context)
-            //         ? MyConstant.setMediaQueryWidth(context, 90)
-            //         : ResponsiveWidthContext.isTablet11(context)
-            //             ? MyConstant.setMediaQueryWidth(context, 45)
-            //             : ResponsiveWidthContext.isTabletMini(context)
-            //                 ? MyConstant.setMediaQueryWidth(context, 60)
-            //                 : MyConstant.setMediaQueryWidth(context, 65),
-            height: MyConstant.setMediaQueryWidth(context, 60),
-            // height: ResponsiveWidthContext.isTablet(context)
-            //     ? MyConstant.setMediaQueryWidth(context, 90)
-            //     : ResponsiveWidthContext.isTablet11(context)
-            //         ? MyConstant.setMediaQueryWidth(context, 45)
-            //         : ResponsiveWidthContext.isTabletMini(context)
-            //             ? MyConstant.setMediaQueryWidth(context, 60)
-            //             : MyConstant.setMediaQueryHeight(context, 60),
+            width: MyConstant.setMediaQueryWidth(context, 65),
+            height: MyConstant.setMediaQueryWidth(context, 65),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: EdgeInsets.all(MyConstant.setMediaQueryWidth(context, 13)
-                  // ResponsiveWidthContext.isTablet(context)
-                  //     ? 15
-                  //     : ResponsiveWidthContext.isTablet11(context)
-                  //         ? MyConstant.setMediaQueryWidth(context, 10)
-                  //         : ResponsiveWidthContext.isTabletMini(context)
-                  //             ? MyConstant.setMediaQueryWidth(context, 12)
-                  //             : 15,
-                  ),
+              padding: EdgeInsets.all(
+                MyConstant.setMediaQueryWidth(context, 12),
+              ),
               child: Image(
                 image: AssetImage(imagePath),
                 fit: BoxFit.cover,
@@ -80,15 +58,10 @@ class _MenuState extends State<Menu> {
           Text(
             title,
             style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: MyConstant.setMediaQueryWidth(context, 23)
-                // fontSize: ResponsiveWidthContext.isTablet(context)
-                //     ? MyConstant.setMediaQueryWidth(context, 35)
-                //     : ResponsiveWidthContext.isTablet11(context)
-                //         ? MyConstant.setMediaQueryWidth(context, 18)
-                //         : MyConstant.setMediaQueryWidth(context, 22),
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+              fontSize: MyConstant.setMediaQueryWidth(context, 23),
+            ),
           ),
         ],
       ),
@@ -114,202 +87,4 @@ class _MenuState extends State<Menu> {
       },
     );
   }
-
-  // print(MediaQuery.of(context).size.height);
-  // return Row(
-  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //   children: [
-  //     InkWell(
-  //       child: Column(
-  //         children: [
-  //           Container(
-  //             width: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : ResponsiveHeightContext.isTablet(context)
-  //                             ? MyConstant.setMediaQueryHeight(context, 90)
-  //                             : null,
-  //             height: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : ResponsiveHeightContext.isTablet(context)
-  //                             ? MyConstant.setMediaQueryHeight(context, 80)
-  //                             : null,
-  //             decoration: BoxDecoration(
-  //               color: Colors.white,
-  //               borderRadius: BorderRadius.circular(20),
-  //             ),
-  //             child: Padding(
-  //               padding: const EdgeInsets.all(18.0),
-  //               child: const Image(
-  //                 image: AssetImage('assets/image/icon1.png'),
-  //                 fit: BoxFit.cover,
-  //               ),
-  //             ),
-  //           ),
-  //           Text(
-  //             'ชำระเงิน',
-  //             style: TextStyle(
-  //               color: Colors.white,
-  //               fontWeight: FontWeight.normal,
-  //               fontSize:
-  //                   ResponsiveHeightContext.isTablet(context) ? 16.sp : 17.sp,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       onTap: () async {
-  //         SharedPreferences prefs = await SharedPreferences.getInstance();
-  //         String? token = prefs.getString('token'); // ดึง Token
-  //         if (token == null) {
-  //           // ignore: use_build_context_synchronously
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) => const Login(),
-  //             ),
-  //           );
-  //           return;
-  //         }
-  //         setState(() {});
-
-  //         // ignore: use_build_context_synchronously
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => const Payment(),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //     InkWell(
-  //       child: Column(
-  //         children: [
-  //           Container(
-  //             width: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : null,
-  //             height: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : MyConstant.setMediaQueryHeight(context, 60),
-  //             decoration: BoxDecoration(
-  //               shape: BoxShape.rectangle,
-  //               color: Colors.white,
-  //               borderRadius: BorderRadius.circular(20),
-  //             ),
-  //             child: const Image(
-  //               image: AssetImage('assets/image/icon2.png'),
-  //               // width: 70,
-  //               // height: 70,
-  //             ),
-  //           ),
-  //           Text(
-  //             'ขอเอกสาร',
-  //             style: TextStyle(
-  //               color: Colors.white,
-  //               fontWeight: FontWeight.normal,
-  //               fontSize: 18.sp,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       onTap: () async {
-  //         SharedPreferences prefs = await SharedPreferences.getInstance();
-  //         String? token = prefs.getString('token'); // ดึง Token
-  //         if (token == null) {
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) => const Login(),
-  //             ),
-  //           );
-  //           return;
-  //         }
-  //         setState(() {});
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => const ReqDocument(),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //     InkWell(
-  //       child: Column(
-  //         children: [
-  //           Container(
-  //             width: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : null,
-  //             height: ResponsiveHeightContext.isMobileFoldVertical(context)
-  //                 ? MyConstant.setMediaQueryHeight(context, 55)
-  //                 : ResponsiveHeightContext.isMobileSmall(context)
-  //                     ? MyConstant.setMediaQueryHeight(context, 60)
-  //                     : ResponsiveHeightContext.isMobile(context)
-  //                         ? MyConstant.setMediaQueryHeight(context, 60)
-  //                         : MyConstant.setMediaQueryHeight(context, 60),
-  //             decoration: BoxDecoration(
-  //               shape: BoxShape.rectangle,
-  //               color: Colors.white,
-  //               borderRadius: BorderRadius.circular(20),
-  //             ),
-  //             child: const Image(
-  //               image: AssetImage('assets/image/icon3.png'),
-  //               // width: 70,
-  //               // height: 70,
-  //             ),
-  //           ),
-  //           Text(
-  //             'ประวัติชำระ',
-  //             style: TextStyle(
-  //               color: Colors.white,
-  //               fontWeight: FontWeight.normal,
-  //               fontSize: 18.sp,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       onTap: () async {
-  //         SharedPreferences prefs = await SharedPreferences.getInstance();
-  //         String? token = prefs.getString('token'); // ดึง Token
-  //         if (token == null) {
-  //           // ignore: use_build_context_synchronously
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) => const Login(),
-  //             ),
-  //           );
-  //           return;
-  //         }
-  //         setState(() {});
-  //         // ignore: use_build_context_synchronously
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (context) => const History(),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   ],
-  // );
 }

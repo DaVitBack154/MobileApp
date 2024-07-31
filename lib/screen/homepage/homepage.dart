@@ -31,59 +31,74 @@ class _HomepageState extends State<Homepage> {
     super.initState();
   }
 
+  Future<bool> onWillPop() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    // print(width);
-    final query = MediaQuery.of(context);
-    return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
-      child: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              width: MyConstant.setMediaQueryWidthFull(context),
-              height: ResponsiveWidthContext.isTablet(context)
-                  ? MyConstant.setMediaQueryWidth(context, 565)
-                  : ResponsiveWidthContext.isTablet11(context)
-                      ? MyConstant.setMediaQueryWidth(context, 530)
-                      : ResponsiveWidthContext.isMobile(context)
-                          ? MyConstant.setMediaQueryWidth(context, 510)
-                          : ResponsiveWidthContext.isMobileFoldVertical(context)
-                              ? MyConstant.setMediaQueryWidth(context, 520)
-                              : MyConstant.setMediaQueryWidth(context, 520),
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                image: DecorationImage(
-                  image: AssetImage('assets/image/bg.png'),
-                  fit: BoxFit.cover,
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: PopScope(
+          onPopInvoked: (didPop) async => await onWillPop().catchError(
+            (error) {
+              if (kDebugMode) {
+                print(
+                  'error ===>> onWillPop: $error',
+                );
+              }
+              return false;
+            },
+          ),
+          child: Scaffold(
+            body: Column(
+              children: [
+                Container(
+                  width: MyConstant.setMediaQueryWidthFull(context),
+                  height: ResponsiveWidthContext.isTablet(context)
+                      ? MyConstant.setMediaQueryWidth(context, 565)
+                      : ResponsiveWidthContext.isTablet11(context)
+                          ? MyConstant.setMediaQueryWidth(context, 530)
+                          : ResponsiveWidthContext.isMobile(context)
+                              ? MyConstant.setMediaQueryWidth(context, 510)
+                              : ResponsiveWidthContext.isMobileFoldVertical(
+                                      context)
+                                  ? MyConstant.setMediaQueryWidth(context, 520)
+                                  : MyConstant.setMediaQueryWidth(context, 530),
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                      image: AssetImage('assets/image/bg.png'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      const Navbar(),
+                      const Slide(),
+                      const Menu(),
+                    ],
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        btnSaleHome(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  const Navbar(),
-                  const Slide(),
-                  const Menu(),
-                ],
-              ),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    btnSaleHome(),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -104,7 +119,7 @@ class _HomepageState extends State<Homepage> {
               child: Text(
                 'บ้านและที่ดิน',
                 style: TextStyle(
-                  fontSize: MyConstant.setMediaQueryWidth(context, 25),
+                  fontSize: MyConstant.setMediaQueryWidth(context, 26),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -122,7 +137,7 @@ class _HomepageState extends State<Homepage> {
                 borderRadius: BorderRadius.circular(15),
               ),
               color: Colors.white,
-              elevation: 3,
+              elevation: 4,
               child: Container(
                 color: Colors.grey.shade100,
                 child: Row(
@@ -134,7 +149,7 @@ class _HomepageState extends State<Homepage> {
                           ? MyConstant.setMediaQueryWidth(context, 210)
                           : ResponsiveWidthContext.isMobile(context) ||
                                   ResponsiveWidthContext.isMobileSmall(context)
-                              ? MyConstant.setMediaQueryWidth(context, 205)
+                              ? MyConstant.setMediaQueryWidth(context, 220)
                               : MyConstant.setMediaQueryWidth(context, 240),
                       fit: BoxFit.cover,
                     ),

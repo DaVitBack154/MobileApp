@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_chaseapp/model/respon_accuser.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class CardUser extends StatelessWidget {
@@ -13,7 +12,7 @@ class CardUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
+    // final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
     final formattedDate = DateFormat("dd-MM-yyyy");
 
     String formatCurrency(double amount) {
@@ -163,13 +162,13 @@ class CardUser extends StatelessWidget {
                             ? Image.asset(
                                 'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
                                 height:
-                                    MyConstant.setMediaQueryWidth(context, 16),
+                                    MyConstant.setMediaQueryWidth(context, 18),
                                 fit: BoxFit.cover,
                               )
                             : Image.asset(
                                 'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
                                 height:
-                                    MyConstant.setMediaQueryWidth(context, 14),
+                                    MyConstant.setMediaQueryWidth(context, 16),
                                 fit: BoxFit.cover,
                               ),
                         SizedBox(
@@ -313,46 +312,33 @@ class CardUser extends StatelessWidget {
                                   : SizedBox.shrink()
                 ],
               ),
-
-              // Row(
-              //   children: [
-              //     Text(
-              //       'Name :',
-              //       style: TextStyle(
-              //         color: Color(0xFF8A8A8A),
-              //         fontSize: 18.sp,
-              //         height: 1.2,
-              //         fontWeight: FontWeight.normal,
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: 5.w,
-              //     ),
-              //     Text(
-              //       '${data.tCustomerName} ${data.tCustomerSurname}',
-              //       style: TextStyle(
-              //         fontWeight: FontWeight.normal,
-              //         fontSize: 18.sp,
-              //         height: 1.2,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              Text(
-                'Name :',
-                style: TextStyle(
-                  color: const Color(0xFF8A8A8A),
-                  fontSize: MyConstant.setMediaQueryWidth(context, 22),
-                  height: 1.2,
-                  fontWeight: FontWeight.normal,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Name :',
+                    style: TextStyle(
+                      color: Color(0xFF8A8A8A),
+                      fontSize: 18.sp,
+                      height: 1.2,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    '${data.tCustomerName} ${data.tCustomerSurname}',
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18.sp,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                '${data.tCustomerName} ${data.tCustomerSurname}',
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: MyConstant.setMediaQueryWidth(context, 21),
-                ),
+              SizedBox(
+                height: 10.h,
               ),
               Text(
                 '${data.customerId}',
@@ -362,30 +348,6 @@ class CardUser extends StatelessWidget {
                   height: 1.1,
                 ),
               ),
-              // Row(
-              //   children: [
-              //     Text(
-              //       'No Card : ',
-              //       style: TextStyle(
-              //         color: Color(0xFF8A8A8A),
-              //         fontSize: 18.sp,
-              //         height: 1.2,
-              //         fontWeight: FontWeight.normal,
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: 5.w,
-              //     ),
-              //     Text(
-              //       '${data.customerId}',
-              //       style: TextStyle(
-              //         fontWeight: FontWeight.normal,
-              //         fontSize: 18.sp,
-              //         height: 1.1,
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),

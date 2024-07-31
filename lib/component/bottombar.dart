@@ -16,6 +16,7 @@ import 'package:mobile_chaseapp/screen/profile/profile.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Bottombar extends StatefulWidget {
@@ -110,140 +111,143 @@ class _BottombarState extends State<Bottombar> {
     );
   }
 
+  Future<bool> onWillPop() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: WillPopScope(
-        onWillPop: () => OncloseProgram(context),
-        child: Scaffold(
-          body: IndexedSemantics(
-            index: pageIndex,
-            child: pages[pageIndex],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.white,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            elevation: 10,
-            selectedFontSize:
-                ResponsiveHeightContext.isTablet(context) ? 14.sp : 16.sp,
-            iconSize: ResponsiveHeightContext.isTablet(context) ? 45 : 30,
-            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-            selectedItemColor: const Color(0xFF103533),
-            unselectedItemColor: Colors.grey.shade400,
-            onTap: (index) async {
-              if (index != pageIndex) {
-                getStarUser();
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: PopScope(
+          onPopInvoked: (didPop) async => await onWillPop().catchError(
+            (error) {
+              if (kDebugMode) {
+                print(
+                  'error ===>> onWillPop: $error',
+                );
               }
-              if (index == 1 || index == 3) {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String? token = prefs.getString('token'); // ดึง Token
-
-                if (token == null) {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const Login(),
-                  //   ),
-                  // );
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          const Login(),
-                      transitionsBuilder:
-                          (context, animation1, animation2, child) {
-                        final tween = Tween(
-                            begin: const Offset(1.0, 0.0), end: Offset.zero);
-                        return SlideTransition(
-                          position: tween.animate(animation1),
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
-                  return;
-                }
-                setState(() {
-                  pageIndex = index;
-                });
-              } else {
-                setState(() {
-                  pageIndex = index;
-                });
-              }
+              return false;
             },
-            currentIndex: pageIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: pageIndex == 0
-                    ? Image.asset(
-                        'assets/image/iconhome.png',
-                        width: 28.w,
-                        height: 28.h,
-                      )
-                    : Image.asset(
-                        'assets/image/iconhome_none.png',
-                        width: 23.w,
-                        height: 23.h,
+          ),
+          child: Scaffold(
+            body: IndexedSemantics(
+              index: pageIndex,
+              child: pages[pageIndex],
+            ),
+            bottomNavigationBar: SalomonBottomBar(
+              backgroundColor: Colors.white,
+              selectedItemColor: const Color(0xFF103533),
+              unselectedItemColor: Colors.grey.shade400,
+              onTap: (index) async {
+                if (index != pageIndex) {
+                  getStarUser();
+                }
+                if (index == 1 || index == 3) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  String? token = prefs.getString('token'); // ดึง Token
+
+                  if (token == null) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            const Login(),
+                        transitionsBuilder:
+                            (context, animation1, animation2, child) {
+                          final tween = Tween(
+                              begin: const Offset(1.0, 0.0), end: Offset.zero);
+                          return SlideTransition(
+                            position: tween.animate(animation1),
+                            child: child,
+                          );
+                        },
                       ),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: pageIndex == 1
-                    ? Image.asset(
-                        'assets/image/iconacc.png',
-                        width: 30.w,
-                        height: 30.w,
-                      )
-                    : Image.asset(
-                        'assets/image/iconacc_none.png',
-                        width: ResponsiveHeightContext.isTablet(context)
-                            ? 25.w
-                            : 30.h,
-                        height: ResponsiveHeightContext.isTablet(context)
-                            ? 25.w
-                            : 30.h,
-                      ),
-                label: 'Account',
-              ),
-              BottomNavigationBarItem(
-                icon: pageIndex == 2
-                    ? Image.asset(
-                        // 'assets/image/iconprofile.png',
-                        'assets/image/iconaddress.png',
-                        width: 28.w,
-                        height: 28.h,
-                      )
-                    : Image.asset(
-                        'assets/image/iconaddress_none.png',
-                        // 'assets/image/iconprofile_none.png',
-                        width: ResponsiveHeightContext.isTablet(context)
-                            ? 22.w
-                            : 28.h,
-                        height: ResponsiveHeightContext.isTablet(context)
-                            ? 22.w
-                            : 28.h,
-                      ),
-                label: 'Contact',
-              ),
-              BottomNavigationBarItem(
-                icon: pageIndex == 3
-                    ? Icon(
-                        Icons.menu,
-                        size: MyConstant.setMediaQueryWidth(context, 35),
-                        color: Color(0xFFF103533),
-                      )
-                    : Icon(
-                        Icons.menu,
-                        size: MyConstant.setMediaQueryWidth(context, 35),
-                        color: Color(0xFFF9badad),
-                      ),
-                label: 'Profile',
-              ),
-            ],
+                    );
+                    return;
+                  }
+                  setState(() {
+                    pageIndex = index;
+                  });
+                } else {
+                  setState(() {
+                    pageIndex = index;
+                  });
+                }
+              },
+              currentIndex: pageIndex,
+              items: [
+                SalomonBottomBarItem(
+                  icon: Image.asset(
+                    pageIndex == 0
+                        ? 'assets/image/iconhome.png'
+                        : 'assets/image/iconhome_none.png',
+                    width: pageIndex == 0 ? 28.w : 23.w,
+                  ),
+                  title: Text(
+                    'หน้าแรก',
+                    style: TextStyle(
+                      fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                      fontFamily: 'FC Iconic',
+                    ),
+                  ),
+                  selectedColor: Color(0xFF103533),
+                ),
+                SalomonBottomBarItem(
+                  icon: Image.asset(
+                    pageIndex == 1
+                        ? 'assets/image/iconacc.png'
+                        : 'assets/image/iconacc_none.png',
+                    width: 28.w,
+                  ),
+                  title: Text(
+                    'บัญชี',
+                    style: TextStyle(
+                      fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                      fontFamily: 'FC Iconic',
+                    ),
+                  ),
+                  selectedColor: Color(0xFF103533),
+                ),
+                SalomonBottomBarItem(
+                  icon: Image.asset(
+                    pageIndex == 2
+                        ? 'assets/image/iconaddress.png'
+                        : 'assets/image/iconaddress_none.png',
+                    width: 28.w,
+                  ),
+                  title: Text(
+                    'ติดต่อ',
+                    style: TextStyle(
+                      fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                      fontFamily: 'FC Iconic',
+                    ),
+                  ),
+                  selectedColor: Color(0xFF103533),
+                ),
+                SalomonBottomBarItem(
+                  icon: Icon(
+                    Icons.menu,
+                    size: MyConstant.setMediaQueryWidth(context, 32),
+                    color:
+                        pageIndex == 3 ? Color(0xFF103533) : Color(0xFFF9badad),
+                  ),
+                  title: Text(
+                    'โปรไฟล์',
+                    style: TextStyle(
+                      fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                      fontFamily: 'FC Iconic',
+                    ),
+                  ),
+                  selectedColor: Color(0xFF103533),
+                ),
+              ],
+            ),
           ),
         ),
       ),

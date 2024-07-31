@@ -27,14 +27,14 @@ class _HisBarState extends State<HisBar> {
             children: [
               Container(
                 width: 40.w,
-                height: 40.h,
+                height: 35.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.black.withOpacity(.1),
                 ),
                 child: IconButton(
                   icon: Icon(
-                    Icons.arrow_back,
+                    Icons.arrow_back_ios_new,
                     size: MyConstant.setMediaQueryWidth(context, 25),
                     color: Colors.white,
                   ),

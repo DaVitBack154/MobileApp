@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class Bar extends StatelessWidget {
@@ -20,12 +19,12 @@ class Bar extends StatelessWidget {
               ? MyConstant.setMediaQueryWidth(context, 135)
               : ResponsiveWidthContext.isMobile(context) ||
                       ResponsiveWidthContext.isMobileSmall(context)
-                  ? MyConstant.setMediaQueryWidth(context, 130)
+                  ? MyConstant.setMediaQueryWidth(context, 140)
                   : MyConstant.setMediaQueryWidth(context, 110),
           child: Row(
             children: [
               Container(
-                width: 35.w,
+                width: 40.w,
                 height: 35.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -33,7 +32,7 @@ class Bar extends StatelessWidget {
                 ),
                 child: IconButton(
                   icon: Icon(
-                    Icons.arrow_back,
+                    Icons.arrow_back_ios_new,
                     size: MyConstant.setMediaQueryWidth(context, 25),
                     color: Colors.white,
                   ),

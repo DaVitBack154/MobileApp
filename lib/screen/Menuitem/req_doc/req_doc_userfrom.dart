@@ -150,14 +150,12 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final thaiBahtFormat = NumberFormat.currency(locale: 'th_TH', symbol: '');
-    final query = MediaQuery.of(context);
 
-    return MediaQuery(
-      data: query.copyWith(
-        // ignore: deprecated_member_use
-        textScaler: TextScaler.linear(query.textScaleFactor.clamp(1.0, 1.0)),
-      ),
+    return MediaQuery.withClampedTextScaling(
+      minScaleFactor: 1,
+      maxScaleFactor: 1,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(
           children: [
             Column(
@@ -166,6 +164,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                   width: width,
                   height: 300.h + kToolbarHeight,
                   decoration: const BoxDecoration(
+                    color: Colors.white,
                     image: DecorationImage(
                       image: AssetImage('assets/image/bg.png'),
                       fit: BoxFit.cover,
