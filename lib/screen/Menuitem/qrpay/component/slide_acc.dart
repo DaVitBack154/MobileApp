@@ -17,7 +17,7 @@ class SlideAcc extends StatefulWidget {
 
 class _SlideAccState extends State<SlideAcc> {
   AccController accController = AccController();
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   int _currentIndex = 0;
 
   bool loading = true;

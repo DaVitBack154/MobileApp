@@ -19,7 +19,7 @@ class SlideHis extends StatefulWidget {
 class _SlideHisState extends State<SlideHis> {
   PaymentController paymentController = PaymentController();
   AccController accController = AccController();
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   int _currentIndex = 0;
   bool loading = true;
 

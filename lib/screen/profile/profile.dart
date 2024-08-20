@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mobile_chaseapp/controller/logout_controller.dart';
+import 'package:mobile_chaseapp/getcontroller/getcontroller.dart';
+import 'package:mobile_chaseapp/model/chat_model.dart';
 import 'package:mobile_chaseapp/screen/chat/chat.dart';
 import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/screen/profile/component/navbarprofile.dart';
@@ -18,25 +23,26 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final LogoutController _logoutController = LogoutController();
+  // final LogoutController _logoutController = LogoutController();
+  final ChatController chatController = Get.put(ChatController());
 
-  Future<void> _handleLogout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString(KeyStorage.token) ?? ''; // ดึง Token
-    String pin = prefs.getString(KeyStorage.pin) ?? '';
+  // Future<void> _handleLogout() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String token = prefs.getString(KeyStorage.token) ?? ''; // ดึง Token
+  //   String pin = prefs.getString(KeyStorage.pin) ?? '';
 
-    if (token.isNotEmpty) {
-      // ตรวจสอบว่า Token ไม่เป็น null ก่อนใช้งาน
-      await _logoutController.logout(device: '');
-      setState(() {});
-      //print('getprofileupdate');
-    }
-  }
+  //   if (token.isNotEmpty) {
+  //     // ตรวจสอบว่า Token ไม่เป็น null ก่อนใช้งาน
+  //     await _logoutController.logout(device: '');
+  //     setState(() {});
+  //     //print('getprofileupdate');
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _handleLogout();
+    // _handleLogout();
   }
 
   @override
@@ -179,6 +185,12 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                     ),
+                                    Obx(() {
+                                      if (chatController.messages.isNotEmpty) {
+                                        return nubStatusReadUser();
+                                      }
+                                      return SizedBox();
+                                    })
                                   ],
                                 ),
                                 const Row(
@@ -194,83 +206,28 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatScreen(),
-                          ),
+                      onTap: () async {
+                        // เรียกใช้ฟังก์ชันทั้งหมดจากแต่ละ controller
+                        chatController.updateStatusRead();
+
+                        chatController.triggerTimeoutEvent();
+
+                        if (chatController.isOutOfWorkingHours.value) {
+                          await chatController.sendMessageWithTimeoutCheck();
+                        }
+                        // ตรวจสอบสถานะและส่งข้อความต้อนรับถ้าจำเป็น
+
+                        await chatController.handleSendWelcomeMessage();
+
+                        // เปลี่ยนหน้าไปยัง ChatScreen เสมอ
+                        Get.to(
+                          () => ChatScreen(),
+                          transition: Transition.rightToLeft,
+                          duration: Duration(milliseconds: 300),
                         );
                       },
                     ),
                   ),
-
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: InkWell(
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(15),
-                  //       child: Container(
-                  //         decoration: BoxDecoration(
-                  //           // border: Border.all(
-                  //           //   width: 1,
-                  //           //   color: Colors.grey.shade100,
-                  //           // ),
-                  //           borderRadius: BorderRadius.circular(10),
-                  //           // color: Colors.grey.shade100,
-                  //         ),
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(15),
-                  //           child: Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 'ติดต่อเรา/แจ้งปัญหาการใช้งาน',
-                  //                 style: TextStyle(
-                  //                   fontSize: MyConstant.setMediaQueryWidth(
-                  //                       context, 24),
-                  //                   // color: Color(0xFF103533),
-                  //                 ),
-                  //               ),
-                  //               SizedBox(
-                  //                 height: 10.h,
-                  //               ),
-                  //               Row(
-                  //                 children: [
-                  //                   Image.asset(
-                  //                     'assets/image/phonecall.png',
-                  //                     fit: BoxFit.fill,
-                  //                     height: 30.h,
-                  //                   ),
-                  //                   SizedBox(
-                  //                     width: 25.w,
-                  //                   ),
-                  //                   Text(
-                  //                     '02-855-8118',
-                  //                     style: TextStyle(
-                  //                       fontSize: MyConstant.setMediaQueryWidth(
-                  //                           context, 25),
-                  //                       fontWeight: FontWeight.w600,
-                  //                     ),
-                  //                   )
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     onTap: () {
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (context) => const EditProfile(),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-
                   const Expanded(
                     child: SizedBox(),
                   ),
@@ -315,5 +272,45 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  Widget nubStatusReadUser() {
+    final filteredMessages = chatController.messages
+        .where((message) =>
+            message.sender == chatController.name.value ||
+            message.receiver == chatController.name.value)
+        .toList();
+
+    int readuser = 0;
+    for (var element in filteredMessages) {
+      if (element.statusRead == 'SA') {
+        readuser = readuser + 1;
+      }
+    }
+
+    return readuser > 0
+        ? Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "$readuser",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: MyConstant.setMediaQueryWidth(context, 22),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
+          )
+        : const SizedBox.shrink();
   }
 }

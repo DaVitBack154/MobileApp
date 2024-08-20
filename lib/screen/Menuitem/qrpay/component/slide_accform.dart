@@ -21,7 +21,7 @@ class SlideFrom extends StatefulWidget {
 }
 
 class _SlideFromState extends State<SlideFrom> {
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   AccController accController = AccController();
   UserPayController userPayController = UserPayController();
   int _currentIndex = 0;

@@ -7,6 +7,7 @@ class ChatMessage {
   final String? statusRead;
   final String? statusConnect;
   final String? idCard;
+  final String? statusEnd;
   final String? role;
   final List<String>? image;
 
@@ -19,6 +20,7 @@ class ChatMessage {
     this.statusRead,
     this.statusConnect,
     this.idCard,
+    this.statusEnd,
     this.role,
     this.image,
   });
@@ -28,11 +30,12 @@ class ChatMessage {
       id: json['_id'], // รับค่า id จาก json
       sender: json['sender'],
       message: json['message'],
-      receiver: json['reciever'], // แก้ไขเป็น 'receiver'
+      receiver: json['reciever'],
       type: json['type'],
       statusRead: json['status_read'],
       statusConnect: json['status_connect'],
       idCard: json['id_card'],
+      statusEnd: json['status_end'],
       role: json['role'],
       image: json['image'] != null
           ? List<String>.from(json['image'])
@@ -45,11 +48,12 @@ class ChatMessage {
       '_id': id, // ส่งค่า id
       'sender': sender,
       'message': message,
-      'reciever': receiver, // แก้ไขเป็น 'receiver'
+      'reciever': receiver,
       'type': type,
       'status_read': statusRead,
       'status_connect': statusConnect,
       'id_card': idCard,
+      'status_end': statusEnd,
       'role': role,
       'image': image,
     };

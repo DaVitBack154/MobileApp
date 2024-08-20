@@ -19,7 +19,7 @@ class ReqDocumentFrom extends StatefulWidget {
 class _ReqDocumentFromState extends State<ReqDocumentFrom> {
   AccController accController = AccController();
   UserReqController userReqController = UserReqController();
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   int _currentIndex = 0;
   final _formKey = GlobalKey<FormState>();
   String? errorOther;

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
-
+import 'package:mobile_chaseapp/controller/getdate_server.dart';
+import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +11,7 @@ import 'package:mobile_chaseapp/getcontroller/getcontroller.dart';
 import 'package:mobile_chaseapp/model/chat_model.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -19,16 +22,72 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> {
   final ChatController chatController = Get.put(ChatController());
+  // final DateServerController dateController = DateServerController();
   final ImagePicker _picker = ImagePicker();
+  // var dateServer = '';
+  // Timer? timer1;
+  List? filteredMessages;
+  // bool langtime = false;
+  // bool sendmessageUser = false;
 
   @override
   void initState() {
     super.initState();
+    // timer1 = Timer.periodic(
+    //   const Duration(seconds: 1),
+    //   (timer1) {
+    //     if (mounted) {
+    //       dateController.fetchDateServer().then(
+    //         (value) {
+    //           dateServer = dateController.dateServer.data.toString();
+    //           // print(dateServer);
+    //           DateTime timelangmai = DateTime.parse(dateServer);
+    //           if (timelangmai.isAfter(
+    //             mounted
+    //                 ? DateTime(timelangmai.year, timelangmai.month,
+    //                         timelangmai.day, 20, 00, 0)
+    //                     .subtract(
+    //                     const Duration(seconds: 1),
+    //                   )
+    //                 : DateTime(timelangmai.year, timelangmai.month,
+    //                     timelangmai.day, 20, 00, 0),
+    //           )) {
+    //             langtime = true;
+    //             if (langtime) {
+    //               if (!sendmessageUser) {
+    //                 sendmessageUser = true;
+    //                 //sendmessageUser ถ้าเป็น true คือส่ง 1  ครั้ง แต่ถ้าเป็น false ไม่ส่ง
+    //                 //langtime ถ้าเป็น false ไม่ทำอะไร ถ้าเป็น trueเอาตัว sendmessageUser มาใช้
+    //                 //sendข้อความนอกเวลา
+    //                 var message = ChatMessage(
+    //                   sender: '',
+    //                   receiver: chatController.name.value,
+    //                   message: 'หมดเวลา',
+    //                   type: 'text',
+    //                   statusRead: 'N',
+    //                   statusConnect: 'N',
+    //                   role: 'admin',
+    //                   idCard: chatController.idcard.value,
+    //                 );
+    //                 chatController.sendMessage(message);
+    //               }
+    //             }
+    //           }
+    //         },
+    //       );
+    //       //date out
+    //     }
+    //   },
+    // );
   }
 
   @override
   void dispose() {
     super.dispose();
+    // if (timer1 != null) {
+    //   timer1!.cancel();
+    //   timer1 = null;
+    // }
   }
 
   Future<void> _pickImages() async {
@@ -69,6 +128,12 @@ class ChatScreenState extends State<ChatScreen> {
             ),
             foregroundColor: Colors.white,
             backgroundColor: const Color(0xFF103533),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Get.back(result: true); // ส่งค่า true กลับไปยังหน้า Profile
+              },
+            ),
           ),
           body: Container(
             color: Colors.white,
@@ -82,9 +147,10 @@ class ChatScreenState extends State<ChatScreen> {
                     }
 
                     // กรองข้อความที่แสดง
-                    var filteredMessages = chatController.messages
+                    filteredMessages = chatController.messages
                         .where((message) =>
                             message.sender == chatController.name.value ||
+                            message.idCard == chatController.idcard.value ||
                             message.receiver == chatController.name.value)
                         .toList();
 
@@ -98,14 +164,15 @@ class ChatScreenState extends State<ChatScreen> {
                           duration: const Duration(milliseconds: 1000),
                           curve: Curves.fastOutSlowIn,
                         );
+                        // update controller
                       },
                     );
 
                     return ListView.builder(
                       controller: scrollslide,
-                      itemCount: filteredMessages.length,
+                      itemCount: filteredMessages!.length,
                       itemBuilder: (context, index) {
-                        var message = filteredMessages[index];
+                        var message = filteredMessages![index];
 
                         // ใช้ Align เพื่อจัดตำแหน่งข้อความ
                         return Align(
@@ -197,83 +264,144 @@ class ChatScreenState extends State<ChatScreen> {
                                             runSpacing: 8.0,
                                             alignment: WrapAlignment.center,
                                             children: message.image!.map(
-                                              (imageUrl) {
-                                                return InkWell(
-                                                  onTap: () async {
-                                                    if (mounted) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return Stack(
-                                                            children: [
-                                                              Positioned.fill(
-                                                                child:
-                                                                    PhotoView(
-                                                                  imageProvider:
-                                                                      NetworkImage(
-                                                                          imageUrl),
-                                                                ),
-                                                              ),
-                                                              Positioned(
-                                                                top: 20,
-                                                                right: 10,
-                                                                child:
-                                                                    IconButton(
-                                                                  icon:
-                                                                      const Icon(
-                                                                    Icons.close,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    size: 40,
-                                                                  ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          );
+                                              (fileUrl) {
+                                                bool isImage = fileUrl
+                                                        .toLowerCase()
+                                                        .endsWith('.jpg') ||
+                                                    fileUrl
+                                                        .toLowerCase()
+                                                        .endsWith('.jpeg') ||
+                                                    fileUrl
+                                                        .toLowerCase()
+                                                        .endsWith('.png') ||
+                                                    fileUrl
+                                                        .toLowerCase()
+                                                        .endsWith('.gif');
+
+                                                String fileName =
+                                                    path.basename(fileUrl);
+
+                                                return isImage
+                                                    ? InkWell(
+                                                        onTap: () async {
+                                                          if (mounted) {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return Stack(
+                                                                  children: [
+                                                                    Positioned
+                                                                        .fill(
+                                                                      child:
+                                                                          PhotoView(
+                                                                        imageProvider:
+                                                                            NetworkImage(fileUrl),
+                                                                      ),
+                                                                    ),
+                                                                    Positioned(
+                                                                      top: 20,
+                                                                      right: 10,
+                                                                      child:
+                                                                          IconButton(
+                                                                        icon:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .close,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          size:
+                                                                              40,
+                                                                        ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          }
                                                         },
+                                                        child: Container(
+                                                          width: MyConstant
+                                                              .setMediaQueryWidth(
+                                                                  context, 140),
+                                                          height: MyConstant
+                                                              .setMediaQueryHeight(
+                                                                  context, 130),
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300,
+                                                                width: 1.0),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Image.network(
+                                                            fileUrl,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context,
+                                                                    error,
+                                                                    stackTrace) =>
+                                                                const Icon(
+                                                                    Icons.error,
+                                                                    color: Colors
+                                                                        .red),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : InkWell(
+                                                        onTap: () async {
+                                                          if (await canLaunch(
+                                                              fileUrl)) {
+                                                            await launch(
+                                                                fileUrl);
+                                                          } else {
+                                                            throw 'Could not launch $fileUrl';
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(8),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300,
+                                                                width: 1.0),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Icon(
+                                                                  Icons
+                                                                      .picture_as_pdf,
+                                                                  color: Colors
+                                                                      .red),
+                                                              SizedBox(
+                                                                  width: 8),
+                                                              Text(fileName),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       );
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    width: MyConstant
-                                                        .setMediaQueryWidth(
-                                                      context,
-                                                      140,
-                                                    ),
-                                                    height: MyConstant
-                                                        .setMediaQueryHeight(
-                                                      context,
-                                                      130,
-                                                    ),
-                                                    clipBehavior: Clip.hardEdge,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors
-                                                              .grey.shade300,
-                                                          width: 1.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: Image.network(
-                                                      imageUrl,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          const Icon(
-                                                              Icons.error,
-                                                              color:
-                                                                  Colors.red),
-                                                    ),
-                                                  ),
-                                                );
                                               },
                                             ).toList(),
                                           ),
@@ -343,17 +471,29 @@ class ChatScreenState extends State<ChatScreen> {
                                   chatController.messageController.value.text,
                               receiver: 'admin',
                               type: 'text',
-                              statusRead: 'N',
+                              statusRead: 'SU',
                               statusConnect: 'N',
+                              //เงื่อนไขกดปุ่ม update ถ้า user == ru  admin == ra
+
+                              //ถ้า แอดมินเชื่อมแล้ว connect  == N  connect  == Y
+                              //เงื่อนไขแอดมินเป็น Y จะมีข้อความบอกว่าแอดมินพร้อมบริการ
+
+                              //status read
+
+                              //admin === sa  แอดมินส่ง  ฝั่งของโมบายตัวนับจำนวนข้อความที่ยังไม่ได้อ่าน
+                              //user === su  userส่ง  ฝั่งของเว็บตัวนับจำนวนข้อความที่ยังไม่ได้อ่าน
+                              //admin === ra  แอดมินอ่าน
+                              //user === ru   userอ่าน ค่าแรก
+                              //ทำ api เชคสเตตัสเป็น a เพื่อนับข้อความ
                               idCard: chatController.idcard.value,
                               role: 'user',
-                              image: [],
                             );
                             if (kDebugMode) {
                               print('Sending message: ${message.message}');
                             } // เพิ่ม print ที่นี่
                             chatController.sendMessage(message);
                             chatController.messageController.value.clear();
+                            // sendmessageUser = false;
                           },
                         ),
                       ],

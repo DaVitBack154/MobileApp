@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/controller/getpromotion.dart';
@@ -8,7 +8,6 @@ import 'package:mobile_chaseapp/model/respon_promotion.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/promotion/knowledge_content_bon.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 
 class Slide extends StatefulWidget {
@@ -20,7 +19,7 @@ class Slide extends StatefulWidget {
 
 class _SlideState extends State<Slide> {
   PromotionController promotionController = PromotionController();
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   int currentIndex = 0;
   bool loading = true;
   UserPromotion? userPromotion;

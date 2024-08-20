@@ -26,7 +26,7 @@ class _DetailHomeState extends State<DetailHome> {
   String imageUrl = ImageNetwork.url;
   bool loading = true;
   Datum? data;
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   int currentIndex = 0;
 
   @override

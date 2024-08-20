@@ -21,7 +21,7 @@ class SlishowFull extends StatefulWidget {
 class _SlishowFullState extends State<SlishowFull> {
   List<String> imgAll = [];
   int currentIndex = 0;
-  final CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   String imageUrl = ImageNetwork.url;
 
   @override
