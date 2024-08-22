@@ -7,7 +7,8 @@ class DateServerController {
   DateServer dateServer = DateServer();
 
   Future<DateServer> fetchDateServer() async {
-    dateServer = DateServer();
+    DateServer dateServer = DateServer();
+
     try {
       var response = await _userService.getDateServer();
       if (response.statusCode == 200) {

@@ -208,7 +208,6 @@ class _ProfileState extends State<Profile> {
                       ),
                       onTap: () async {
                         // เรียกใช้ฟังก์ชันทั้งหมดจากแต่ละ controller
-                        chatController.updateStatusRead();
 
                         chatController.triggerTimeoutEvent();
 
@@ -220,11 +219,15 @@ class _ProfileState extends State<Profile> {
                         await chatController.handleSendWelcomeMessage();
 
                         // เปลี่ยนหน้าไปยัง ChatScreen เสมอ
-                        Get.to(
+                        chatController.isChatRoom = true;
+                        await Get.to(
                           () => ChatScreen(),
                           transition: Transition.rightToLeft,
                           duration: Duration(milliseconds: 300),
                         );
+                        chatController.isChatRoom = false;
+                        chatController.updateStatusRead();
+                        setState(() {});
                       },
                     ),
                   ),
@@ -278,7 +281,7 @@ class _ProfileState extends State<Profile> {
     final filteredMessages = chatController.messages
         .where((message) =>
             message.sender == chatController.name.value ||
-            message.receiver == chatController.name.value)
+            message.idCard == chatController.idcard.value)
         .toList();
 
     int readuser = 0;

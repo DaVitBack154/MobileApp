@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:mobile_chaseapp/controller/getdate_server.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  final ChatController chatController = Get.put(ChatController());
+  final ChatController chatController = Get.find<ChatController>();
   // final DateServerController dateController = DateServerController();
   final ImagePicker _picker = ImagePicker();
   // var dateServer = '';
@@ -172,7 +171,7 @@ class ChatScreenState extends State<ChatScreen> {
                       controller: scrollslide,
                       itemCount: filteredMessages!.length,
                       itemBuilder: (context, index) {
-                        var message = filteredMessages![index];
+                        ChatMessage message = filteredMessages![index];
 
                         // ใช้ Align เพื่อจัดตำแหน่งข้อความ
                         return Align(
@@ -263,147 +262,274 @@ class ChatScreenState extends State<ChatScreen> {
                                             spacing: 8.0,
                                             runSpacing: 8.0,
                                             alignment: WrapAlignment.center,
-                                            children: message.image!.map(
-                                              (fileUrl) {
-                                                bool isImage = fileUrl
-                                                        .toLowerCase()
-                                                        .endsWith('.jpg') ||
-                                                    fileUrl
-                                                        .toLowerCase()
-                                                        .endsWith('.jpeg') ||
-                                                    fileUrl
-                                                        .toLowerCase()
-                                                        .endsWith('.png') ||
-                                                    fileUrl
-                                                        .toLowerCase()
-                                                        .endsWith('.gif');
-
+                                            children: [
+                                              ...message.image!.map((fileUrl) {
                                                 String fileName =
                                                     path.basename(fileUrl);
-
-                                                return isImage
-                                                    ? InkWell(
-                                                        onTap: () async {
-                                                          if (mounted) {
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return Stack(
-                                                                  children: [
-                                                                    Positioned
-                                                                        .fill(
-                                                                      child:
-                                                                          PhotoView(
-                                                                        imageProvider:
-                                                                            NetworkImage(fileUrl),
-                                                                      ),
+                                                bool isImage = [
+                                                  'jpg',
+                                                  'jpeg',
+                                                  'png',
+                                                  'gif'
+                                                ].contains(
+                                                    fileUrl.split('.').last);
+                                                if (isImage) {
+                                                  return InkWell(
+                                                    onTap: () async {
+                                                      if (mounted) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Stack(
+                                                              children: [
+                                                                Positioned.fill(
+                                                                  child:
+                                                                      PhotoView(
+                                                                    imageProvider:
+                                                                        NetworkImage(
+                                                                            fileUrl),
+                                                                  ),
+                                                                ),
+                                                                Positioned(
+                                                                  top: 20,
+                                                                  right: 10,
+                                                                  child:
+                                                                      IconButton(
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .close,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      size: 40,
                                                                     ),
-                                                                    Positioned(
-                                                                      top: 20,
-                                                                      right: 10,
-                                                                      child:
-                                                                          IconButton(
-                                                                        icon:
-                                                                            const Icon(
-                                                                          Icons
-                                                                              .close,
-                                                                          color:
-                                                                              Colors.white,
-                                                                          size:
-                                                                              40,
-                                                                        ),
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.of(context)
-                                                                              .pop();
-                                                                        },
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             );
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          width: MyConstant
-                                                              .setMediaQueryWidth(
-                                                                  context, 140),
-                                                          height: MyConstant
-                                                              .setMediaQueryHeight(
-                                                                  context, 130),
-                                                          clipBehavior:
-                                                              Clip.hardEdge,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300,
-                                                                width: 1.0),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          child: Image.network(
-                                                            fileUrl,
-                                                            fit: BoxFit.cover,
-                                                            errorBuilder: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                const Icon(
-                                                                    Icons.error,
-                                                                    color: Colors
-                                                                        .red),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : InkWell(
-                                                        onTap: () async {
-                                                          if (await canLaunch(
-                                                              fileUrl)) {
-                                                            await launch(
-                                                                fileUrl);
-                                                          } else {
-                                                            throw 'Could not launch $fileUrl';
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.all(8),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300,
-                                                                width: 1.0),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Icon(
-                                                                  Icons
-                                                                      .picture_as_pdf,
-                                                                  color: Colors
-                                                                      .red),
-                                                              SizedBox(
-                                                                  width: 8),
-                                                              Text(fileName),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                              },
-                                            ).toList(),
+                                                          },
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      width: MyConstant
+                                                          .setMediaQueryWidth(
+                                                              context, 140),
+                                                      height: MyConstant
+                                                          .setMediaQueryHeight(
+                                                              context, 130),
+                                                      clipBehavior:
+                                                          Clip.hardEdge,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .grey.shade300,
+                                                            width: 1.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Image.network(
+                                                        fileUrl,
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context,
+                                                                error,
+                                                                stackTrace) =>
+                                                            const Icon(
+                                                                Icons.error,
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                return InkWell(
+                                                  onTap: () async {
+                                                    if (await canLaunch(
+                                                        fileUrl)) {
+                                                      await launch(fileUrl);
+                                                    } else {
+                                                      throw 'Could not launch $fileUrl';
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors
+                                                              .grey.shade300,
+                                                          width: 1.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Icon(
+                                                            Icons
+                                                                .picture_as_pdf,
+                                                            color: Colors.red),
+                                                        SizedBox(width: 8),
+                                                        Text(fileName),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList()
+                                            ],
+                                            // children: message.image!.map(
+                                            //   (fileUrl) {
+                                            //     bool isImage = fileUrl
+                                            //             .toLowerCase()
+                                            //             .endsWith('.jpg') ||
+                                            //         fileUrl
+                                            //             .toLowerCase()
+                                            //             .endsWith('.jpeg') ||
+                                            //         fileUrl
+                                            //             .toLowerCase()
+                                            //             .endsWith('.png') ||
+                                            //         fileUrl
+                                            //             .toLowerCase()
+                                            //             .endsWith('.gif');
+                                            // // ['.jpg',].contains(fileUrl
+                                            // //             .toLowerCase());
+                                            //     String fileName =
+                                            //         path.basename(fileUrl);
+
+                                            //     return isImage
+                                            //         ? InkWell(
+                                            //             onTap: () async {
+                                            //               if (mounted) {
+                                            //                 await showDialog(
+                                            //                   context: context,
+                                            //                   builder:
+                                            //                       (context) {
+                                            //                     return Stack(
+                                            //                       children: [
+                                            //                         Positioned
+                                            //                             .fill(
+                                            //                           child:
+                                            //                               PhotoView(
+                                            //                             imageProvider:
+                                            //                                 NetworkImage(fileUrl),
+                                            //                           ),
+                                            //                         ),
+                                            //                         Positioned(
+                                            //                           top: 20,
+                                            //                           right: 10,
+                                            //                           child:
+                                            //                               IconButton(
+                                            //                             icon:
+                                            //                                 const Icon(
+                                            //                               Icons
+                                            //                                   .close,
+                                            //                               color:
+                                            //                                   Colors.white,
+                                            //                               size:
+                                            //                                   40,
+                                            //                             ),
+                                            //                             onPressed:
+                                            //                                 () {
+                                            //                               Navigator.of(context)
+                                            //                                   .pop();
+                                            //                             },
+                                            //                           ),
+                                            //                         ),
+                                            //                       ],
+                                            //                     );
+                                            //                   },
+                                            //                 );
+                                            //               }
+                                            //             },
+                                            //             child: Container(
+                                            //               width: MyConstant
+                                            //                   .setMediaQueryWidth(
+                                            //                       context, 140),
+                                            //               height: MyConstant
+                                            //                   .setMediaQueryHeight(
+                                            //                       context, 130),
+                                            //               clipBehavior:
+                                            //                   Clip.hardEdge,
+                                            //               decoration:
+                                            //                   BoxDecoration(
+                                            //                 border: Border.all(
+                                            //                     color: Colors
+                                            //                         .grey
+                                            //                         .shade300,
+                                            //                     width: 1.0),
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .circular(
+                                            //                             10),
+                                            //               ),
+                                            //               child: Image.network(
+                                            //                 fileUrl,
+                                            //                 fit: BoxFit.cover,
+                                            //                 errorBuilder: (context,
+                                            //                         error,
+                                            //                         stackTrace) =>
+                                            //                     const Icon(
+                                            //                         Icons.error,
+                                            //                         color: Colors
+                                            //                             .red),
+                                            //               ),
+                                            //             ),
+                                            //           )
+
+                                            //         :
+                                            //         InkWell(
+                                            //             onTap: () async {
+                                            //               if (await canLaunch(
+                                            //                   fileUrl)) {
+                                            //                 await launch(
+                                            //                     fileUrl);
+                                            //               } else {
+                                            //                 throw 'Could not launch $fileUrl';
+                                            //               }
+                                            //             },
+                                            //             child: Container(
+                                            //               padding:
+                                            //                   EdgeInsets.all(8),
+                                            //               decoration:
+                                            //                   BoxDecoration(
+                                            //                 border: Border.all(
+                                            //                     color: Colors
+                                            //                         .grey
+                                            //                         .shade300,
+                                            //                     width: 1.0),
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .circular(
+                                            //                             10),
+                                            //               ),
+                                            //               child: Row(
+                                            //                 mainAxisSize:
+                                            //                     MainAxisSize
+                                            //                         .min,
+                                            //                 children: [
+                                            //                   Icon(
+                                            //                       Icons
+                                            //                           .picture_as_pdf,
+                                            //                       color: Colors
+                                            //                           .red),
+                                            //                   SizedBox(
+                                            //                       width: 8),
+                                            //                   Text(fileName),
+                                            //                 ],
+                                            //               ),
+                                            //             ),
+                                            //           );
+
+                                            //   },
+                                            // ).toList(),
                                           ),
                                         )
                                       : const SizedBox.shrink(),

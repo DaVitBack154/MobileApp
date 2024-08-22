@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_chaseapp/controller/getdate_server.dart';
 import 'package:mobile_chaseapp/model/chat_model.dart';
+import 'package:mobile_chaseapp/model/respon_dateserver.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -27,10 +28,16 @@ class ChatController extends GetxController {
   final DateServerController dateController = DateServerController();
   var dateServer = ''.obs;
 
+  bool isChatRoom = false;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     fetchUserProfile().then((_) => connectSocket());
+    DateServer dateServer = await dateController.fetchDateServer();
+    DateTime dateTime = DateTime.parse(dateServer.data ?? "");
+    lastSentDate.value = DateTime(dateTime.year, dateTime.month, dateTime.day);
+
     // loadData();
   }
 
@@ -122,12 +129,11 @@ class ChatController extends GetxController {
 
     // ฟังเหตุการณ์ Timeout จากเซิร์ฟเวอร์
     socket.on('outOfWorkingHours', (data) {
-      isOutOfWorkingHours.value =
-          data == 'หมดเวลาทำการ'; // ตรวจสอบข้อความที่ได้รับ
+      isOutOfWorkingHours.value = data == 'หมดเวลาทำการ';
       print('Received outOfWorkingHours signal: $data');
 
       // ส่งข้อความถ้าเป็นช่วงหมดเวลาทำการ
-      sendMessageWithTimeoutCheck();
+      // sendMessageWithTimeoutCheck();
     });
 
     socket.onConnectError((error) {
@@ -219,6 +225,12 @@ class ChatController extends GetxController {
         // ส่งข้อมูล id_card ไปยังเซิร์ฟเวอร์
         socket.emit('read-user', json.encode({'CardID': idcard.value}));
         print('Status read updated for id_card: ${idcard.value}');
+
+        for (int index = 0; index != messages.length; index++) {
+          Map<String, dynamic> jsonMessage = messages[index].toJson();
+          jsonMessage['status_read'] = 'RU';
+          messages[index] = ChatMessage.fromJson(jsonMessage);
+        }
       } catch (e) {
         print('Error updating status read: $e');
       }
@@ -292,49 +304,55 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendMessageWithTimeoutCheck() async {
+    // print(isChatRoom);
+    // if (isChatRoom) return;
     try {
       print('isOutOfWorkingHours.value: ${isOutOfWorkingHours.value}');
 
-      if (isOutOfWorkingHours.value) {
-        var today = DateTime.now();
-        var todayDate =
-            DateTime(today.year, today.month, today.day); // เก็บวันที่ปัจจุบัน
+      // if (isOutOfWorkingHours.value) {
+      var today = DateTime.now();
+      var todayDate =
+          DateTime(today.year, today.month, today.day); // เก็บวันที่ปัจจุบัน
 
-        // ดึงวันที่ล่าสุดจาก SharedPreferences
-        final prefs = await SharedPreferences.getInstance();
-        final dateString = prefs.getString(KeyStorage.lastSentDate);
-        lastSentDate.value =
-            dateString != null ? DateTime.parse(dateString) : null;
+      // ดึงวันที่ล่าสุดจาก SharedPreferences
+      // final prefs = await SharedPreferences.getInstance();
+      // final dateString = prefs.getString(KeyStorage.lastSentDate);
+      // lastSentDate.value =
+      //     dateString != null ? DateTime.parse(dateString) : null;
 
-        // ตรวจสอบว่าต้องส่งข้อความใหม่หรือไม่
-        if (lastSentDate.value == null || lastSentDate.value != todayDate) {
-          var outTime = ChatMessage(
-            sender: name.value,
-            receiver: name.value,
-            message: 'หมดเวลาทำการแล้ว',
-            type: 'text',
-            statusRead: 'RU',
-            statusConnect: 'Y',
-            idCard: idcard.value,
-            role: 'admin',
-          );
+      // ตรวจสอบว่าต้องส่งข้อความใหม่หรือไม่
+      List messagesText = messages.map((e) => e.message).toList();
 
-          // if (!messages.any((msg) => msg.message == outTime.message)) {
-          //   messages.insert(0, outTime);
-          //   // ส่งข้อความ
+      if (lastSentDate.value == null ||
+          lastSentDate.value != todayDate ||
+          !messagesText.contains('หมดเวลาทำการแล้ว')) {
+        var outTime = ChatMessage(
+          sender: '',
+          receiver: name.value,
+          message: 'หมดเวลาทำการแล้ว',
+          type: 'text',
+          statusRead: 'RU',
+          statusConnect: 'Y',
+          idCard: idcard.value,
+          role: 'admin',
+        );
 
-          // }
+        // if (!messages.any((msg) => msg.message == outTime.message)) {
+        //   messages.insert(0, outTime);
+        //   // ส่งข้อความ
 
-          await sendMessage(outTime);
+        // }
 
-          // บันทึกวันที่ที่ส่งข้อความไปแล้ว
-          await prefs.setString(
-              KeyStorage.lastSentDate, todayDate.toIso8601String());
-          print('Message sent and date updated to: $todayDate');
-        }
-      } else {
-        print('Not out of working hours');
+        await sendMessage(outTime);
+
+        // บันทึกวันที่ที่ส่งข้อความไปแล้ว
+        // await prefs.setString(
+        //     KeyStorage.lastSentDate, todayDate.toIso8601String());
+        print('Message sent and date updated to: $todayDate');
       }
+      // } else {
+      //   print('Not out of working hours');
+      // }
     } catch (e) {
       print('Error in sendMessageWithTimeoutCheck: $e');
     }

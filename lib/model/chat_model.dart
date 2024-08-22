@@ -9,6 +9,7 @@ class ChatMessage {
   final String? idCard;
   final String? statusEnd;
   final String? role;
+  final String? createdAt;
   final List<String>? image;
 
   ChatMessage({
@@ -22,6 +23,7 @@ class ChatMessage {
     this.idCard,
     this.statusEnd,
     this.role,
+    this.createdAt,
     this.image,
   });
 
@@ -37,6 +39,7 @@ class ChatMessage {
       idCard: json['id_card'],
       statusEnd: json['status_end'],
       role: json['role'],
+      createdAt: json['createdAt'],
       image: json['image'] != null
           ? List<String>.from(json['image'])
           : [], // ตรวจสอบว่ามีค่าเป็น null หรือไม่
@@ -55,6 +58,7 @@ class ChatMessage {
       'id_card': idCard,
       'status_end': statusEnd,
       'role': role,
+      'createdAt': createdAt,
       'image': image,
     };
   }
