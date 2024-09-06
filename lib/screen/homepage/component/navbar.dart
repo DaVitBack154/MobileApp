@@ -72,7 +72,7 @@ class _NavbarState extends State<Navbar> {
       children: [
         SizedBox(
           height: ResponsiveWidthContext.isMobileFoldVertical(context)
-              ? 35.h
+              ? 28.h
               : ResponsiveWidthContext.isMobileSmall(context)
                   ? 40.h
                   : ResponsiveWidthContext.isMobile(context)
@@ -92,11 +92,11 @@ class _NavbarState extends State<Navbar> {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: MyConstant.setMediaQueryWidth(context, 30),
+                    radius: MyConstant.setMediaQueryWidth(context, 28),
                     child: Image.asset(
                       'assets/image/icon_a.png',
                       fit: BoxFit.cover,
-                      height: MyConstant.setMediaQueryWidth(context, 30),
+                      height: MyConstant.setMediaQueryWidth(context, 28),
                     ),
                   ),
                   Padding(
@@ -120,7 +120,7 @@ class _NavbarState extends State<Navbar> {
                           name ?? '',
                           style: TextStyle(
                               fontSize:
-                                  MyConstant.setMediaQueryWidth(context, 30),
+                                  MyConstant.setMediaQueryWidth(context, 28),
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -134,8 +134,8 @@ class _NavbarState extends State<Navbar> {
                   Row(
                     children: [
                       Container(
-                        width: MyConstant.setMediaQueryWidth(context, 60),
-                        height: 45.h,
+                        width: MyConstant.setMediaQueryWidth(context, 55),
+                        height: MyConstant.setMediaQueryWidth(context, 55),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.black.withOpacity(.1),

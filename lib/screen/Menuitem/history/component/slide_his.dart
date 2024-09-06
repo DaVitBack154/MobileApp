@@ -84,7 +84,7 @@ class _SlideHisState extends State<SlideHis> {
                       viewportFraction: 0.93,
                       height:
                           ResponsiveWidthContext.isMobileFoldVertical(context)
-                              ? 210.h
+                              ? 200.h
                               : 190.h,
                       autoPlay: false,
                       enableInfiniteScroll: false,

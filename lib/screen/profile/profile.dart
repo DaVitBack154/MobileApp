@@ -3,10 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
 import 'package:mobile_chaseapp/controller/logout_controller.dart';
+import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/getcontroller/getcontroller.dart';
 import 'package:mobile_chaseapp/model/chat_model.dart';
 import 'package:mobile_chaseapp/screen/chat/chat.dart';
+import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/screen/profile/component/navbarprofile.dart';
 import 'package:mobile_chaseapp/screen/profile/edit_profile.dart';
@@ -23,21 +26,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // final LogoutController _logoutController = LogoutController();
+  final LogoutController _logoutController = LogoutController();
   final ChatController chatController = Get.put(ChatController());
+  final _updateController = UpdateController();
+  final ProfileController profileController = ProfileController();
 
-  // Future<void> _handleLogout() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String token = prefs.getString(KeyStorage.token) ?? ''; // ดึง Token
-  //   String pin = prefs.getString(KeyStorage.pin) ?? '';
+  Future<void> _handleLogout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(KeyStorage.typeCustomer);
+    String? typeCustomer = prefs.getString(KeyStorage.typeCustomer);
 
-  //   if (token.isNotEmpty) {
-  //     // ตรวจสอบว่า Token ไม่เป็น null ก่อนใช้งาน
-  //     await _logoutController.logout(device: '');
-  //     setState(() {});
-  //     //print('getprofileupdate');
-  //   }
-  // }
+    print(
+        'TypeCustomer after removal: $typeCustomer'); // ควรเป็น null ถ้าลบสำเร็จ
+  }
 
   @override
   void initState() {
@@ -141,6 +142,61 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
+
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(
+                  //     horizontal: 10.w,
+                  //     vertical: 10.h,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     // border: Border.all(
+                  //     //   width: 1,
+                  //     //   color: Colors.grey.shade100,
+                  //     // ),
+                  //     borderRadius: BorderRadius.circular(10),
+                  //     // color: Colors.grey.shade100,
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(15),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           'ติดต่อเรา/แจ้งปัญหาการใช้งาน',
+                  //           style: TextStyle(
+                  //             fontSize:
+                  //                 MyConstant.setMediaQueryWidth(context, 24),
+                  //             // color: Color(0xFF103533),
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           height: 10.h,
+                  //         ),
+                  //         Row(
+                  //           children: [
+                  //             Image.asset(
+                  //               'assets/image/phonecall.png',
+                  //               fit: BoxFit.fill,
+                  //               height: 30.h,
+                  //             ),
+                  //             SizedBox(
+                  //               width: 25.w,
+                  //             ),
+                  //             Text(
+                  //               '02-855-8118',
+                  //               style: TextStyle(
+                  //                 fontSize: MyConstant.setMediaQueryWidth(
+                  //                     context, 25),
+                  //                 fontWeight: FontWeight.w600,
+                  //               ),
+                  //             )
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+
                   SizedBox(
                     width: double.infinity,
                     child: InkWell(
@@ -208,15 +264,28 @@ class _ProfileState extends State<Profile> {
                       ),
                       onTap: () async {
                         // เรียกใช้ฟังก์ชันทั้งหมดจากแต่ละ controller
-
-                        chatController.triggerTimeoutEvent();
-
-                        if (chatController.isOutOfWorkingHours.value) {
-                          await chatController.sendMessageWithTimeoutCheck();
-                        }
                         // ตรวจสอบสถานะและส่งข้อความต้อนรับถ้าจำเป็น
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        String token = prefs.getString(KeyStorage.token) ?? '';
+                        await profileController.fetchProfileData(token);
+
+                        if (profileController.userModel.user?.starPoint == '' ||
+                            profileController.userModel.user?.starPoint ==
+                                null) {
+                          await _updateController.fetchUpdateProfile(
+                            statusStar: 'Y',
+                          );
+                          // print(
+                          //     'tokota-> ${profileController.userModel.user?.starPoint}');
+                        } else {
+                          print('ให้คะแนนแล้ว');
+                        }
 
                         await chatController.handleSendWelcomeMessage();
+
+                        chatController.setMessageV2();
+                        chatController.triggerTimeoutEvent();
 
                         // เปลี่ยนหน้าไปยัง ChatScreen เสมอ
                         chatController.isChatRoom = true;
@@ -231,6 +300,7 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
+
                   const Expanded(
                     child: SizedBox(),
                   ),
@@ -241,11 +311,8 @@ class _ProfileState extends State<Profile> {
                     ),
                     child: ElevatedButton(
                       onPressed: () async {
-                        // await _handleLogout();
-                        // SharedPreferences prefs =
-                        //     await SharedPreferences.getInstance();
-                        // await prefs.remove('');
-                        // ignore: use_build_context_synchronously
+                        await _handleLogout();
+                        // Get.offAll(Login());
                         AppNavigator.pushReplacementNamed(
                           PinCode.routeName,
                           arguments: const PinCodeArgs(isGotoNotif: false),
@@ -278,32 +345,32 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget nubStatusReadUser() {
-    final filteredMessages = chatController.messages
-        .where((message) =>
-            message.sender == chatController.name.value ||
-            message.idCard == chatController.idcard.value)
-        .toList();
+    // final filteredMessages = chatController.messages
+    //     .where((message) =>
+    //         message.sender == chatController.name.value ||
+    //         message.idCard == chatController.idcard.value)
+    //     .toList();
 
-    int readuser = 0;
-    for (var element in filteredMessages) {
-      if (element.statusRead == 'SA') {
-        readuser = readuser + 1;
-      }
-    }
+    // int readuser = 0;
+    // for (var element in filteredMessages) {
+    //   if (element.statusRead == 'SA') {
+    //     readuser = readuser + 1;
+    //   }
+    // }
 
-    return readuser > 0
+    return chatController.readuser > 0
         ? Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               decoration: BoxDecoration(
                 color: Colors.red,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
                 child: Text(
-                  "$readuser",
+                  "${chatController.readuser}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

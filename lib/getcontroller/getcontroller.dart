@@ -5,6 +5,7 @@ import 'package:mobile_chaseapp/controller/getdate_server.dart';
 import 'package:mobile_chaseapp/model/chat_model.dart';
 import 'package:mobile_chaseapp/model/respon_dateserver.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'dart:convert';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 
 class ChatController extends GetxController {
   RxList<ChatMessage> messages = <ChatMessage>[].obs;
+
   late IO.Socket socket;
   Rx<ScrollController> scoll = ScrollController().obs;
   Rx<TextEditingController> messageController = TextEditingController().obs;
@@ -20,9 +22,9 @@ class ChatController extends GetxController {
   Rx<String?> idcard = Rx<String?>(null);
   Rx<String?> statusRead = Rx<String?>(null);
   RxList<File> selectedImages = <File>[].obs;
+  RxInt readuser = 0.obs;
   var isOutOfWorkingHours = false.obs;
   Rx<DateTime?> lastSentDate = Rx<DateTime?>(null);
-  // var currentStatusEnd = ''.obs;
   var lastStatusEnd = ''.obs;
 
   final DateServerController dateController = DateServerController();
@@ -33,23 +35,12 @@ class ChatController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    fetchUserProfile().then((_) => connectSocket());
+    connectSocket();
+    fetchUserProfile();
     DateServer dateServer = await dateController.fetchDateServer();
     DateTime dateTime = DateTime.parse(dateServer.data ?? "");
     lastSentDate.value = DateTime(dateTime.year, dateTime.month, dateTime.day);
-
-    // loadData();
   }
-
-  // Future<void> loadData() async {
-  //   await Future.delayed(Duration(seconds: 1));
-  //   loading.value = false;
-  // }
-
-  // void refreshData() async {
-  //   loading.value = true;
-  //   await loadData();
-  // }
 
   Future<void> fetchUserProfile() async {
     try {
@@ -67,11 +58,6 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> saveLastSentDate(DateTime date) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(KeyStorage.lastSentDate, date.toIso8601String());
-  }
-
   void connectSocket() {
     socket = IO.io('http://18.140.121.108:4000', <String, dynamic>{
       'transports': ['websocket'],
@@ -81,6 +67,7 @@ class ChatController extends GetxController {
     socket.onConnect((_) {
       print('Connected to server');
       socket.emit('requestMessages');
+      // socket.emit('initialMessages');
     });
 
     socket.onDisconnect((_) {
@@ -89,51 +76,66 @@ class ChatController extends GetxController {
 
     socket.on('initialMessages', (data) {
       try {
-        List<dynamic> messageData = data;
+        if (data is! List) return;
         messages.value =
-            messageData.map((json) => ChatMessage.fromJson(json)).toList();
+            data.map((json) => ChatMessage.fromJson(json)).toList();
 
-        // เพิ่มข้อความต้อนรับใน messages หากไม่มีข้อความนี้
-
-        var welcomeMessage01 = ChatMessage(
-          sender: '',
-          receiver: name.value,
-          message: 'สวัสดีคุณ ${name.value}',
-          type: 'text',
-          statusRead: '',
-          statusConnect: '',
-          idCard: '',
-          role: 'user',
-        );
-
-        if (!messages.any((msg) => msg.message == welcomeMessage01.message)) {
-          messages.insert(0, welcomeMessage01);
+        if (messages.isEmpty) {
+          sendWelcomeMessageNotSave();
+          print('No messages available.');
         }
 
-        print('Initial messages receiveddddddddd: ${messages.length}');
+        // socket.emit('viewsMessageV2', json.encode({'CardID': idcard.value}));
+        print('Initial messages : ${messages.length}');
       } catch (e) {
         print('Error decoding initial messages: $e');
       }
     });
 
+    socket.on('initialUsers', (data) {
+      print('initialUsers $data');
+      List dataUsers = data ?? [];
+      if (dataUsers.isNotEmpty) {
+        String? currentIdCard = idcard.value;
+        int readSU = dataUsers.first?['readSU'] ?? 0;
+        int readSA = dataUsers.first?['readSA'] ?? 0;
+        for (int index = 0; index != messages.length; index++) {
+          Map<String, dynamic> jsonMessage = messages[index].toJson();
+          if (jsonMessage['id_card'] == currentIdCard) {
+            if (messages[index].role == 'user' && (readSU == 0)) {
+              jsonMessage['status_read'] = 'RU';
+            } else if (messages[index].role == 'admin' && (readSA == 0)) {
+              jsonMessage['status_read'] = 'RA';
+            }
+          }
+
+          messages[index] = ChatMessage.fromJson(jsonMessage);
+        }
+      }
+    });
+
     socket.on('receiveMessage', (data) {
       print('Data received: $data'); // แสดงข้อมูลที่ได้รับ
+
       try {
         var message = ChatMessage.fromJson(json.decode(data));
-        messages.add(message); // เพิ่มข้อความลงใน list
-        print('Message received: ${message.message}'); // แสดงข้อความที่รับ
+        if (message.idCard == idcard.value) {
+          messages.add(message); // เพิ่มข้อความลงใน list
+          print('Message : ${messages.length}');
+          print('Message received: ${message.message}');
+        } // แสดงข้อความที่รับ
       } catch (e) {
         print('Error decoding message: $e');
       }
     });
 
     // ฟังเหตุการณ์ Timeout จากเซิร์ฟเวอร์
-    socket.on('outOfWorkingHours', (data) {
-      isOutOfWorkingHours.value = data == 'หมดเวลาทำการ';
+    socket.on('outOfWorkingHours', (data) async {
       print('Received outOfWorkingHours signal: $data');
-
-      // ส่งข้อความถ้าเป็นช่วงหมดเวลาทำการ
-      // sendMessageWithTimeoutCheck();
+      isOutOfWorkingHours.value = data == 'หมดเวลาทำการ';
+      if (data == 'หมดเวลาทำการ') {
+        await sendMessageWithTimeoutCheck();
+      }
     });
 
     socket.onConnectError((error) {
@@ -145,40 +147,13 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> sendMessageWithImages() async {
-    try {
-      List<String> imageUrls = [];
-
-      // อัพโหลดภาพหากมีภาพที่เลือก
-      if (selectedImages.isNotEmpty) {
-        imageUrls = await uploadImages(selectedImages);
-      }
-
-      // สร้างข้อความ
-      final message = ChatMessage(
-        sender: name.value,
-        message: messageController.value.text,
-        receiver: 'admin',
-        statusRead: 'SU',
-        statusConnect: 'N',
-        idCard: idcard.value,
-        role: 'user',
-        image: imageUrls,
-      );
-
-      // ส่งข้อความ
-      await sendMessage(message);
-
-      // เคลียร์ข้อมูล
-      messageController.value.clear();
-      selectedImages.clear();
-    } catch (e) {
-      print('Error sending message with images: $e');
-    }
+  void setMessageV2() {
+    socket.emit('viewsMessageV2', json.encode({'CardID': idcard.value}));
   }
 
   Future<void> sendMessage(ChatMessage message) async {
     try {
+      socket.emit('read-user', json.encode({'CardID': idcard.value}));
       // ส่งข้อความผ่าน socket
       socket.emit('sendMessage', json.encode(message.toJson()));
       print('Message sent: ${message.message}');
@@ -224,13 +199,13 @@ class ChatController extends GetxController {
       try {
         // ส่งข้อมูล id_card ไปยังเซิร์ฟเวอร์
         socket.emit('read-user', json.encode({'CardID': idcard.value}));
-        print('Status read updated for id_card: ${idcard.value}');
-
-        for (int index = 0; index != messages.length; index++) {
-          Map<String, dynamic> jsonMessage = messages[index].toJson();
-          jsonMessage['status_read'] = 'RU';
-          messages[index] = ChatMessage.fromJson(jsonMessage);
-        }
+        // setMessageV2();
+        // for (int index = 0; index != messages.length; index++) {
+        //   Map<String, dynamic> jsonMessage = messages[index].toJson();
+        //   jsonMessage['status_read'] = 'RU';
+        //   messages[index] = ChatMessage.fromJson(jsonMessage);
+        // }
+        readuser.value = 0;
       } catch (e) {
         print('Error updating status read: $e');
       }
@@ -289,12 +264,14 @@ class ChatController extends GetxController {
     var welcomeMessage = ChatMessage(
       sender: 'auto',
       receiver: name.value,
-      message: 'สวัสดีคุณ ${name.value} เก็บลง data',
+      message: 'สวัสดีคุณ ${name.value} อาม่ายินดีให้บริการค่ะ',
       type: 'text',
       statusRead: 'RU',
       statusConnect: 'Y',
+      statusEnd: 'N',
       idCard: idcard.value,
       role: 'admin',
+      image: [],
     );
 
     // ตรวจสอบว่าข้อความต้อนรับนี้ยังไม่มีอยู่ในแชท
@@ -303,9 +280,27 @@ class ChatController extends GetxController {
     sendMessage(welcomeMessage);
   }
 
+  void sendWelcomeMessageNotSave() {
+    var welcomeMessage01 = ChatMessage(
+      sender: 'auto',
+      receiver: name.value,
+      message:
+          'สวัสดีคุณ ${name.value} อาม่ายินดีให้บริการ ต้องการสอบถามข้อมูลด้านใด ค่ะ/ครับ',
+      type: 'text',
+      statusRead: 'RU',
+      statusConnect: 'Y',
+      statusEnd: 'N',
+      idCard: idcard.value,
+      role: 'admin',
+      image: [],
+      createdAt: DateTime.now().toIso8601String(),
+    );
+    messages.insert(0, welcomeMessage01);
+  }
+
   Future<void> sendMessageWithTimeoutCheck() async {
     // print(isChatRoom);
-    // if (isChatRoom) return;
+    if (lastStatusEnd.value == 'N') return;
     try {
       print('isOutOfWorkingHours.value: ${isOutOfWorkingHours.value}');
 
@@ -313,13 +308,6 @@ class ChatController extends GetxController {
       var today = DateTime.now();
       var todayDate =
           DateTime(today.year, today.month, today.day); // เก็บวันที่ปัจจุบัน
-
-      // ดึงวันที่ล่าสุดจาก SharedPreferences
-      // final prefs = await SharedPreferences.getInstance();
-      // final dateString = prefs.getString(KeyStorage.lastSentDate);
-      // lastSentDate.value =
-      //     dateString != null ? DateTime.parse(dateString) : null;
-
       // ตรวจสอบว่าต้องส่งข้อความใหม่หรือไม่
       List messagesText = messages.map((e) => e.message).toList();
 
@@ -327,32 +315,21 @@ class ChatController extends GetxController {
           lastSentDate.value != todayDate ||
           !messagesText.contains('หมดเวลาทำการแล้ว')) {
         var outTime = ChatMessage(
-          sender: '',
+          sender: name.value,
           receiver: name.value,
-          message: 'หมดเวลาทำการแล้ว',
+          message:
+              'ขณะนี้อยู่นอกเวลาทำการกรุณาติดต่ออีกครั้งในเวลาทำการ 08.00-20.00 น.',
           type: 'text',
           statusRead: 'RU',
           statusConnect: 'Y',
+          statusEnd: 'timeout',
           idCard: idcard.value,
           role: 'admin',
+          image: [],
         );
-
-        // if (!messages.any((msg) => msg.message == outTime.message)) {
-        //   messages.insert(0, outTime);
-        //   // ส่งข้อความ
-
-        // }
-
         await sendMessage(outTime);
-
-        // บันทึกวันที่ที่ส่งข้อความไปแล้ว
-        // await prefs.setString(
-        //     KeyStorage.lastSentDate, todayDate.toIso8601String());
         print('Message sent and date updated to: $todayDate');
       }
-      // } else {
-      //   print('Not out of working hours');
-      // }
     } catch (e) {
       print('Error in sendMessageWithTimeoutCheck: $e');
     }
@@ -363,7 +340,3 @@ class ChatController extends GetxController {
     socket.emit('Timeout');
   }
 }
-
-  // void clearData() {
-  //   statusRead.value = null;
-  // }

@@ -36,6 +36,7 @@ class CardUser extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 10.w,
+            vertical: 18.h,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,8 +168,13 @@ class CardUser extends StatelessWidget {
                               )
                             : Image.asset(
                                 'assets/image/${data.companyId == 'CFAA' || data.companyId == 'CFAM' ? 'cfam.png' : data.companyId == 'RWAY' ? 'rway.png' : 'courts.png'}',
-                                height:
-                                    MyConstant.setMediaQueryWidth(context, 16),
+                                height: ResponsiveWidthContext
+                                        .isMobileFoldVertical(context)
+                                    ? MyConstant.setMediaQueryWidth(context, 14)
+                                    : MyConstant.setMediaQueryWidth(
+                                        context,
+                                        15,
+                                      ),
                                 fit: BoxFit.cover,
                               ),
                         SizedBox(
@@ -194,38 +200,29 @@ class CardUser extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  data.legalType == 'ยังไม่ได้ฟ้อง' &&
-                          (data.calType == 'D' || data.calType == 'K')
-                      ? Column(
-                          children: [
-                            Text(
-                              data.osBalance != null
-                                  ? formatCurrency(data.osBalance)
-                                  : '',
-                              style: TextStyle(
-                                fontSize:
-                                    MyConstant.setMediaQueryWidth(context, 30),
-                                fontWeight: FontWeight.bold,
-                                height: 1.2,
-                                color: const Color(0xFF103533),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                          ],
+                  data.flagCode == 'CLS' || data.flagCode == 'CLSW'
+                      ? Text(
+                          '(ปิดบัญชีแล้ว)',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
+                              height: 1.2,
+                              color: Colors.teal.shade500),
                         )
-                      : data.calType == ''
+                      : data.legalType == 'ยังไม่ได้ฟ้อง' &&
+                              (data.calType == 'D' || data.calType == 'K')
                           ? Column(
                               children: [
                                 Text(
-                                  'กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบยอดหนี้คงค้าง',
+                                  data.osBalance != null
+                                      ? formatCurrency(data.osBalance)
+                                      : '',
                                   style: TextStyle(
                                     fontSize: MyConstant.setMediaQueryWidth(
-                                        context, 19),
+                                        context, 30),
                                     fontWeight: FontWeight.bold,
-                                    height: 1.3,
-                                    // color: const Color(0xFF103533),
+                                    height: 1.2,
+                                    color: const Color(0xFF103533),
                                   ),
                                 ),
                                 SizedBox(
@@ -233,55 +230,35 @@ class CardUser extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : data.legalType == 'ฟ้องแล้วยังไม่พิพากษา' ||
-                                  data.legalType == 'พิพากษาแล้วยังไม่ยืนยัน'
+                          : data.calType == '' || data.calType == null
                               ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      data.lawsuiteAmount != null
-                                          ? formatCurrency(data.lawsuiteAmount!)
-                                          : '',
-                                      style: TextStyle(
-                                        fontSize: MyConstant.setMediaQueryWidth(
-                                            context, 25),
-                                        fontWeight: FontWeight.bold,
-                                        height: 1.2,
-                                        color: const Color(0xFF103533),
-                                      ),
-                                    ),
-                                    Text(
-                                      'ยอดหนี้ ณ วันที่ ${formattedDate.format(
-                                        DateTime.parse(
-                                            data.lawsuiteDate.toString()),
-                                      )} ',
-                                      style: TextStyle(
-                                        fontSize: MyConstant.setMediaQueryWidth(
-                                            context, 17),
-                                        height: 1.0,
-                                      ),
-                                    ),
                                     Text(
                                       'กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบยอดหนี้คงค้าง',
                                       style: TextStyle(
                                         fontSize: MyConstant.setMediaQueryWidth(
-                                            context, 17),
-                                        height: 1.0,
+                                            context, 19),
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.3,
+                                        // color: const Color(0xFF103533),
                                       ),
                                     ),
                                     SizedBox(
                                       height: 5.h,
-                                    )
+                                    ),
                                   ],
                                 )
-                              : data.legalType == 'ยืนยันคำพิพากษาแล้ว'
+                              : data.legalType == 'ฟ้องแล้วยังไม่พิพากษา' ||
+                                      data.legalType ==
+                                          'พิพากษาแล้วยังไม่ยืนยัน'
                                   ? Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          data.osBalance != null
-                                              ? formatCurrency(data.osBalance)
+                                          data.lawsuiteAmount != null
+                                              ? formatCurrency(
+                                                  data.lawsuiteAmount!)
                                               : '',
                                           style: TextStyle(
                                             fontSize:
@@ -295,13 +272,24 @@ class CardUser extends StatelessWidget {
                                         Text(
                                           'ยอดหนี้ ณ วันที่ ${formattedDate.format(
                                             DateTime.parse(
-                                                data.reportAsOf.toString()),
+                                                data.lawsuiteDate.toString()),
                                           )} ',
                                           style: TextStyle(
                                             fontSize:
                                                 MyConstant.setMediaQueryWidth(
                                                     context, 17),
-                                            height: 1.0,
+                                            height: 1.2,
+                                            color: const Color(0xFF103533),
+                                          ),
+                                        ),
+                                        Text(
+                                          'กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบยอดหนี้คงค้าง',
+                                          style: TextStyle(
+                                            fontSize:
+                                                MyConstant.setMediaQueryWidth(
+                                                    context, 17),
+                                            height: 1.2,
+                                            color: const Color(0xFF103533),
                                           ),
                                         ),
                                         SizedBox(
@@ -309,7 +297,43 @@ class CardUser extends StatelessWidget {
                                         )
                                       ],
                                     )
-                                  : SizedBox.shrink()
+                                  : data.legalType == 'ยืนยันคำพิพากษาแล้ว'
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.osBalance != null
+                                                  ? formatCurrency(
+                                                      data.osBalance)
+                                                  : '',
+                                              style: TextStyle(
+                                                fontSize: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 25),
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.2,
+                                                color: const Color(0xFF103533),
+                                              ),
+                                            ),
+                                            Text(
+                                              'ยอดหนี้ ณ วันที่ ${formattedDate.format(
+                                                DateTime.parse(
+                                                    data.reportAsOf.toString()),
+                                              )} ',
+                                              style: TextStyle(
+                                                fontSize: MyConstant
+                                                    .setMediaQueryWidth(
+                                                        context, 17),
+                                                height: 1.0,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            )
+                                          ],
+                                        )
+                                      : SizedBox()
                 ],
               ),
               Row(
@@ -338,14 +362,14 @@ class CardUser extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 10.h,
+                height: 5.h,
               ),
               Text(
                 '${data.customerId}',
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  fontSize: MyConstant.setMediaQueryWidth(context, 21),
-                  height: 1.1,
+                  fontSize: 18.sp,
+                  height: 1.2,
                 ),
               ),
             ],

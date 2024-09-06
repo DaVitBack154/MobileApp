@@ -6,7 +6,6 @@ import 'package:mobile_chaseapp/controller/otp_controller.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
 import 'package:mobile_chaseapp/screen/login_page/accept_rule.dart';
 import 'package:mobile_chaseapp/screen/login_page/phone_page.dart';
-import 'package:mobile_chaseapp/screen/login_page/pin_page.dart';
 import 'package:mobile_chaseapp/screen/piccode/pincode.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
@@ -30,57 +29,6 @@ class _LoginState extends State<Login> {
 
   final CreateOTPController createotpController = CreateOTPController();
 
-  // Future setOTP() async {
-  //   String sub = '';
-  //   sub = '66' + sub.substring(1);
-  //   await createotpController.createPhoneOTP(phone: sub);
-  // }
-  // Future<void> openlaunchUrl(Uri url) async {
-  //   if (mounted) {
-  //     if (await canLaunchUrl(url)
-  //         .timeout(
-  //       const Duration(seconds: 20),
-  //     )
-  //         .catchError(
-  //       (error) {
-  //         if (kDebugMode) {
-  //           print(
-  //             'error ===>> $error',
-  //           );
-  //         }
-  //         return false;
-  //       },
-  //     )) {
-  //       if (!await launchUrl(url)
-  //           .timeout(
-  //         const Duration(seconds: 20),
-  //       )
-  //           .catchError(
-  //         (error) {
-  //           if (kDebugMode) {
-  //             print(
-  //               'error ===>> $error',
-  //             );
-  //           }
-  //           return false;
-  //         },
-  //       )) {
-  //         if (kDebugMode) {
-  //           print(
-  //             'Could not launch $url',
-  //           );
-  //         }
-  //       }
-  //     } else {
-  //       if (kDebugMode) {
-  //         print(
-  //           'Could not launch $url',
-  //         );
-  //       }
-  //     }
-  //   }
-  // }
-  // ฝฝ
   Future<void> openlaunchUrl(String url) async {
     try {
       bool canLaunchUrlResult = await canLaunch(url);
@@ -128,7 +76,10 @@ class _LoginState extends State<Login> {
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 140.h + kToolbarHeight,
+                        height:
+                            ResponsiveWidthContext.isMobileFoldVertical(context)
+                                ? 130.h + kToolbarHeight
+                                : 140.h + kToolbarHeight,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/image/bglogin.png'),

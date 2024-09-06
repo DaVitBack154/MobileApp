@@ -1,15 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-import 'package:animations/animations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
 import 'package:mobile_chaseapp/firebase_cloud_messaging_provider.dart';
-import 'package:mobile_chaseapp/local_notification.dart';
 import 'package:mobile_chaseapp/model/respon_user.dart';
-import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
 import 'package:mobile_chaseapp/utils/app_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'component/bottombar.dart';

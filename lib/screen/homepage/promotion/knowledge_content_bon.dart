@@ -26,45 +26,12 @@ class _PromotionBonState extends State<PromotionBon> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.grey.shade100,
-
-        // foregroundColor: Colors.white,
-        // flexibleSpace: Container(
-        //   width: width,
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: NetworkImage(
-        //           '$imageUrl/public/image/${widget.item.image ?? ''}'),
-        //       fit: BoxFit.cover,
-        //       // ให้รูปภาพปรับขนาดให้เต็ม Container
-        //     ),
-        //   ),
-        // ),
-        // leading: Container(
-        //   margin: EdgeInsets.symmetric(
-        //     vertical: 3.h,
-        //     horizontal: 3.w,
-        //   ),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(15),
-        //     color: Colors.black.withOpacity(.3),
-        //   ),
-        //   child: IconButton(
-        //     icon: const Icon(
-        //       Icons.arrow_back,
-        //       size: 30,
-        //       color: Colors.white,
-        //     ),
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //   ),
-        // ),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -4,6 +4,7 @@ import 'package:mobile_chaseapp/screen/profile/update_profile.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
+import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controller/getprofile_controller.dart';
 
@@ -57,11 +58,15 @@ class _FormProfileState extends State<FormProfile> {
             ),
             CircleAvatar(
               backgroundColor: Colors.grey.shade100,
-              radius: 33.h,
+              radius: ResponsiveWidthContext.isMobileFoldVertical(context)
+                  ? 30.h
+                  : 33.h,
               child: Image.asset(
                 'assets/image/icon_a.png',
                 fit: BoxFit.cover,
-                height: 35.h,
+                height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                    ? 32.h
+                    : 35.h,
               ),
             ),
             SizedBox(

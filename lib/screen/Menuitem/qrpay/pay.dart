@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mobile_chaseapp/controller/getacc_controller.dart';
+import 'package:mobile_chaseapp/getcontroller/getacc_controller.dart';
 import 'package:mobile_chaseapp/model/respon_accuser.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/bar.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/component/slide_acc.dart';
@@ -18,23 +20,28 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  String? typeCustomer;
   bool loading = true;
   UserAccModel? accData;
   AccController accController = AccController();
+  final CustomerController customerController = Get.put(CustomerController());
 
   @override
   void initState() {
     super.initState();
     getTypeCustomer();
+    customerController.fetchUserProfile();
   }
 
   Future<void> getTypeCustomer() async {
-    final prefs = await SharedPreferences.getInstance();
-    typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
+    setState(() {
+      loading = true;
+    });
+
     accData = await accController.fetchAccData();
-    loading = false;
-    setState(() {});
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -54,16 +61,15 @@ class _PaymentState extends State<Payment> {
                 children: [
                   Container(
                     width: width,
-                    height: ResponsiveWidthContext.isMobileFoldVertical(context)
-                        ? 285.h + kToolbarHeight
-                        : ResponsiveWidthContext.isMobileSmall(context)
-                            ? 290.h + kToolbarHeight
-                            : ResponsiveWidthContext.isMobile(context)
-                                ? 285.h + kToolbarHeight
-                                : ResponsiveWidthContext.isTablet11(context) ||
-                                        ResponsiveWidthContext.isTablet(context)
-                                    ? 310.h + kToolbarHeight
-                                    : 300.h + kToolbarHeight,
+                    height:
+                        ResponsiveWidthContext.isMobileFoldVertical(context) ||
+                                ResponsiveWidthContext.isMobileSmall(context) ||
+                                ResponsiveWidthContext.isMobile(context)
+                            ? 280.h + kToolbarHeight
+                            : ResponsiveWidthContext.isTablet11(context) ||
+                                    ResponsiveWidthContext.isTablet(context)
+                                ? 310.h + kToolbarHeight
+                                : 300.h + kToolbarHeight,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/image/bg.png'),
@@ -93,82 +99,23 @@ class _PaymentState extends State<Payment> {
                           Container(
                             margin: EdgeInsets.only(bottom: 80.h),
                             width: 40.w,
-                            height: 40.h,
+                            height: 35.h,
                             child: CircularProgressIndicator(
                               color: Colors.teal.shade800,
                             ),
                           ),
                         ],
                       )
-                    : typeCustomer == 'Y' &&
-                            (accData?.data != null &&
-                                accData!.data!.isNotEmpty &&
-                                (accData!.data![0].ciType == 'T' ||
-                                    accData!.data![0].ciType == ''))
-                        ? const SlideAcc()
-                        : accData?.data != null &&
-                                accData!.data!.isNotEmpty &&
-                                accData!.data![0].ciType == 'F'
-                            ? Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 30.h,
-                                      horizontal: 25.w,
-                                    ),
-                                    child: SizedBox(
-                                      width: width,
-                                      height: 370.h,
-                                      child: Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        elevation: 2,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              'assets/image/danger.png',
-                                              height: 60.h,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                            Text(
-                                              'ไม่พบข้อมูลสมาชิก',
-                                              style: TextStyle(
-                                                fontSize: 30.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 25.h,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 10.h,
-                                                horizontal: 25.w,
-                                              ),
-                                              child: Text(
-                                                'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
-                                                style: TextStyle(
-                                                  fontSize: 19.sp,
-                                                  color: Colors.grey.shade500,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : typeCustomer == 'N'
+                    : Obx(() {
+                        return customerController.typeCustomer.value == 'Y' &&
+                                (accData?.data != null &&
+                                    accData!.data!.isNotEmpty &&
+                                    (accData!.data![0].ciType == 'T' ||
+                                        accData!.data![0].ciType == ''))
+                            ? const SlideAcc()
+                            : accData?.data != null &&
+                                    accData!.data!.isNotEmpty &&
+                                    accData!.data![0].ciType == 'F'
                                 ? Column(
                                     children: [
                                       Padding(
@@ -199,7 +146,7 @@ class _PaymentState extends State<Payment> {
                                                   height: 20.h,
                                                 ),
                                                 Text(
-                                                  'ไม่พบข้อมูล',
+                                                  'ไม่พบข้อมูลสมาชิก',
                                                   style: TextStyle(
                                                     fontSize: 30.sp,
                                                     fontWeight: FontWeight.bold,
@@ -214,11 +161,11 @@ class _PaymentState extends State<Payment> {
                                                     horizontal: 25.w,
                                                   ),
                                                   child: Text(
-                                                    'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
+                                                    'เนื่องจากผู้สมัครเป็นบัญชีนิติบุคคล กรุณาติดต่อ Callcenter 02-821-1055',
                                                     style: TextStyle(
                                                       fontSize: 19.sp,
                                                       color:
-                                                          Colors.grey.shade700,
+                                                          Colors.grey.shade500,
                                                     ),
                                                   ),
                                                 )
@@ -229,7 +176,71 @@ class _PaymentState extends State<Payment> {
                                       ),
                                     ],
                                   )
-                                : SizedBox(),
+                                : customerController.typeCustomer.value == 'N'
+                                    ? Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 30.h,
+                                              horizontal: 25.w,
+                                            ),
+                                            child: SizedBox(
+                                              width: width,
+                                              height: 370.h,
+                                              child: Card(
+                                                clipBehavior: Clip.antiAlias,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                elevation: 2,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/image/danger.png',
+                                                      height: 60.h,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    Text(
+                                                      'ไม่พบข้อมูล',
+                                                      style: TextStyle(
+                                                        fontSize: 30.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 25.h,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        vertical: 10.h,
+                                                        horizontal: 25.w,
+                                                      ),
+                                                      child: Text(
+                                                        'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
+                                                        style: TextStyle(
+                                                          fontSize: 19.sp,
+                                                          color: Colors
+                                                              .grey.shade700,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : SizedBox();
+                      }),
               ),
             ],
           ),

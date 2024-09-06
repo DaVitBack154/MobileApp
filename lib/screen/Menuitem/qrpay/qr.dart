@@ -81,7 +81,9 @@ class _QRPaymentState extends State<QRPayment> {
                             ResponsiveWidthContext.isTablet11(context) ||
                             ResponsiveWidthContext.isTabletMini(context)
                         ? 435.h + kToolbarHeight
-                        : 410.h + kToolbarHeight,
+                        : ResponsiveWidthContext.isMobileFoldVertical(context)
+                            ? 405.h + kToolbarHeight
+                            : 405.h + kToolbarHeight,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/image/bg.png'),
@@ -101,18 +103,21 @@ class _QRPaymentState extends State<QRPayment> {
                                 ? 20.h
                                 : ResponsiveWidthContext.isMobileFoldVertical(
                                         context)
-                                    ? 35.h
+                                    ? 34.h
                                     : 50.h,
                             left: 20.w,
                           ),
                           child: bar(),
                         ),
                         SizedBox(
-                          height: 15.h,
+                          height: 12.h,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 34),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 32.w,
+                          ),
                           child: Container(
+                            width: width,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.all(
@@ -143,6 +148,7 @@ class _QRPaymentState extends State<QRPayment> {
                                                       context, 22),
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFF103533),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         )
@@ -159,6 +165,8 @@ class _QRPaymentState extends State<QRPayment> {
                                                           context, 22),
                                                   fontWeight: FontWeight.bold,
                                                   color: Color(0xFF103533),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             )
@@ -174,6 +182,8 @@ class _QRPaymentState extends State<QRPayment> {
                                                           context, 22),
                                                   fontWeight: FontWeight.bold,
                                                   color: Color(0xFF103533),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ),
@@ -286,7 +296,7 @@ class _QRPaymentState extends State<QRPayment> {
                           ),
                         ),
                         SizedBox(
-                          height: 15.h,
+                          height: 10.h,
                         ),
                         ElevatedButton(
                           onPressed: () async {
@@ -398,7 +408,7 @@ class _QRPaymentState extends State<QRPayment> {
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(
                               240.w,
-                              MyConstant.setMediaQueryWidth(context, 40),
+                              20.h,
                             ),
                             backgroundColor: Color.fromARGB(255, 19, 96, 92),
                             shape: RoundedRectangleBorder(
@@ -419,7 +429,7 @@ class _QRPaymentState extends State<QRPayment> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize:
-                                MyConstant.setMediaQueryWidth(context, 24),
+                                MyConstant.setMediaQueryWidth(context, 22),
                           ),
                         ),
                       ],
@@ -429,7 +439,7 @@ class _QRPaymentState extends State<QRPayment> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         Text(
                           'ขั้นตอนการชำระเงิน',
@@ -474,7 +484,7 @@ class _QRPaymentState extends State<QRPayment> {
                     padding: EdgeInsets.only(
                         bottom:
                             ResponsiveWidthContext.isMobileFoldVertical(context)
-                                ? 10
+                                ? 15
                                 : 30),
                     child: ElevatedButton(
                       onPressed: () {

@@ -87,8 +87,7 @@ class _ContractState extends State<Contract> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final query = MediaQuery.of(context);
-    // print('object----');
-    // print(width);
+
     return MediaQuery(
       data: query.copyWith(
         // ignore: deprecated_member_use

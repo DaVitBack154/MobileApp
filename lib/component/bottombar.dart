@@ -21,8 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Bottombar extends StatefulWidget {
   static const routeName = "Bottombar";
+  final int? pageIndex;
 
-  const Bottombar({super.key});
+  const Bottombar({this.pageIndex, super.key});
 
   @override
   State<Bottombar> createState() => _BottombarState();
@@ -49,6 +50,9 @@ class _BottombarState extends State<Bottombar> {
   @override
   void initState() {
     super.initState();
+    if (widget.pageIndex != null) {
+      pageIndex = widget.pageIndex!;
+    }
     getStarUser();
   }
 
@@ -139,7 +143,7 @@ class _BottombarState extends State<Bottombar> {
               child: pages[pageIndex],
             ),
             bottomNavigationBar: SalomonBottomBar(
-              backgroundColor: Colors.white,
+              backgroundColor: const Color.fromARGB(255, 237, 245, 244),
               selectedItemColor: const Color(0xFF103533),
               unselectedItemColor: Colors.grey.shade400,
               onTap: (index) async {

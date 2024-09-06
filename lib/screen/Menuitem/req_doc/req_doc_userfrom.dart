@@ -10,11 +10,11 @@ import 'package:mobile_chaseapp/controller/getpayment_controller.dart';
 import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
 import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/controller/user_req_controller.dart';
+import 'package:mobile_chaseapp/model/respon_dateserver.dart';
 import 'package:mobile_chaseapp/model/respon_payment.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/component/req_format.dart';
 import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -45,7 +45,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
   final _updateController = UpdateController();
 
   bool loading = true;
-  var dateServer = '';
+  String? dateServer;
   List<Data>? userPayment = [];
 
   Data? selectedPayment;
@@ -93,18 +93,23 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
       surname = prefs.getString(KeyStorage.surname);
       idCard = prefs.getString(KeyStorage.idCard);
       await paymentController.fetchPaymentData();
-      await dateController.fetchDateServer();
+      DateServer dateServer = await dateController.fetchDateServer();
+      // ตรวจสอบค่าที่ได้จาก fetchDateServer()
+      print('Date Server before setting: ${dateController.dateServer.data}');
       await profileController.fetchProfileData(token);
       setState(() {
-        dateServer = dateController.dateServer.data.toString();
-        //print(dateServer);
+        this.dateServer =
+            dateServer.data.toString(); // ใช้ค่าจาก DateServer ที่ได้มา
+        print('Date Server after setting: $dateServer');
         if (dateServer != '') {
           generateMonthsList();
         }
       });
       //debugPrint('userPayment: ${userPayment!.toString()}');
-      loading = false;
-      setState(() {});
+
+      setState(() {
+        loading = false;
+      });
     } catch (error) {
       //print('เกิดข้อผิดพลาดในการดึงข้อมูล: $error');
     }
@@ -115,7 +120,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
     // _dateServer = '2025-03-04 22:41:36';
     final currentYear = int.parse(dateServer.toString().substring(0, 4));
     //currentValue = currentYear.toString() + dateServer.toString().substring(5, 7);
-    // print(currentValue!);
+    print(currentValue!);
     for (int i = 0; i < 6; i++) {
       int newMonth = int.parse(dateServer.toString().substring(5, 7)) - i;
       // print('newMonth=>' + newMonth.toString());
@@ -559,7 +564,7 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                         Text(
                                           profileController
                                                   .userModel.user?.email ??
-                                              ' ',
+                                              '',
                                           style: TextStyle(
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.normal,
@@ -1565,6 +1570,20 @@ class _ReqDocFromUserState extends State<ReqDocFromUser> {
                                           },
                                         );
                                       }
+                                    }
+
+                                    if (profileController
+                                                .userModel.user?.starPoint ==
+                                            '' ||
+                                        profileController
+                                                .userModel.user?.starPoint ==
+                                            null) {
+                                      await _updateController
+                                          .fetchUpdateProfile(
+                                        statusStar: 'Y',
+                                      );
+                                    } else {
+                                      print('ให้คะแนนแล้ว');
                                     }
                                   },
                                   style: ButtonStyle(

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/pay.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/req_doc/req_doc.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
-import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
-import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import '../../../controller/getprofile_controller.dart';
-//import '../../../utils/key_storage.dart';
 import '../../login_page/login_page.dart';
 
 class Menu extends StatefulWidget {
@@ -38,8 +33,8 @@ class _MenuState extends State<Menu> {
       child: Column(
         children: [
           Container(
-            width: MyConstant.setMediaQueryWidth(context, 65),
-            height: MyConstant.setMediaQueryWidth(context, 65),
+            width: MyConstant.setMediaQueryWidth(context, 58),
+            height: MyConstant.setMediaQueryWidth(context, 58),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
@@ -60,7 +55,7 @@ class _MenuState extends State<Menu> {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.normal,
-              fontSize: MyConstant.setMediaQueryWidth(context, 23),
+              fontSize: MyConstant.setMediaQueryWidth(context, 22),
             ),
           ),
         ],

@@ -90,6 +90,7 @@ class UserService extends BaseService {
     required String? subdistrict,
     required String? provin,
     required String? postcode,
+    String? statusStar,
   }) async {
     String url = '$domain/updateprofile/$id';
 
@@ -109,7 +110,11 @@ class UserService extends BaseService {
                             "provin": provin,
                             "postcode": postcode,
                           })
-                        : jsonEncode({}));
+                        : statusStar != null
+                            ? jsonEncode({
+                                "status_star": statusStar,
+                              })
+                            : jsonEncode({}));
 
     return response;
   }

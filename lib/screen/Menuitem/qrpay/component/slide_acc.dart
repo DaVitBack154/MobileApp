@@ -72,12 +72,12 @@ class _SlideAccState extends State<SlideAcc> {
                     .toList(),
                 carouselController: carouselController,
                 options: CarouselOptions(
-                    viewportFraction: 0.93,
+                    viewportFraction: 0.92,
                     height: ResponsiveWidthContext.isMobileFoldVertical(context)
                         ? 200.h
                         : ResponsiveWidthContext.isMobile(context) ||
                                 ResponsiveWidthContext.isMobileSmall(context)
-                            ? MyConstant.setMediaQueryWidth(context, 253)
+                            ? 190.h
                             : MyConstant.setMediaQueryWidth(context, 260),
                     autoPlay: false,
                     enableInfiniteScroll: false,
@@ -90,7 +90,7 @@ class _SlideAccState extends State<SlideAcc> {
               ),
 
               SizedBox(
-                height: 5.h,
+                height: 10.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +119,7 @@ class _SlideAccState extends State<SlideAcc> {
               ),
 
               SizedBox(
-                height: 15.h,
+                height: 20.h,
               ),
               // card ด้านล่างทั้งหมด
               Padding(
@@ -368,16 +368,23 @@ class _SlideAccState extends State<SlideAcc> {
               ),
               //ปุ่มชำระเงิน
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PayFrom(
-                        currentIndex: _currentIndex,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: accController
+                                .userAccModel.data![_currentIndex].flagCode ==
+                            'CLS' ||
+                        accController
+                                .userAccModel.data![_currentIndex].flagCode ==
+                            'CLSW'
+                    ? null // Disable ปุ่มเมื่อ flashcode เป็น 'CLS' หรือ 'CLW'
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PayFrom(
+                              currentIndex: _currentIndex,
+                            ),
+                          ),
+                        );
+                      },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
                     Size(
@@ -385,8 +392,16 @@ class _SlideAccState extends State<SlideAcc> {
                       MyConstant.setMediaQueryWidth(context, 40),
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color(0xFF103533), // กำหนดสีพื้นหลังของปุ่ม
+                  // กำหนดสีพื้นหลังของปุ่มตามสถานะ
+                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (states) {
+                      if (states.contains(WidgetState.disabled)) {
+                        return Colors
+                            .grey.shade400; // สีเทาเมื่อปุ่มถูก disable
+                      }
+                      return const Color(
+                          0xFF103533); // สีปกติเมื่อปุ่มไม่ถูก disable
+                    },
                   ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(

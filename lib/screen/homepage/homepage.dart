@@ -62,12 +62,13 @@ class _HomepageState extends State<Homepage> {
                       ? MyConstant.setMediaQueryWidth(context, 565)
                       : ResponsiveWidthContext.isTablet11(context)
                           ? MyConstant.setMediaQueryWidth(context, 530)
-                          : ResponsiveWidthContext.isMobile(context)
-                              ? MyConstant.setMediaQueryWidth(context, 510)
-                              : ResponsiveWidthContext.isMobileFoldVertical(
+                          : ResponsiveWidthContext.isMobile(context) ||
+                                  ResponsiveWidthContext.isMobileSmall(
+                                      context) ||
+                                  ResponsiveWidthContext.isMobileFoldVertical(
                                       context)
-                                  ? MyConstant.setMediaQueryWidth(context, 520)
-                                  : MyConstant.setMediaQueryWidth(context, 530),
+                              ? MyConstant.setMediaQueryWidth(context, 502)
+                              : MyConstant.setMediaQueryWidth(context, 530),
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     image: DecorationImage(
@@ -79,11 +80,11 @@ class _HomepageState extends State<Homepage> {
                       bottomRight: Radius.circular(30),
                     ),
                   ),
-                  child: Column(
+                  child: const Column(
                     children: [
-                      const Navbar(),
-                      const Slide(),
-                      const Menu(),
+                      Navbar(),
+                      Slide(),
+                      Menu(),
                     ],
                   ),
                 ),
@@ -108,7 +109,10 @@ class _HomepageState extends State<Homepage> {
     return Column(
       children: [
         SizedBox(
-          height: ResponsiveWidthContext.isMobile(context) ? 10.h : 5.h,
+          height: ResponsiveWidthContext.isMobile(context) ||
+                  ResponsiveWidthContext.isMobileSmall(context)
+              ? 10.h
+              : 5.h,
         ),
         Row(
           children: [
@@ -149,7 +153,7 @@ class _HomepageState extends State<Homepage> {
                           ? MyConstant.setMediaQueryWidth(context, 210)
                           : ResponsiveWidthContext.isMobile(context) ||
                                   ResponsiveWidthContext.isMobileSmall(context)
-                              ? MyConstant.setMediaQueryWidth(context, 220)
+                              ? MyConstant.setMediaQueryWidth(context, 210)
                               : MyConstant.setMediaQueryWidth(context, 240),
                       fit: BoxFit.cover,
                     ),

@@ -16,10 +16,10 @@ class Bar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           alignment: Alignment.bottomCenter,
           height: ResponsiveWidthContext.isMobileFoldVertical(context)
-              ? MyConstant.setMediaQueryWidth(context, 135)
+              ? 110.h
               : ResponsiveWidthContext.isMobile(context) ||
                       ResponsiveWidthContext.isMobileSmall(context)
-                  ? MyConstant.setMediaQueryWidth(context, 140)
+                  ? 106.h
                   : MyConstant.setMediaQueryWidth(context, 110),
           child: Row(
             children: [

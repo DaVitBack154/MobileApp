@@ -31,6 +31,7 @@ class UpdateController {
     String? subdistrict,
     String? provin,
     String? postcode,
+    String? statusStar,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString(KeyStorage.uid);
@@ -49,6 +50,7 @@ class UpdateController {
         subdistrict: subdistrict,
         provin: provin,
         postcode: postcode,
+        statusStar: statusStar,
       );
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);

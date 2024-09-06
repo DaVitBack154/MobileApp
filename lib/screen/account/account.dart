@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:get/get.dart';
 import 'package:mobile_chaseapp/controller/getacc_controller.dart';
+import 'package:mobile_chaseapp/getcontroller/getacc_controller.dart';
 import 'package:mobile_chaseapp/model/respon_accuser.dart';
 import 'package:mobile_chaseapp/screen/account/component/acc_card.dart';
-import 'package:mobile_chaseapp/utils/key_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -16,29 +15,32 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String? typeCustomer;
+  // String? typeCustomer;
   UserAccModel? accData;
   AccController accController = AccController();
   bool loading = true;
+  CustomerController customerController = Get.put(CustomerController());
 
   @override
   void initState() {
     super.initState();
     getTypeCustomer();
+    customerController.fetchUserProfile();
   }
 
   Future<void> getTypeCustomer() async {
     setState(() {
       loading = true;
     });
-    final prefs = await SharedPreferences.getInstance();
-    typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
+
     accData = await accController.fetchAccData();
 
     setState(() {
       loading = false;
     });
   }
+  // final prefs = await SharedPreferences.getInstance();
+  // typeCustomer = prefs.getString(KeyStorage.typeCustomer) ?? 'Y';
 
   Future<bool> onWillPop() async {
     return false;
@@ -111,149 +113,177 @@ class _AccountState extends State<Account> {
                                     ),
                                   ],
                                 )
-                              : typeCustomer == 'Y' &&
-                                      (accData?.data != null &&
-                                          accData!.data!.isNotEmpty &&
-                                          (accData!.data![0].ciType == 'T' ||
-                                              accData!.data![0].ciType == ''))
-                                  ? const AccCard()
-                                  : accData?.data != null &&
-                                          accData!.data!.isNotEmpty &&
-                                          accData!.data![0].ciType == 'F'
-                                      ? Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 30.h,
-                                                horizontal: 25.w,
-                                              ),
-                                              child: SizedBox(
-                                                width: width,
-                                                height: 370.h,
-                                                child: Card(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  elevation: 2,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Image.asset(
-                                                        'assets/image/danger.png',
-                                                        height: 60.h,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 20.h,
-                                                      ),
-                                                      Text(
-                                                        'เนื่องจากท่านเป็นบัญชีนิติบุคคล',
-                                                        style: TextStyle(
-                                                          fontSize: 25.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                              : Obx(
+                                  () {
+                                    return customerController
+                                                    .typeCustomer.value ==
+                                                'Y' &&
+                                            (accData?.data != null &&
+                                                accData!.data!.isNotEmpty &&
+                                                (accData!.data![0].ciType ==
+                                                        'T' ||
+                                                    accData!.data![0].ciType ==
+                                                        ''))
+                                        ? const AccCard()
+                                        : accData?.data != null &&
+                                                accData!.data!.isNotEmpty &&
+                                                accData!.data![0].ciType == 'F'
+                                            ? Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 30.h,
+                                                      horizontal: 25.w,
+                                                    ),
+                                                    child: SizedBox(
+                                                      width: width,
+                                                      height: 370.h,
+                                                      child: Card(
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
                                                         ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 25.h,
-                                                      ),
-                                                      Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          vertical: 10.h,
-                                                          horizontal: 25.w,
-                                                        ),
-                                                        child: Text(
-                                                          'กรุณาติดต่่อเจ้าหน้าที่ Callcenter 02-821-1055',
-                                                          style: TextStyle(
-                                                            fontSize: 25.sp,
-                                                            color: Colors
-                                                                .grey.shade500,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : typeCustomer == 'N'
-                                          ? Column(
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                    vertical: 30.h,
-                                                    horizontal: 25.w,
-                                                  ),
-                                                  child: SizedBox(
-                                                    width: width,
-                                                    height: 370.h,
-                                                    child: Card(
-                                                      clipBehavior:
-                                                          Clip.antiAlias,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                      ),
-                                                      elevation: 2,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Image.asset(
-                                                            'assets/image/danger.png',
-                                                            height: 60.h,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 20.h,
-                                                          ),
-                                                          Text(
-                                                            'ไม่พบข้อมูลสมาชิก',
-                                                            style: TextStyle(
-                                                              fontSize: 30.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
+                                                        elevation: 2,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Image.asset(
+                                                              'assets/image/danger.png',
+                                                              height: 60.h,
+                                                              fit: BoxFit.cover,
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 25.h,
-                                                          ),
-                                                          Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                              vertical: 10.h,
-                                                              horizontal: 25.w,
+                                                            SizedBox(
+                                                              height: 20.h,
                                                             ),
-                                                            child: Text(
-                                                              'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
+                                                            Text(
+                                                              'เนื่องจากท่านเป็นบัญชีนิติบุคคล',
                                                               style: TextStyle(
-                                                                fontSize: 20.sp,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade700,
+                                                                fontSize: 25.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
                                                               ),
                                                             ),
-                                                          )
-                                                        ],
+                                                            SizedBox(
+                                                              height: 25.h,
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                vertical: 10.h,
+                                                                horizontal:
+                                                                    25.w,
+                                                              ),
+                                                              child: Text(
+                                                                'กรุณาติดต่่อเจ้าหน้าที่ Callcenter 02-821-1055',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      25.sp,
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade500,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            )
-                                          : SizedBox.shrink(),
+                                                ],
+                                              )
+                                            : customerController
+                                                        .typeCustomer.value ==
+                                                    'N'
+                                                ? Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          vertical: 30.h,
+                                                          horizontal: 25.w,
+                                                        ),
+                                                        child: SizedBox(
+                                                          width: width,
+                                                          height: 370.h,
+                                                          child: Card(
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                            ),
+                                                            elevation: 2,
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Image.asset(
+                                                                  'assets/image/danger.png',
+                                                                  height: 60.h,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 20.h,
+                                                                ),
+                                                                Text(
+                                                                  'ไม่พบข้อมูลสมาชิก',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        30.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 25.h,
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .symmetric(
+                                                                    vertical:
+                                                                        10.h,
+                                                                    horizontal:
+                                                                        25.w,
+                                                                  ),
+                                                                  child: Text(
+                                                                    'ไม่พบข้อมูลสมาชิกในระบบ กรุณาติดต่อ CallCenter 02-821-1055',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          20.sp,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade700,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                : SizedBox.shrink();
+                                  },
+                                ),
                         ),
                       ],
                     ),

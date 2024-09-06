@@ -47,30 +47,6 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Row(
-                        //   mainAxisAlignment:
-                        //       MainAxisAlignment.end,
-                        //   children: [
-                        //     IconButton(
-                        //       onPressed: () async {
-                        //         // maidaiHai = 'ไม่ได้ให้';
-                        //         await UpdateStarController()
-                        //             .fetchUpdateStar(
-                        //           'N',
-                        //           '',
-                        //           '',
-                        //           'ไม่ได้ให้',
-                        //         );
-                        //         Navigator.of(context).pop();
-                        //       },
-                        //       icon: Icon(
-                        //         Icons.close,
-                        //         size: 30,
-                        //         color: Colors.teal.shade800,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
                         SizedBox(
                           height: 15.h,
                         ),

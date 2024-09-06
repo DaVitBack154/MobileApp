@@ -38,10 +38,10 @@ class _PayFromState extends State<PayFrom> {
                   Container(
                     width: double.infinity,
                     height: ResponsiveWidthContext.isMobileFoldVertical(context)
-                        ? 285.h + kToolbarHeight
+                        ? 280.h + kToolbarHeight
                         : ResponsiveWidthContext.isMobile(context) ||
                                 ResponsiveWidthContext.isMobileSmall(context)
-                            ? 290.h + kToolbarHeight
+                            ? 276.h + kToolbarHeight
                             : ResponsiveWidthContext.isTablet(context)
                                 ? MyConstant.setMediaQueryWidth(context, 370) +
                                     kToolbarHeight

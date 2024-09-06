@@ -1,14 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mobile_chaseapp/component/bottombar.dart';
 import 'package:mobile_chaseapp/controller/getpromotion.dart';
 import 'package:mobile_chaseapp/model/respon_promotion.dart';
 import 'package:mobile_chaseapp/screen/homepage/component/imgnetwork.dart';
 import 'package:mobile_chaseapp/screen/homepage/promotion/knowledge_content_bon.dart';
+import 'package:mobile_chaseapp/screen/login_page/login_page.dart';
+import 'package:mobile_chaseapp/screen/profile/profile.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Slide extends StatefulWidget {
   const Slide({super.key});
@@ -24,8 +29,12 @@ class _SlideState extends State<Slide> {
   bool loading = true;
   UserPromotion? userPromotion;
   String imageUrl = ImageNetwork.url;
+  int pageIndex = 0;
+  String? checktoken;
 
   Future<void> fetchPromotion() async {
+    final prefs = await SharedPreferences.getInstance();
+    checktoken = prefs.getString('token'); // ดึง Token
     setState(() {
       loading = true;
     });
@@ -34,7 +43,8 @@ class _SlideState extends State<Slide> {
       loading = false;
       setState(() {
         userPromotion!.data!.removeWhere((element) =>
-            element.typeImage != 'image_bon' || element.status == 'OFF');
+            // element.typeImage != 'image_bon' || element.status == 'OFF')
+            element.status == 'OFF');
       });
     } catch (error) {
       print('เกิดข้อผิดพลาดในการดึงข้อมูล: $error');
@@ -53,8 +63,8 @@ class _SlideState extends State<Slide> {
         ? const SizedBox()
         : Column(
             children: [
-              Container(
-                child: Stack(children: [
+              Stack(
+                children: [
                   CarouselSlider(
                     items: userPromotion!.data! // กรองรายการที่มีข้อมูลเท่านั้น
                         .map(
@@ -64,6 +74,37 @@ class _SlideState extends State<Slide> {
                             child: Center(
                               child: InkWell(
                                 onTap: () {
+                                  // if (item.typeImage == 'image_lang') {
+                                  //   if (checktoken == null) {
+                                  //     Navigator.pushReplacement(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: (context) => const Login(),
+                                  //       ),
+                                  //     );
+                                  //     return;
+                                  //   } else {
+                                  //     Navigator.pushAndRemoveUntil(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               const Bottombar(
+                                  //                 pageIndex: 3,
+                                  //               )),
+                                  //       (Route<dynamic> route) => false,
+                                  //     );
+                                  //   }
+                                  // } else {
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => PromotionBon(
+                                  //         item: item,
+                                  //       ),
+                                  //     ),
+                                  //   );
+                                  // }
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -97,11 +138,6 @@ class _SlideState extends State<Slide> {
                                         image: imageProvider,
                                         fit: BoxFit.cover,
                                         width: double.infinity,
-                                        // height: ResponsiveWidthContext.isMobile(
-                                        //         context)
-                                        //     ? MyConstant.setMediaQueryHeight(
-                                        //         context, 200)
-                                        //     : null,
                                         height: ResponsiveWidthContext
                                                 .isMobileFoldVertical(context)
                                             ? MyConstant.setMediaQueryWidth(
@@ -111,7 +147,7 @@ class _SlideState extends State<Slide> {
                                                     ResponsiveWidthContext
                                                         .isMobileSmall(context)
                                                 ? MyConstant.setMediaQueryWidth(
-                                                    context, 200)
+                                                    context, 195)
                                                 : ResponsiveWidthContext
                                                         .isTablet(context)
                                                     ? MyConstant
@@ -130,7 +166,7 @@ class _SlideState extends State<Slide> {
                     carouselController: carouselController,
                     options: CarouselOptions(
                       viewportFraction: 0.93,
-                      autoPlay: false,
+                      autoPlay: true,
                       enableInfiniteScroll: false,
                       initialPage: currentIndex,
                       onPageChanged: (index, reason) {
@@ -184,14 +220,14 @@ class _SlideState extends State<Slide> {
                       ),
                     ),
                   ),
-                ]),
+                ],
               ),
               SizedBox(
                 height: ResponsiveWidthContext.isMobileFoldVertical(context)
                     ? MyConstant.setMediaQueryWidth(context, 17)
                     : ResponsiveWidthContext.isMobileSmall(context) ||
                             ResponsiveWidthContext.isMobile(context)
-                        ? MyConstant.setMediaQueryWidth(context, 30)
+                        ? MyConstant.setMediaQueryWidth(context, 26)
                         : null,
               ),
             ],

@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_chaseapp/component/card_user.dart';
+import 'package:mobile_chaseapp/controller/getprofile_controller.dart';
+import 'package:mobile_chaseapp/controller/update_controller.dart';
 import 'package:mobile_chaseapp/controller/userpay_controller.dart';
 import 'package:mobile_chaseapp/model/respon_payuser.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/history/history.dart';
 import 'package:mobile_chaseapp/screen/Menuitem/qrpay/qr.dart';
+import 'package:mobile_chaseapp/utils/key_storage.dart';
 import 'package:mobile_chaseapp/utils/my_constant.dart';
 import 'package:mobile_chaseapp/utils/responsive_heigth__context.dart';
 import 'package:mobile_chaseapp/utils/responsive_width__context.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../controller/getacc_controller.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -23,6 +27,7 @@ class SlideFrom extends StatefulWidget {
 class _SlideFromState extends State<SlideFrom> {
   CarouselSliderController carouselController = CarouselSliderController();
   AccController accController = AccController();
+  final _updateController = UpdateController();
   UserPayController userPayController = UserPayController();
   int _currentIndex = 0;
 
@@ -30,7 +35,7 @@ class _SlideFromState extends State<SlideFrom> {
 
   final FocusNode _yourFocusNode = FocusNode();
   TextEditingController amountController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final ProfileController profileController = ProfileController();
 
   Future<void> fetchAccData() async {
     setState(() {
@@ -108,8 +113,8 @@ class _SlideFromState extends State<SlideFrom> {
                         viewportFraction: 0.93,
                         height:
                             ResponsiveWidthContext.isMobileFoldVertical(context)
-                                ? 210.h
-                                : 200.h,
+                                ? 200.h
+                                : 190.h,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         initialPage: _currentIndex,
@@ -153,10 +158,12 @@ class _SlideFromState extends State<SlideFrom> {
                   // ปุ่มที่ติดกับภาพเลื่อน
 
                   SizedBox(
-                    height: ResponsiveWidthContext.isMobile(context) ||
-                            ResponsiveWidthContext.isMobileSmall(context)
-                        ? 32.h
-                        : 20.h,
+                    height: ResponsiveWidthContext.isMobileFoldVertical(context)
+                        ? 50.h
+                        : ResponsiveWidthContext.isMobile(context) ||
+                                ResponsiveWidthContext.isMobileSmall(context)
+                            ? 32.h
+                            : 20.h,
                   ),
                   //ในส่วน กรอก จำนวนเงิน ด้านล่าง
                   Column(
@@ -244,6 +251,25 @@ class _SlideFromState extends State<SlideFrom> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String token =
+                              prefs.getString(KeyStorage.token) ?? '';
+                          await profileController.fetchProfileData(token);
+
+                          if (profileController.userModel.user?.starPoint ==
+                                  '' ||
+                              profileController.userModel.user?.starPoint ==
+                                  null) {
+                            await _updateController.fetchUpdateProfile(
+                              statusStar: 'Y',
+                            );
+                            // print(
+                            //     'tokota-> ${profileController.userModel.user?.starPoint}');
+                          } else {
+                            print('ให้คะแนนแล้ว');
+                          }
+
                           Payuser? payuser =
                               await userPayController.createUserPay(
                             customerId: accController
